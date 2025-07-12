@@ -1,0 +1,90 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:luma/global/app_icons.dart';
+import 'package:luma/ui/widgets/widget_store.dart';
+
+class PageBuyerHomepageFeed extends StatelessWidget {
+  const PageBuyerHomepageFeed({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    CarouselController carouselController = CarouselController(initialItem: 1);
+    return CarouselView.weighted(
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      controller: carouselController,
+      flexWeights: [1],
+      scrollDirection: Axis.vertical,
+      shape: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.zero),
+        borderSide: BorderSide.none,
+      ),
+      itemSnapping: true,
+      enableSplash: false,
+
+      children: [
+        WidgetFeedContainer(),
+        WidgetFeedContainer(),
+        WidgetFeedContainer(),
+        WidgetFeedContainer(),
+        WidgetFeedContainer(),
+        WidgetFeedContainer(),
+        WidgetFeedContainer(),
+        WidgetFeedContainer(),
+        WidgetFeedContainer(),
+        WidgetFeedContainer(),
+        SizedBox(height: 64),
+      ],
+    );
+  }
+}
+
+class WidgetFeedContainer extends StatelessWidget {
+  const WidgetFeedContainer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.amber,
+        border: BoxBorder.all(),
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+      ),
+      child: Stack(
+        children: [
+          // VIDEO
+          SizedBox(child: Center(child: Text("VIDEO EXAMPLE"))),
+
+          // ITEM
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: ClipRRect(
+              borderRadius: BorderRadiusGeometry.all(Radius.circular(16)),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.all(Radius.circular(16)),
+                  ),
+                  leading: Icon(AppIcons.account),
+                  title: Text("Title text"),
+                  subtitle: Text("Second text"),
+                  trailing: IconButton(
+                    onPressed: () {},
+                    icon: Icon(AppIcons.shopCart),
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          // STORE
+          Align(
+            alignment: Alignment.topCenter,
+            child: WidgetStore(blurLevel: 5),
+          ),
+        ],
+      ),
+    );
+  }
+}
