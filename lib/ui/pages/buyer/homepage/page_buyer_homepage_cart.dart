@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:luma/global/app_text_styles.dart';
+import 'package:luma/ui/pages/buyer/page_buyer_purchase.dart';
 import 'package:luma/ui/widgets/widget_shop_cart_item.dart';
 
 class PageBuyerHomepageCart extends StatelessWidget {
@@ -25,14 +26,20 @@ class PageBuyerHomepageCart extends StatelessWidget {
               height: 50,
               width: MediaQuery.sizeOf(context).width * 0.8,
               child: FilledButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PageBuyerPurchase(),
+                    ),
+                  );
+                },
                 style: FilledButton.styleFrom(
-                  
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadiusGeometry.circular(16),
                   ),
                 ),
-                child: Text("Buy", style: AppTextStyles.title,),
+                child: Text("Buy", style: AppTextStyles.title),
               ),
             ),
           ),

@@ -6,6 +6,7 @@ import 'package:luma/ui/pages/buyer/homepage/page_buyer_homepage_cart.dart';
 import 'package:luma/ui/pages/buyer/homepage/page_buyer_homepage_feed.dart';
 import 'package:luma/ui/pages/buyer/homepage/page_buyer_homepage_home.dart';
 import 'package:luma/ui/pages/buyer/homepage/page_buyer_homepage_settings.dart';
+import 'package:luma/ui/pages/buyer/page_buyer_notifications.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_profile.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_search.dart';
 
@@ -68,7 +69,14 @@ class _PageBuyerHomepageState extends State<PageBuyerHomepage>
 
           // NOTIFICATIONS
           IconButton.filledTonal(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PageBuyerNotifications(),
+                ),
+              );
+            },
             icon: Icon(AppIcons.notifications),
           ),
 

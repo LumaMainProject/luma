@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:luma/global/app_icons.dart';
+import 'package:luma/ui/pages/buyer/page_buyer_item_card.dart';
 import 'package:luma/ui/widgets/widget_store.dart';
 
 class PageBuyerHomepageFeed extends StatelessWidget {
@@ -9,7 +10,7 @@ class PageBuyerHomepageFeed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CarouselController carouselController = CarouselController(initialItem: 1);
+    CarouselController carouselController = CarouselController();
     return CarouselView.weighted(
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       controller: carouselController,
@@ -69,10 +70,15 @@ class WidgetFeedContainer extends StatelessWidget {
                   leading: Icon(AppIcons.account),
                   title: Text("Title text"),
                   subtitle: Text("Second text"),
-                  trailing: IconButton(
-                    onPressed: () {},
-                    icon: Icon(AppIcons.shopCart),
-                  ),
+                  trailing: Icon(AppIcons.shopCart),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PageBuyerItemCard(),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
