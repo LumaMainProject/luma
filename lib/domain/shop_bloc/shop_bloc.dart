@@ -6,8 +6,6 @@ part 'shop_state.dart';
 
 class ShopBloc extends Bloc<ShopEvent, ShopState> {
   ShopBloc() : super(ShopInitial()) {
-    on<ShopEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<ShopEvent>((event, emit) {});
   }
 }

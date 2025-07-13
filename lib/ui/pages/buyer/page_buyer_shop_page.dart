@@ -15,15 +15,18 @@ class PageBuyerShopPage extends StatelessWidget {
     List<ObjectItem> items = [];
 
     for (ObjectItem element in SaveLists.itemList) {
-      if(element.shop == shop) items.add(element);
+      if (element.shop == shop) items.add(element);
     }
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: 300,
-            flexibleSpace: Container(color: Colors.amber),
+            expandedHeight: 200,
+            flexibleSpace: Container(
+              color: Colors.amber,
+              child: Image(fit: BoxFit.cover, image: shop.header, height: 300,),
+            ),
           ),
 
           // REVIEWS AND FOLOWERS
@@ -47,13 +50,6 @@ class PageBuyerShopPage extends StatelessWidget {
                                 ? Icon(Icons.star)
                                 : Icon(Icons.star_border);
                           }),
-                          // children: [
-                          //   Icon(Icons.star),
-                          //   Icon(Icons.star),
-                          //   Icon(Icons.star),
-                          //   Icon(Icons.star),
-                          //   Icon(Icons.star),
-                          // ],
                         ),
                       ),
                     ],

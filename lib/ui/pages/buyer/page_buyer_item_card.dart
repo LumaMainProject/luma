@@ -53,7 +53,19 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
                 itemSnapping: true,
                 controller: carouselController,
                 flexWeights: [1],
-                children: [Placeholder(), Placeholder(), Placeholder()],
+                children: List.generate(
+                  widget.item.images.length,
+                  (index) => ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(16),
+                      bottomRight: Radius.circular(16),
+                    ),
+                    child: Image(
+                      fit: BoxFit.fill,
+                      image: widget.item.images[index],
+                    ),
+                  ),
+                ),
               ),
             ),
           ),

@@ -22,14 +22,16 @@ class PageBuyerHomepageHome extends StatelessWidget {
         ),
       ),
 
-      WidgetGridViewPromos(paddings: 16, itemList: SaveLists.itemList,),
+      WidgetGridViewPromos(paddings: 16, itemList: SaveLists.itemList),
 
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Text("New Arrivals", style: TextStyle(fontSize: 18)),
       ),
 
-      debug == true ? Placeholder() : WidgetCarouselView(itemList: SaveLists.itemList),
+      debug == true
+          ? WidgetGridViewPromos(paddings: 16, itemList: SaveLists.itemList)
+          : WidgetCarouselView(itemList: SaveLists.itemList),
 
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -45,7 +47,7 @@ class PageBuyerHomepageHome extends StatelessWidget {
     return ListView.separated(
       itemBuilder: (context, index) => items[index],
       separatorBuilder: (context, index) => const SizedBox(height: 16),
-      itemCount: 5,
+      itemCount: 6,
     );
   }
 }

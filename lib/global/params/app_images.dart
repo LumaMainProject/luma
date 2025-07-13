@@ -89,10 +89,10 @@ abstract class AppImages {
     'assets/images/balenciaga_items/P00493698_b1.webp',
   );
   static final balenciagaItem_4_2 = AssetImage(
-    'assets/images/balenciaga_items/image27284873.jpg',
+    'assets/images/balenciaga_items/P00493698.webp',
   );
   static final balenciagaItem_4_3 = AssetImage(
-    'assets/images/balenciaga_items/P00493698.webp',
+    'assets/images/balenciaga_items/P00493698_d1.webp',
   );
 
   // ITEM PRADA 1

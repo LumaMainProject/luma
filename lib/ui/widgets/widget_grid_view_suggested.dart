@@ -8,6 +8,9 @@ class WidgetGridViewSuggested extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // SHUFFLE
+    itemList.shuffle();
+
     return GridView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
