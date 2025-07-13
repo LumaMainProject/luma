@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:luma/global/app_icons.dart';
+import 'package:luma/global/app_images.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_item_card.dart';
 import 'package:luma/ui/widgets/widget_store.dart';
 
@@ -24,16 +25,13 @@ class PageBuyerHomepageFeed extends StatelessWidget {
       enableSplash: false,
 
       children: [
-        WidgetFeedContainer(),
-        WidgetFeedContainer(),
-        WidgetFeedContainer(),
-        WidgetFeedContainer(),
-        WidgetFeedContainer(),
-        WidgetFeedContainer(),
-        WidgetFeedContainer(),
-        WidgetFeedContainer(),
-        WidgetFeedContainer(),
-        WidgetFeedContainer(),
+        WidgetFeedContainer(image: AppImages.adidasLogo),
+        WidgetFeedContainer(image: AppImages.adidasLogo),
+        WidgetFeedContainer(image: AppImages.adidasLogo),
+        WidgetFeedContainer(image: AppImages.adidasLogo),
+        WidgetFeedContainer(image: AppImages.adidasLogo),
+        WidgetFeedContainer(image: AppImages.adidasLogo),
+        WidgetFeedContainer(image: AppImages.adidasLogo),
         SizedBox(height: 64),
       ],
     );
@@ -41,7 +39,8 @@ class PageBuyerHomepageFeed extends StatelessWidget {
 }
 
 class WidgetFeedContainer extends StatelessWidget {
-  const WidgetFeedContainer({super.key});
+  final ImageProvider image;
+  const WidgetFeedContainer({super.key, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +53,9 @@ class WidgetFeedContainer extends StatelessWidget {
       child: Stack(
         children: [
           // VIDEO
-          SizedBox(child: Center(child: Text("VIDEO EXAMPLE"))),
+          SizedBox(
+            child: Center(child: Image(image: image)),
+          ),
 
           // ITEM
           Align(
