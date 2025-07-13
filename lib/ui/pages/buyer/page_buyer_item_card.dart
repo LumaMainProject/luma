@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:luma/global/app_colors.dart';
 import 'package:luma/global/app_icons.dart';
@@ -76,7 +74,6 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
                             setState(() {
                               isFavorite = !isFavorite;
                             });
-                            ;
                           },
                           icon: Icon(
                             color: isFavorite == true
