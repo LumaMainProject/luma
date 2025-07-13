@@ -6,11 +6,13 @@ class ObjectNotification {
   final String? description;
   final ObjectShop? shop;
   final ObjectItem? item;
+  final DateTime? time;
 
   const ObjectNotification({
     required this.notification,
     this.description,
     this.item,
     this.shop,
+    this.time,
   });
 }

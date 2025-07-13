@@ -1,9 +1,10 @@
+import 'package:flutter/widgets.dart';
 import 'package:luma/global/classes/object_item.dart';
 
 class ObjectShop {
   final String shopName;
-  final String icon;
-  final String header;
+  final AssetImage icon;
+  final AssetImage header;
   final List<ObjectItem>? items;
 
   const ObjectShop({
