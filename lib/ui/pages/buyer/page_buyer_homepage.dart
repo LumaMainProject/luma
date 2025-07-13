@@ -11,7 +11,8 @@ import 'package:luma/ui/pages/buyer/page_buyer_profile.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_search.dart';
 
 class PageBuyerHomepage extends StatefulWidget {
-  const PageBuyerHomepage({super.key});
+  final int pageIndex;
+  const PageBuyerHomepage({super.key, this.pageIndex = 1});
 
   @override
   State<PageBuyerHomepage> createState() => _PageBuyerHomepageState();
@@ -26,6 +27,7 @@ class _PageBuyerHomepageState extends State<PageBuyerHomepage>
     PageBuyerHomepageSettings(),
   ];
 
+
   @override
   Widget build(BuildContext context) {
     final bool isTransparent = false;
@@ -33,7 +35,7 @@ class _PageBuyerHomepageState extends State<PageBuyerHomepage>
     TabController tabController = TabController(
       length: 4,
       vsync: this,
-      initialIndex: 1,
+      initialIndex: widget.pageIndex,
     );
 
     return Scaffold(

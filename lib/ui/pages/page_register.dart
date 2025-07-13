@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:luma/global/app_icons.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_homepage.dart';
+import 'package:luma/ui/pages/seller/page_seller_homepage.dart';
 
-class PageRegister extends StatelessWidget {
-  const PageRegister({super.key});
+class PageRegister extends StatefulWidget {
+  final int changeTheme;
+  const PageRegister({super.key, this.changeTheme = 0});
 
+  @override
+  State<PageRegister> createState() => _PageRegisterState();
+}
+
+class _PageRegisterState extends State<PageRegister> {
   @override
   Widget build(BuildContext context) {
     List<Widget> listViewWidgets = [
@@ -18,6 +25,7 @@ class PageRegister extends StatelessWidget {
         ),
         keyboardType: TextInputType.number,
       ),
+
       SizedBox(
         height: 56,
         child: FilledButton(
@@ -34,9 +42,30 @@ class PageRegister extends StatelessWidget {
               borderRadius: BorderRadiusGeometry.all(Radius.circular(16)),
             ),
           ),
-          child: Text("Send code", style: TextStyle(fontSize: 16)),
+          child: Text("Buyer", style: TextStyle(fontSize: 16)),
         ),
       ),
+
+      SizedBox(
+        height: 56,
+        child: FilledButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PageSellerHomepage(),
+              ),
+            );
+          },
+          style: FilledButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusGeometry.all(Radius.circular(16)),
+            ),
+          ),
+          child: Text("Seller", style: TextStyle(fontSize: 16)),
+        ),
+      ),
+
       Divider(),
       Row(
         children: [
@@ -46,7 +75,6 @@ class PageRegister extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(),
       body: Column(
         children: [
           Spacer(),

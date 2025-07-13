@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:luma/global/app_text_styles.dart';
-import 'package:luma/ui/pages/seller/page_seller_homepage.dart';
+import 'package:luma/ui/pages/buyer/page_buyer_homepage.dart';
 
-class PageBuyerHomepageSettings extends StatelessWidget {
-  const PageBuyerHomepageSettings({super.key});
+class PageSellerHomepageSettings extends StatelessWidget {
+  const PageSellerHomepageSettings({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +17,7 @@ class PageBuyerHomepageSettings extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        const PageSellerHomepage(pageIndex: 1),
+                    builder: (context) => const PageBuyerHomepage(pageIndex: 1),
                   ),
                 );
               },
@@ -28,7 +27,7 @@ class PageBuyerHomepageSettings extends StatelessWidget {
                   borderRadius: BorderRadiusGeometry.all(Radius.circular(16)),
                 ),
               ),
-              child: Text("Switch to Seller", style: AppTextStyles.title),
+              child: Text("Switch to Buyer", style: AppTextStyles.title),
             ),
           ),
         ),

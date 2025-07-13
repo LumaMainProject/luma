@@ -21,10 +21,7 @@ class PageBuyerHomepageHome extends StatelessWidget {
         ),
       ),
 
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: WidgetGridViewPromos(),
-      ),
+      WidgetGridViewPromos(paddings: 16),
 
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
