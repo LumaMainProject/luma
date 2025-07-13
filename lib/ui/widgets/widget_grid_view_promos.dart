@@ -8,12 +8,12 @@ class WidgetGridViewPromos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 220,
+      height: 260,
       child: GridView.builder(
         padding: EdgeInsets.symmetric(horizontal: paddings),
         scrollDirection: Axis.horizontal,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 1.2,
+          childAspectRatio: 1.4,
           mainAxisSpacing: 16,
           crossAxisCount: 1,
         ),

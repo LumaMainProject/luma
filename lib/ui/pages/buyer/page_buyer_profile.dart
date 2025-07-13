@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:luma/global/app_text_styles.dart';
+import 'package:luma/global/params/app_text_styles.dart';
 
 class PageBuyerProfile extends StatelessWidget {
   const PageBuyerProfile({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:luma/global/app_text_styles.dart';
+import 'package:luma/global/params/app_text_styles.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_purchase.dart';
 import 'package:luma/ui/widgets/widget_shop_cart_item.dart';
 

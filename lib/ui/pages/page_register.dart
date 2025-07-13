@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:luma/global/app_icons.dart';
+import 'package:luma/global/params/app_icons.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_homepage.dart';
 import 'package:luma/ui/pages/seller/page_seller_homepage.dart';
 

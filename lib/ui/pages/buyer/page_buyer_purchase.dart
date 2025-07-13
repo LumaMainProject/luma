@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:luma/global/app_icons.dart';
-import 'package:luma/global/app_text_styles.dart';
+import 'package:luma/global/params/app_icons.dart';
+import 'package:luma/global/params/app_text_styles.dart';
 
 class PageBuyerPurchase extends StatelessWidget {
   const PageBuyerPurchase({super.key});

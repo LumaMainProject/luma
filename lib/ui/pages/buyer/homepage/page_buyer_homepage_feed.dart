@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:luma/global/app_icons.dart';
-import 'package:luma/global/app_images.dart';
+import 'package:luma/global/params/app_icons.dart';
+import 'package:luma/global/params/app_images.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_item_card.dart';
 import 'package:luma/ui/widgets/widget_store.dart';
 

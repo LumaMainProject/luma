@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:luma/global/app_text_styles.dart';
+import 'package:luma/global/params/app_text_styles.dart';
 
 class WidgetSellerNotification extends StatelessWidget {
   const WidgetSellerNotification({super.key});

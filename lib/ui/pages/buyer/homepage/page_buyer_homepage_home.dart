@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:luma/global/app_icons.dart';
+import 'package:luma/global/params/app_icons.dart';
 import 'package:luma/ui/widgets/widger_carousel_view.dart';
 import 'package:luma/ui/widgets/widget_grid_view_promos.dart';
 import 'package:luma/ui/widgets/widget_grid_view_suggested.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:luma/global/app_icons.dart';
+import 'package:luma/global/params/app_icons.dart';
 
 class PageBuyerNotifications extends StatelessWidget {
   const PageBuyerNotifications({super.key});
