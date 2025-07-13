@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:luma/global/classes/object_item.dart';
 import 'package:luma/ui/widgets/widget_item_card.dart';
 
 class WidgetCarouselView extends StatelessWidget {
-  const WidgetCarouselView({super.key});
+  final List<ObjectItem> itemList;
+  const WidgetCarouselView({super.key, required this.itemList});
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +22,10 @@ class WidgetCarouselView extends StatelessWidget {
         enableSplash: false,
         controller: carouselController,
         flexWeights: [1, 3, 2, 1],
-        children: const [
-          WidgetItemCard(),
-          WidgetItemCard(),
-          WidgetItemCard(),
-          WidgetItemCard(),
-          WidgetItemCard(),
-          WidgetItemCard(),
-          WidgetItemCard(),
-          WidgetItemCard(),
-        ],
+        children: List.generate(
+          itemList.length,
+          (index) => WidgetItemCard(item: itemList[index]),
+        ),
       ),
     );
   }

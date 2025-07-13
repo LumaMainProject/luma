@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:luma/global/params/app_text_styles.dart';
+import 'package:luma/global/saves/saves.dart';
 import 'package:luma/ui/widgets/widget_grid_view_promos.dart';
 import 'package:luma/ui/widgets/widget_grid_view_suggested.dart';
 
@@ -145,7 +146,7 @@ class PageSellerHomepageStoreSliver extends StatelessWidget {
               children: [
                 Text("Promos", style: AppTextStyles.title),
                 SizedBox(height: 16),
-                WidgetGridViewPromos(),
+                WidgetGridViewPromos(itemList: SaveLists.itemList),
               ],
             ),
           ),
@@ -158,7 +159,7 @@ class PageSellerHomepageStoreSliver extends StatelessWidget {
             child: Column(
               children: [
                 Text("All", style: AppTextStyles.title),
-                WidgetGridViewSuggested(),
+                WidgetGridViewSuggested(itemList: SaveLists.itemList),
               ],
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:luma/global/params/app_icons.dart';
+import 'package:luma/global/saves/saves.dart';
 import 'package:luma/ui/widgets/widger_carousel_view.dart';
 import 'package:luma/ui/widgets/widget_grid_view_promos.dart';
 import 'package:luma/ui/widgets/widget_grid_view_suggested.dart';
@@ -21,14 +22,14 @@ class PageBuyerHomepageHome extends StatelessWidget {
         ),
       ),
 
-      WidgetGridViewPromos(paddings: 16),
+      WidgetGridViewPromos(paddings: 16, itemList: SaveLists.itemList,),
 
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Text("New Arrivals", style: TextStyle(fontSize: 18)),
       ),
 
-      debug == true ? Placeholder() : WidgetCarouselView(),
+      debug == true ? Placeholder() : WidgetCarouselView(itemList: SaveLists.itemList),
 
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -37,14 +38,14 @@ class PageBuyerHomepageHome extends StatelessWidget {
 
       Padding(
         padding: const EdgeInsets.all(16),
-        child: WidgetGridViewSuggested(),
+        child: WidgetGridViewSuggested(itemList: SaveLists.itemList),
       ),
     ];
 
     return ListView.separated(
       itemBuilder: (context, index) => items[index],
       separatorBuilder: (context, index) => const SizedBox(height: 16),
-      itemCount: items.length,
+      itemCount: 5,
     );
   }
 }

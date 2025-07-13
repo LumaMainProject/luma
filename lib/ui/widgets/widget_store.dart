@@ -1,17 +1,14 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:luma/global/classes/object_shop.dart';
 import 'package:luma/global/params/app_icons.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_shop_page.dart';
 
 class WidgetStore extends StatelessWidget {
+  final ObjectShop store;
   final double blurLevel;
-  final String storeName;
-  const WidgetStore({
-    super.key,
-    this.blurLevel = 0,
-    this.storeName = "Default Store Name",
-  });
+  const WidgetStore({super.key, this.blurLevel = 0, required this.store});
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +18,12 @@ class WidgetStore extends StatelessWidget {
         filter: ImageFilter.blur(sigmaX: blurLevel, sigmaY: blurLevel),
         child: ListTile(
           leading: const Icon(AppIcons.account),
-          title: Text(storeName),
+          title: Text(store.shopName),
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const PageBuyerShopPage(),
+                builder: (context) => PageBuyerShopPage(shop: store),
               ),
             );
           },

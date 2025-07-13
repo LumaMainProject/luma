@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:luma/global/classes/object_item.dart';
+import 'package:luma/ui/pages/buyer/page_buyer_shop_page.dart';
 
 class WidgetItemCard extends StatelessWidget {
-  const WidgetItemCard({super.key});
+  final ObjectItem item;
+  const WidgetItemCard({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,14 @@ class WidgetItemCard extends StatelessWidget {
               borderRadius: BorderRadiusDirectional.circular(16),
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PageBuyerShopPage(shop: item.shop),
+              ),
+            );
+          },
           child: Column(
             children: [
               Expanded(
@@ -26,8 +36,8 @@ class WidgetItemCard extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16),
-              Text("Name"),
-              Text("Price"),
+              Text(item.itemName),
+              Text(item.price.toString()),
               SizedBox(height: 16),
             ],
           ),

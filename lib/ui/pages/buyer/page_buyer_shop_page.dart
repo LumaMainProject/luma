@@ -1,19 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:luma/global/classes/object_item.dart';
+import 'package:luma/global/classes/object_shop.dart';
 import 'package:luma/global/params/app_text_styles.dart';
+import 'package:luma/global/saves/saves.dart';
 import 'package:luma/ui/widgets/widget_grid_view_promos.dart';
 import 'package:luma/ui/widgets/widget_grid_view_suggested.dart';
 
 class PageBuyerShopPage extends StatelessWidget {
-  const PageBuyerShopPage({super.key});
+  final ObjectShop shop;
+  const PageBuyerShopPage({super.key, required this.shop});
 
   @override
   Widget build(BuildContext context) {
+    List<ObjectItem> items = [];
+
+    for (ObjectItem element in SaveLists.itemList) {
+      if(element.shop == shop) items.add(element);
+    }
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             expandedHeight: 300,
-            flexibleSpace: Container(color: Colors.amber,),
+            flexibleSpace: Container(color: Colors.amber),
           ),
 
           // REVIEWS AND FOLOWERS
@@ -22,7 +32,7 @@ class PageBuyerShopPage extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Text("Shop Name", style: AppTextStyles.title),
+                  Text(shop.shopName, style: AppTextStyles.title),
                   Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,13 +40,20 @@ class PageBuyerShopPage extends StatelessWidget {
                       Text("Reviews", style: AppTextStyles.title2),
                       SizedBox(
                         child: Row(
-                          children: [
-                            Icon(Icons.star),
-                            Icon(Icons.star),
-                            Icon(Icons.star),
-                            Icon(Icons.star),
-                            Icon(Icons.star),
-                          ],
+                          children: List.generate(5, (index) {
+                            return shop.rating == null
+                                ? Text("No rating")
+                                : shop.rating! >= index + 1
+                                ? Icon(Icons.star)
+                                : Icon(Icons.star_border);
+                          }),
+                          // children: [
+                          //   Icon(Icons.star),
+                          //   Icon(Icons.star),
+                          //   Icon(Icons.star),
+                          //   Icon(Icons.star),
+                          //   Icon(Icons.star),
+                          // ],
                         ),
                       ),
                     ],
@@ -46,7 +63,10 @@ class PageBuyerShopPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Followers", style: AppTextStyles.title2),
-                      Text("3406", style: AppTextStyles.title2),
+                      Text(
+                        shop.followers.toString(),
+                        style: AppTextStyles.title2,
+                      ),
                     ],
                   ),
                 ],
@@ -62,7 +82,7 @@ class PageBuyerShopPage extends StatelessWidget {
                 children: [
                   Text("Best Seller", style: AppTextStyles.title),
                   SizedBox(height: 16),
-                  Placeholder(),
+                  WidgetGridViewPromos(itemList: items),
                 ],
               ),
             ),
@@ -76,7 +96,7 @@ class PageBuyerShopPage extends StatelessWidget {
                 children: [
                   Text("Promos", style: AppTextStyles.title),
                   SizedBox(height: 16),
-                  WidgetGridViewPromos(),
+                  WidgetGridViewPromos(itemList: SaveLists.itemList),
                 ],
               ),
             ),
@@ -89,7 +109,7 @@ class PageBuyerShopPage extends StatelessWidget {
               child: Column(
                 children: [
                   Text("All", style: AppTextStyles.title),
-                  WidgetGridViewSuggested(),
+                  WidgetGridViewSuggested(itemList: SaveLists.itemList),
                 ],
               ),
             ),

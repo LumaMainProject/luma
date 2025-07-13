@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:luma/global/classes/object_item.dart';
 import 'package:luma/global/params/app_text_styles.dart';
 import 'package:luma/ui/widgets/widget_store.dart';
 
 class WidgetShopCartItem extends StatelessWidget {
-  const WidgetShopCartItem({super.key});
+  final ObjectItem item;
+  const WidgetShopCartItem({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class WidgetShopCartItem extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          WidgetStore(),
+          WidgetStore(store: item.shop,),
 
           Row(
             mainAxisSize: MainAxisSize.max,
@@ -32,28 +34,28 @@ class WidgetShopCartItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Brand", style: AppTextStyles.title2),
-                        Text("Adidas", style: AppTextStyles.title2),
+                        Text(item.brand, style: AppTextStyles.title2),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Price", style: AppTextStyles.title2),
-                        Text("299", style: AppTextStyles.title2),
+                        Text(item.price.toString(), style: AppTextStyles.title2),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Size", style: AppTextStyles.title2),
-                        Text("23", style: AppTextStyles.title2),
+                        Text(item.size, style: AppTextStyles.title2),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Quantity", style: AppTextStyles.title2),
-                        Text("111", style: AppTextStyles.title2),
+                        Text(item.quantity.toString(), style: AppTextStyles.title2),
                       ],
                     ),
                   ],
@@ -64,7 +66,7 @@ class WidgetShopCartItem extends StatelessWidget {
 
           Align(
             alignment: Alignment.centerRight,
-            child: Text("Final Price", style: AppTextStyles.title),
+            child: Text(item.price.toString(), style: AppTextStyles.title),
           ),
         ],
       ),

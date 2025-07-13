@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:luma/global/params/app_text_styles.dart';
+import 'package:luma/global/saves/saves.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_purchase.dart';
 import 'package:luma/ui/widgets/widget_shop_cart_item.dart';
 
@@ -12,10 +13,10 @@ class PageBuyerHomepageCart extends StatelessWidget {
       children: [
         ListView.separated(
           itemBuilder: (context, index) {
-            return WidgetShopCartItem();
+            return WidgetShopCartItem(item: SaveLists.itemList[index]);
           },
           separatorBuilder: (context, index) => const SizedBox(height: 16),
-          itemCount: 10,
+          itemCount: SaveLists.itemList.length,
         ),
 
         Align(

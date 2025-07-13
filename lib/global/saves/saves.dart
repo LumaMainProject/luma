@@ -2,23 +2,62 @@ import 'package:luma/global/classes/object_item.dart';
 import 'package:luma/global/classes/object_shop.dart';
 import 'package:luma/global/params/app_images.dart';
 
+abstract class SaveLists{
+  static final List<ObjectItem> itemList = [
+    SaveItem.adidas_1,
+    SaveItem.adidas_2,
+    SaveItem.adidas_3,
+    SaveItem.balenciaga_1,
+    SaveItem.balenciaga_2,
+    SaveItem.balenciaga_3,
+    SaveItem.balenciaga_4,
+    SaveItem.prada_1,
+    SaveItem.prada_2,
+    SaveItem.prada_3,
+    SaveItem.prada_4,
+  ];
+}
+
 abstract class SaveShop {
   static final ObjectShop adidas = ObjectShop(
     shopName: "Adidas",
     icon: AppImages.adidasImage,
     header: AppImages.adidasLogo,
+    followers: 13000,
+    rating: 4,
+    // items: [
+    //   SaveItem.adidas_1,
+    //   SaveItem.adidas_2,
+    //   SaveItem.adidas_3,
+    // ]
   );
 
   static final ObjectShop prada = ObjectShop(
     shopName: "Prada",
     icon: AppImages.pradaImage,
     header: AppImages.pradaLogo,
+    followers: 28000,
+    rating: 5,
+    // items: [
+    //   SaveItem.prada_1,
+    //   SaveItem.prada_2,
+    //   SaveItem.prada_3,
+    //   SaveItem.prada_4,
+    // ]
   );
 
   static final ObjectShop balenciaga = ObjectShop(
     shopName: "Balenciaga",
     icon: AppImages.balenciagaImage,
     header: AppImages.balenciagaLogo,
+    followers: 33000,
+    rating: 3,
+    // items: [
+    //   SaveItem.balenciaga_1,
+    //   SaveItem.balenciaga_2,
+    //   SaveItem.balenciaga_3,
+    //   SaveItem.balenciaga_4,
+    // ]
   );
 }
 

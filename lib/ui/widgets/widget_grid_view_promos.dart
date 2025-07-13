@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:luma/global/classes/object_item.dart';
 import 'package:luma/ui/widgets/widget_item_card.dart';
 
 class WidgetGridViewPromos extends StatelessWidget {
+  final List<ObjectItem> itemList;
   final double paddings;
-  const WidgetGridViewPromos({super.key, this.paddings = 0});
+  const WidgetGridViewPromos({super.key, this.paddings = 0, required this.itemList});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +19,8 @@ class WidgetGridViewPromos extends StatelessWidget {
           mainAxisSpacing: 16,
           crossAxisCount: 1,
         ),
-        itemBuilder: (context, index) => WidgetItemCard(),
-        itemCount: 10,
+        itemBuilder: (context, index) => WidgetItemCard(item: itemList[index],),
+        itemCount: itemList.length,
       ),
     );
   }

@@ -5,9 +5,9 @@ abstract class AppImages {
 
   static final adidasLogo = AssetImage('assets/images/adidas_image.png');
   static final balenciagaLogo = AssetImage(
-    'assets/images/balenciaga_image.png',
+    'assets/images/balenciaga_image.jpg',
   );
-  static final pradaLogo = AssetImage('assets/images/prada_image.png');
+  static final pradaLogo = AssetImage('assets/images/prada_logo.webp');
 
   // LOGOS FOR SHOP
 
@@ -17,7 +17,7 @@ abstract class AppImages {
   );
   static final pradaImage = AssetImage('assets/images/prada_logo.webp');
 
-  // ITEM ADIDAS 1
+  // ITEM ADIDAS 1 
 
   static final adidasItem_1_1 = AssetImage(
     'assets/images/adidas_items/53178-full_product.webp',

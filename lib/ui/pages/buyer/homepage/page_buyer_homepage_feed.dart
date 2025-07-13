@@ -1,16 +1,14 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:luma/global/params/app_icons.dart';
-import 'package:luma/global/params/app_images.dart';
-import 'package:luma/ui/pages/buyer/page_buyer_item_card.dart';
-import 'package:luma/ui/widgets/widget_store.dart';
+import 'package:luma/global/classes/object_item.dart';
+import 'package:luma/global/saves/saves.dart';
+import 'package:luma/ui/widgets/widget_feed_container.dart';
 
 class PageBuyerHomepageFeed extends StatelessWidget {
   const PageBuyerHomepageFeed({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<ObjectItem> list = SaveLists.itemList;
     CarouselController carouselController = CarouselController();
     return CarouselView.weighted(
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -24,73 +22,10 @@ class PageBuyerHomepageFeed extends StatelessWidget {
       itemSnapping: true,
       enableSplash: false,
 
-      children: [
-        WidgetFeedContainer(image: AppImages.adidasLogo),
-        WidgetFeedContainer(image: AppImages.adidasLogo),
-        WidgetFeedContainer(image: AppImages.adidasLogo),
-        WidgetFeedContainer(image: AppImages.adidasLogo),
-        WidgetFeedContainer(image: AppImages.adidasLogo),
-        WidgetFeedContainer(image: AppImages.adidasLogo),
-        WidgetFeedContainer(image: AppImages.adidasLogo),
-        SizedBox(height: 64),
-      ],
-    );
-  }
-}
-
-class WidgetFeedContainer extends StatelessWidget {
-  final ImageProvider image;
-  const WidgetFeedContainer({super.key, required this.image});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.amber,
-        border: BoxBorder.all(),
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-      ),
-      child: Stack(
-        children: [
-          // VIDEO
-          SizedBox(
-            child: Center(child: Image(image: image)),
-          ),
-
-          // ITEM
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: ClipRRect(
-              borderRadius: BorderRadiusGeometry.all(Radius.circular(16)),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadiusGeometry.all(Radius.circular(16)),
-                  ),
-                  leading: Icon(AppIcons.account),
-                  title: Text("Title text"),
-                  subtitle: Text("Second text"),
-                  trailing: Icon(AppIcons.shopCart),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PageBuyerItemCard(),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-          ),
-
-          // STORE
-          Align(
-            alignment: Alignment.topCenter,
-            child: WidgetStore(blurLevel: 5),
-          ),
-        ],
+      children: List.generate(
+        list.length,
+        (index) =>
+            WidgetFeedContainer(shop: list[index].shop, item: list[index]),
       ),
     );
   }
