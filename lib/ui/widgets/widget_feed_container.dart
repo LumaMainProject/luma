@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:luma/global/classes/object_item.dart';
 import 'package:luma/global/classes/object_shop.dart';
@@ -32,22 +34,33 @@ class WidgetFeedContainer extends StatelessWidget {
           // ITEM
           Align(
             alignment: Alignment.bottomCenter,
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadiusGeometry.all(Radius.circular(16)),
-              ),
-              leading: Icon(AppIcons.account),
-              title: Text(item.itemName),
-              subtitle: Text(item.brand),
-              trailing: Text(item.price.toString()),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PageBuyerItemCard(item: item),
+            child: ClipRRect(
+              borderRadius: BorderRadiusGeometry.all(Radius.circular(16)),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(
+                  sigmaX: 5, sigmaY: 5
+                ),
+                child: Container(
+                  color: Colors.black12,
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.all(Radius.circular(16)),
+                    ),
+                    leading: Icon(AppIcons.account),
+                    title: Text(item.itemName),
+                    subtitle: Text(item.brand),
+                    trailing: Text(item.price.toString()),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PageBuyerItemCard(item: item),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+              ),
             ),
           ),
 

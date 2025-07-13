@@ -16,17 +16,20 @@ class WidgetStore extends StatelessWidget {
       borderRadius: const BorderRadiusGeometry.all(Radius.circular(16)),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: blurLevel, sigmaY: blurLevel),
-        child: ListTile(
-          leading: const Icon(AppIcons.account),
-          title: Text(store.shopName),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PageBuyerShopPage(shop: store),
-              ),
-            );
-          },
+        child: Container(
+          color: Colors.black12,
+          child: ListTile(
+            leading: const Icon(AppIcons.account),
+            title: Text(store.shopName),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PageBuyerShopPage(shop: store),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

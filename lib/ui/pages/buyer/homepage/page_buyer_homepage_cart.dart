@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:luma/global/classes/object_item.dart';
 import 'package:luma/global/params/app_text_styles.dart';
 import 'package:luma/global/saves/saves.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_purchase.dart';
@@ -9,14 +10,18 @@ class PageBuyerHomepageCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // SHUFFLE
+    List<ObjectItem> items = SaveLists.itemList;
+    items.shuffle();
+
     return Stack(
       children: [
         ListView.separated(
           itemBuilder: (context, index) {
-            return WidgetShopCartItem(item: SaveLists.itemList[index]);
+            return WidgetShopCartItem(item: items[index]);
           },
           separatorBuilder: (context, index) => const SizedBox(height: 16),
-          itemCount: SaveLists.itemList.length,
+          itemCount: items.length,
         ),
 
         Align(

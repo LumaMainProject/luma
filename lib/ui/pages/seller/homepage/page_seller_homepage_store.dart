@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:luma/global/classes/object_item.dart';
+import 'package:luma/global/classes/object_shop.dart';
 import 'package:luma/global/params/app_text_styles.dart';
 import 'package:luma/global/saves/saves.dart';
 import 'package:luma/ui/widgets/widget_grid_view_promos.dart';
 import 'package:luma/ui/widgets/widget_grid_view_suggested.dart';
 
 class PageSellerHomepageStore extends StatelessWidget {
-  const PageSellerHomepageStore({super.key});
+  final ObjectShop shop;
+  const PageSellerHomepageStore({super.key, required this.shop});
 
   @override
   Widget build(BuildContext context) {
+
+
     return Stack(
       children: [
-        PageSellerHomepageStoreSliver(),
+        PageSellerHomepageStoreSliver(shop: shop,),
         PageSellerHomepageStoreEditAndAdd(),
       ],
     );
@@ -32,18 +37,16 @@ class PageSellerHomepageStoreEditAndAdd extends StatelessWidget {
           FilledButton(
             onPressed: () {},
             style: FilledButton.styleFrom(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.only(
-                topLeft: Radius.circular(16),
-                bottomLeft: Radius.circular(16),
-                topRight: Radius.circular(4),
-                bottomRight: Radius.circular(4),
-              ))
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusGeometry.only(
+                  topLeft: Radius.circular(16),
+                  bottomLeft: Radius.circular(16),
+                  topRight: Radius.circular(4),
+                  bottomRight: Radius.circular(4),
+                ),
+              ),
             ),
-            child: Row(
-              children: [
-                Text("Edit", style: AppTextStyles.title2),
-              ],
-            ),
+            child: Row(children: [Text("Edit", style: AppTextStyles.title2)]),
           ),
 
           SizedBox(width: 4),
@@ -51,18 +54,16 @@ class PageSellerHomepageStoreEditAndAdd extends StatelessWidget {
           FilledButton(
             onPressed: () {},
             style: FilledButton.styleFrom(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.only(
-                topLeft: Radius.circular(4),
-                bottomLeft: Radius.circular(4),
-                topRight: Radius.circular(16),
-                bottomRight: Radius.circular(16),
-              ))
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusGeometry.only(
+                  topLeft: Radius.circular(4),
+                  bottomLeft: Radius.circular(4),
+                  topRight: Radius.circular(16),
+                  bottomRight: Radius.circular(16),
+                ),
+              ),
             ),
-            child: Row(
-              children: [
-                Text("Add", style: AppTextStyles.title2),
-              ],
-            ),
+            child: Row(children: [Text("Add", style: AppTextStyles.title2)]),
           ),
         ],
       ),
@@ -71,19 +72,25 @@ class PageSellerHomepageStoreEditAndAdd extends StatelessWidget {
 }
 
 class PageSellerHomepageStoreSliver extends StatelessWidget {
-  const PageSellerHomepageStoreSliver({super.key});
+  final ObjectShop shop;
+  const PageSellerHomepageStoreSliver({super.key, required this.shop});
 
   @override
   Widget build(BuildContext context) {
+    List<ObjectItem> items = [];
+
+    for (ObjectItem element in SaveLists.itemList) {
+      if (element.shop == shop) items.add(element);
+    }
+
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          leading: SizedBox(),
-          actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.edit_outlined)),
-          ],
-          expandedHeight: 300,
-          flexibleSpace: Container(color: Colors.amber),
+          expandedHeight: 200,
+          flexibleSpace: Container(
+            color: Colors.amber,
+            child: Image(fit: BoxFit.cover, image: shop.header, height: 300),
+          ),
         ),
 
         // REVIEWS AND FOLOWERS
@@ -92,7 +99,7 @@ class PageSellerHomepageStoreSliver extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
-                Text("Shop Name", style: AppTextStyles.title),
+                Text(shop.shopName, style: AppTextStyles.title),
                 Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,13 +107,13 @@ class PageSellerHomepageStoreSliver extends StatelessWidget {
                     Text("Reviews", style: AppTextStyles.title2),
                     SizedBox(
                       child: Row(
-                        children: [
-                          Icon(Icons.star),
-                          Icon(Icons.star),
-                          Icon(Icons.star),
-                          Icon(Icons.star),
-                          Icon(Icons.star),
-                        ],
+                        children: List.generate(5, (index) {
+                          return shop.rating == null
+                              ? Text("No rating")
+                              : shop.rating! >= index + 1
+                              ? Icon(Icons.star)
+                              : Icon(Icons.star_border);
+                        }),
                       ),
                     ),
                   ],
@@ -116,7 +123,10 @@ class PageSellerHomepageStoreSliver extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Followers", style: AppTextStyles.title2),
-                    Text("3406", style: AppTextStyles.title2),
+                    Text(
+                      shop.followers.toString(),
+                      style: AppTextStyles.title2,
+                    ),
                   ],
                 ),
               ],
@@ -132,7 +142,7 @@ class PageSellerHomepageStoreSliver extends StatelessWidget {
               children: [
                 Text("Best Seller", style: AppTextStyles.title),
                 SizedBox(height: 16),
-                Placeholder(),
+                WidgetGridViewPromos(itemList: items),
               ],
             ),
           ),

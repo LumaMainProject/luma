@@ -9,8 +9,9 @@ class WidgetGridViewPromos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // SHUFFLE
-    itemList.shuffle();
+        // SHUFFLE
+    List<ObjectItem> items = itemList;
+    items.shuffle();
 
     return SizedBox(
       height: 260,

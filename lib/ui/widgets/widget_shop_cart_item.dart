@@ -17,12 +17,17 @@ class WidgetShopCartItem extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          WidgetStore(store: item.shop,),
+          WidgetStore(store: item.shop),
 
           Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Container(color: Colors.amber, height: 120, width: 120),
+              Container(
+                color: Colors.amber,
+                height: 120,
+                width: 120,
+                child: Image(fit: BoxFit.fill, image: item.images[0]),
+              ),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -41,7 +46,10 @@ class WidgetShopCartItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Price", style: AppTextStyles.title2),
-                        Text(item.price.toString(), style: AppTextStyles.title2),
+                        Text(
+                          item.price.toString(),
+                          style: AppTextStyles.title2,
+                        ),
                       ],
                     ),
                     Row(
@@ -55,7 +63,10 @@ class WidgetShopCartItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Quantity", style: AppTextStyles.title2),
-                        Text(item.quantity.toString(), style: AppTextStyles.title2),
+                        Text(
+                          item.quantity.toString(),
+                          style: AppTextStyles.title2,
+                        ),
                       ],
                     ),
                   ],

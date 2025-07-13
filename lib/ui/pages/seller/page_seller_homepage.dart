@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:luma/global/params/app_icons.dart';
+import 'package:luma/global/saves/saves.dart';
 import 'package:luma/ui/pages/seller/homepage/page_seller_homepage_billing.dart';
 import 'package:luma/ui/pages/seller/homepage/page_seller_homepage_home.dart';
 import 'package:luma/ui/pages/seller/homepage/page_seller_homepage_settings.dart';
@@ -30,7 +31,7 @@ class _PageSellerHomepageState extends State<PageSellerHomepage>
     );
 
     final List<Widget> pages = [
-      PageSellerHomepageStore(),
+      PageSellerHomepageStore(shop: SaveShop.adidas,),
       PageSellerHomepageHome(),
       PageSellerHomepageBilling(),
       PageSellerHomepageSettings(),
