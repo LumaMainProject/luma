@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:luma/global/params/app_icons.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_homepage.dart';
 import 'package:luma/ui/pages/seller/page_seller_homepage.dart';
 
@@ -67,11 +66,11 @@ class _PageRegisterState extends State<PageRegister> {
       ),
 
       Divider(),
-      Row(
-        children: [
-          IconButton(onPressed: () {}, icon: Icon(AppIcons.googleIcon)),
-        ],
-      ),
+      // Row(
+      //   children: [
+      //     IconButton(onPressed: () {}, icon: Icon(AppIcons.googleIcon)),
+      //   ],
+      // ),
     ];
 
     return Scaffold(

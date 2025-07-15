@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:luma/domain/bloc/buyer_account_bloc.dart';
 import 'package:luma/global/classes/object_item.dart';
 import 'package:luma/global/params/app_colors.dart';
-import 'package:luma/global/params/app_icons.dart';
 import 'package:luma/global/params/app_text_styles.dart';
 import 'package:luma/global/saves/saves.dart';
 import 'package:luma/ui/widgets/widget_grid_view_promos.dart';
@@ -20,6 +21,8 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
   bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
+    final ObjectItem item = widget.item;
+    final bloc = BlocProvider.of<BuyerAccountBloc>(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -34,9 +37,80 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
         //   ),
         // ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(AppIcons.shopCart),
+      floatingActionButton: BlocBuilder<BuyerAccountBloc, BuyerAccountState>(
+        builder: (context, state) {
+          if (state is! BuyerAccountLoaded) {
+            return const SizedBox();
+          }
+
+          if (state.actualOrders.contains(item)) {
+            return Container(
+              width: 140,
+              decoration: BoxDecoration(
+                color: AppColors.mainColor,
+                borderRadius: BorderRadiusDirectional.all(Radius.circular(16)),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton.filled(
+                    style: IconButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusDirectional.all(
+                          Radius.circular(16),
+                        ),
+                      ),
+                    ),
+                    icon: Icon(Icons.remove),
+                    onPressed: () {
+                      bloc.add(RemoveActualOrdersEvent(item: item));
+                      setState(() {});
+                    },
+                  ),
+                  const SizedBox(width: 16),
+                  Text(state.actualOrdersItemAmount(item).toString()),
+                  const SizedBox(width: 16),
+                  IconButton.filled(
+                    style: IconButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusDirectional.all(
+                          Radius.circular(16),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      bloc.add(AddActualOrdersEvent(item: item));
+                      setState(() {});
+                    },
+                    icon: Icon(Icons.add),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton.filled(
+                style: IconButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusDirectional.all(
+                      Radius.circular(16),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  bloc.add(AddActualOrdersEvent(item: item));
+                  setState(() {});
+                },
+                icon: Icon(Icons.add),
+              ),
+            ],
+          );
+        },
       ),
       body: CustomScrollView(
         slivers: [
@@ -54,16 +128,13 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
                 controller: carouselController,
                 flexWeights: [1],
                 children: List.generate(
-                  widget.item.images.length,
+                  item.images.length,
                   (index) => ClipRRect(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(16),
                       bottomRight: Radius.circular(16),
                     ),
-                    child: Image(
-                      fit: BoxFit.fill,
-                      image: widget.item.images[index],
-                    ),
+                    child: Image(fit: BoxFit.fill, image: item.images[index]),
                   ),
                 ),
               ),
@@ -82,7 +153,7 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
                   children: [
                     Row(
                       children: [
-                        Text(widget.item.itemName, style: AppTextStyles.title),
+                        Text(item.itemName, style: AppTextStyles.title),
                         const Spacer(),
                         IconButton(
                           onPressed: () {
@@ -103,13 +174,13 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
                     ),
                     const Divider(),
 
-                    WidgetStore(store: widget.item.shop),
+                    WidgetStore(store: item.shop),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Brand", style: AppTextStyles.title2),
-                        Text(widget.item.brand, style: AppTextStyles.title2),
+                        Text(item.brand, style: AppTextStyles.title2),
                       ],
                     ),
                     Row(
@@ -117,7 +188,7 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
                       children: [
                         Text("Price", style: AppTextStyles.title2),
                         Text(
-                          widget.item.price.toString(),
+                          item.price.toString(),
                           style: AppTextStyles.title2,
                         ),
                       ],
@@ -126,7 +197,7 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Size", style: AppTextStyles.title2),
-                        Text(widget.item.size, style: AppTextStyles.title2),
+                        Text(item.size, style: AppTextStyles.title2),
                       ],
                     ),
                     Row(
@@ -134,7 +205,7 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
                       children: [
                         Text("Quantity", style: AppTextStyles.title2),
                         Text(
-                          widget.item.quantity.toString(),
+                          item.quantity.toString(),
                           style: AppTextStyles.title2,
                         ),
                       ],
