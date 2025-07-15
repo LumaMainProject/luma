@@ -1,7 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:luma/domain/manager_bloc/manager_bloc.dart';
 import 'package:luma/global/params/app_icons.dart';
+import 'package:luma/global/params/app_images.dart';
 import 'package:luma/global/params/app_text_styles.dart';
 import 'package:luma/ui/pages/buyer/homepage/page_buyer_homepage_cart.dart';
 import 'package:luma/ui/pages/buyer/homepage/page_buyer_homepage_feed.dart';
@@ -28,16 +31,33 @@ class _PageBuyerHomepageState extends State<PageBuyerHomepage>
     PageBuyerHomepageSettings(),
   ];
 
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(
+      length: 4,
+      vsync: this,
+      initialIndex: widget.pageIndex,
+    );
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final bool isTransparent = false;
 
-    TabController tabController = TabController(
-      length: 4,
-      vsync: this,
-      initialIndex: widget.pageIndex,
-    );
+    final bloc = BlocProvider.of<ManagerBloc>(context);
+
+    _tabController.addListener(() {
+      bloc.add(ManagerPageChangeEvent(currentPage: _tabController.index));
+    });
 
     return Scaffold(
       extendBodyBehindAppBar: isTransparent,
@@ -55,8 +75,13 @@ class _PageBuyerHomepageState extends State<PageBuyerHomepage>
                 ),
               )
             : null,
-        title: Text("LUMA", style: AppTextStyles.description,),
-        leading: null,
+        title: const Text("LUMA", style: AppTextStyles.logo),
+        leading: Image(
+          image: AppImages.appLogo,
+          height: 50,
+          width: 50,
+          fit: BoxFit.cover,
+        ),
         actions: [
           // SEARCH
           IconButton.filledTonal(
@@ -107,7 +132,7 @@ class _PageBuyerHomepageState extends State<PageBuyerHomepage>
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
             child: TabBar(
-              controller: tabController,
+              controller: _tabController,
               tabs: const [
                 Tab(icon: Icon(Icons.article_outlined)),
                 Tab(icon: Icon(Icons.home_outlined)),
@@ -118,7 +143,11 @@ class _PageBuyerHomepageState extends State<PageBuyerHomepage>
           ),
         ),
       ),
-      body: TabBarView(controller: tabController, children: _pages),
+      body: TabBarView(
+        controller: _tabController,
+        physics: NeverScrollableScrollPhysics(),
+        children: _pages,
+      ),
     );
   }
 }

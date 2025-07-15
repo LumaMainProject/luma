@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:luma/domain/bloc/buyer_account_bloc.dart';
+import 'package:luma/domain/buyer_bloc/buyer_account_bloc.dart';
 import 'package:luma/global/classes/object_item.dart';
 import 'package:luma/global/params/app_colors.dart';
 import 'package:luma/global/params/app_text_styles.dart';

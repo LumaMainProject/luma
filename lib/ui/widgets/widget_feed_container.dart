@@ -1,17 +1,22 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:luma/domain/manager_bloc/manager_bloc.dart';
 import 'package:luma/global/classes/object_item.dart';
 import 'package:luma/global/classes/object_shop.dart';
-import 'package:luma/global/params/app_icons.dart';
+import 'package:luma/global/params/app_videos.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_item_card.dart';
 import 'package:luma/ui/widgets/widget_store.dart';
+import 'package:video_player/video_player.dart';
 
 class WidgetFeedContainer extends StatelessWidget {
+  final int page;
   final ObjectShop shop;
   final ObjectItem item;
   const WidgetFeedContainer({
     super.key,
+    required this.page,
     required this.shop,
     required this.item,
   });
@@ -21,15 +26,13 @@ class WidgetFeedContainer extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.amber,
-        border: BoxBorder.all(),
+        border: BoxBorder.all(color: Theme.of(context).hoverColor),
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
       child: Stack(
         children: [
           // VIDEO
-          SizedBox(
-            child: Center(child: Image(image: shop.header)),
-          ),
+          WidgetFeedVideoPlayer(page: page),
 
           // ITEM
           Align(
@@ -37,16 +40,26 @@ class WidgetFeedContainer extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadiusGeometry.all(Radius.circular(16)),
               child: BackdropFilter(
-                filter: ImageFilter.blur(
-                  sigmaX: 5, sigmaY: 5
-                ),
+                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                 child: Container(
                   color: Colors.black12,
                   child: ListTile(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadiusGeometry.all(Radius.circular(16)),
+                      borderRadius: BorderRadiusGeometry.all(
+                        Radius.circular(16),
+                      ),
                     ),
-                    leading: Icon(AppIcons.account),
+                    leading: ClipRRect(
+                      borderRadius: const BorderRadiusGeometry.all(
+                        Radius.circular(16),
+                      ),
+                      child: Image(
+                        fit: BoxFit.cover,
+                        image: item.images[0],
+                        height: 50,
+                        width: 50,
+                      ),
+                    ),
                     title: Text(item.itemName),
                     subtitle: Text(item.brand),
                     trailing: Text(item.price.toString()),
@@ -67,10 +80,68 @@ class WidgetFeedContainer extends StatelessWidget {
           //STORE
           Align(
             alignment: Alignment.topCenter,
-            child: WidgetStore(blurLevel: 5, store: shop,),
+            child: WidgetStore(blurLevel: 5, store: shop),
           ),
         ],
       ),
+    );
+  }
+}
+
+class WidgetFeedVideoPlayer extends StatefulWidget {
+  final int page;
+  const WidgetFeedVideoPlayer({super.key, required this.page});
+
+  @override
+  State<WidgetFeedVideoPlayer> createState() => _WidgetFeedVideoPlayerState();
+}
+
+class _WidgetFeedVideoPlayerState extends State<WidgetFeedVideoPlayer> {
+  late VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset(AppVideos.adidasVideo)
+      ..initialize().then((_) {
+        setState(() {});
+        _controller.play();
+        _controller.setLooping(true);
+      });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ManagerBloc, ManagerState>(
+      builder: (context, state) {
+        if (state is! ManagerLoaded) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        // if (state.currentPage == 0) {
+        //   _controller.play();
+        //   _controller.setLooping(true);
+        // }
+
+        if (state.currentPage != 0) {
+          _controller.pause();
+        }
+
+        return Center(
+          child: _controller.value.isInitialized
+              ? AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: VideoPlayer(_controller),
+                )
+              : const CircularProgressIndicator(),
+        );
+      },
     );
   }
 }

@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:luma/global/classes/object_shop.dart';
-import 'package:luma/global/params/app_icons.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_shop_page.dart';
 
 class WidgetStore extends StatelessWidget {
@@ -19,7 +18,10 @@ class WidgetStore extends StatelessWidget {
         child: Container(
           color: Colors.black12,
           child: ListTile(
-            leading: const Icon(AppIcons.account),
+            leading: ClipRRect(
+              borderRadius: const BorderRadiusGeometry.all(Radius.circular(16)),
+              child: Image(fit: BoxFit.cover, image: store.header, height: 50, width: 50,),
+            ),
             title: Text(store.shopName),
             onTap: () {
               Navigator.push(

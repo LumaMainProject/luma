@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:luma/domain/bloc/buyer_account_bloc.dart';
+import 'package:luma/domain/buyer_bloc/buyer_account_bloc.dart';
 import 'package:luma/global/classes/object_item.dart';
 import 'package:luma/global/params/app_text_styles.dart';
 import 'package:luma/global/saves/saves.dart';
@@ -35,10 +35,16 @@ class PageBuyerHomepageCart extends StatelessWidget {
           children: [
             ListView.separated(
               itemBuilder: (context, index) {
-                return WidgetShopCartItem(item: state.actualOrders[index]);
+                if (index == state.actualOrders.length) {
+                  return const SizedBox(height: 60);
+                }
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: WidgetShopCartItem(item: state.actualOrders[index]),
+                );
               },
-              separatorBuilder: (context, index) => const SizedBox(),
-              itemCount: state.actualOrders.length,
+              separatorBuilder: (context, index) => const SizedBox(height: 16),
+              itemCount: state.actualOrders.length + 1,
             ),
 
             WidgetBottomButton(),

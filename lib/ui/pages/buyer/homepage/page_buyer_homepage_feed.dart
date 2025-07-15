@@ -8,25 +8,52 @@ class PageBuyerHomepageFeed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //final CarouselController carouselController = CarouselController();
     List<ObjectItem> list = SaveLists.itemList;
-    CarouselController carouselController = CarouselController();
-    return CarouselView.weighted(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      controller: carouselController,
-      flexWeights: [1],
-      scrollDirection: Axis.vertical,
-      shape: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.zero),
-        borderSide: BorderSide.none,
-      ),
-      itemSnapping: true,
-      enableSplash: false,
+    //int _currentIndex = carouselController.initialItem;
 
-      children: List.generate(
-        list.length,
-        (index) =>
-            WidgetFeedContainer(shop: list[index].shop, item: list[index]),
-      ),
+    final PageController pageController = PageController();
+
+    return PageView.builder(
+      controller: pageController,
+      onPageChanged: (value) {
+        // int previousPage = _currentIndex;
+        // if (_currentIndex != 0)
+        //   previousPage--;
+        // else
+        //   previousPage = 2;
+      },
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: WidgetFeedContainer(
+            shop: list[index].shop,
+            item: list[index],
+            page: pageController.page?.toInt() ?? 0,
+          ),
+        );
+      },
+      itemCount: list.length,
+      scrollDirection: Axis.vertical,
     );
+
+    // return CarouselView.weighted(
+    //   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    //   controller: carouselController,
+    //   flexWeights: [1],
+    //   scrollDirection: Axis.vertical,
+    //   shape: OutlineInputBorder(
+    //     borderRadius: BorderRadius.all(Radius.zero),
+    //     borderSide: BorderSide.none,
+    //   ),
+    //   itemSnapping: true,
+    //   enableSplash: false,
+
+    //   children: List.generate(
+    //     list.length,
+    //     (index) =>
+    //         WidgetFeedContainer(shop: list[index].shop, item: list[index]),
+    //   ),
+    // );
   }
 }

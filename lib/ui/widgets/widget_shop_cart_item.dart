@@ -13,20 +13,26 @@ class WidgetShopCartItem extends StatelessWidget {
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadiusDirectional.all(Radius.circular(16)),
+        color: Theme.of(context).hoverColor,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           WidgetStore(store: item.shop),
 
+          SizedBox(height: 16),
+
           Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Container(
-                color: Colors.amber,
-                height: 120,
-                width: 120,
-                child: Image(fit: BoxFit.fill, image: item.images[0]),
+              ClipRRect(
+                borderRadius: BorderRadiusDirectional.all(Radius.circular(16)),
+                child: Container(
+                  color: Colors.amber,
+                  height: 120,
+                  width: 120,
+                  child: Image(fit: BoxFit.fill, image: item.images[0]),
+                ),
               ),
               const SizedBox(width: 16),
               Expanded(

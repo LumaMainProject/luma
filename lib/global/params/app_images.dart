@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 abstract class AppImages {
+  // APP LOGO
+  static final appLogo = AssetImage('assets/images/luma.png');
+
   // REGULAR LOGOS
 
   static final adidasLogo = AssetImage('assets/images/adidas_image.png');
