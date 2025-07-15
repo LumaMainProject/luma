@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:luma/global/params/app_icons.dart';
+import 'package:luma/global/params/app_text_styles.dart';
 import 'package:luma/ui/pages/buyer/homepage/page_buyer_homepage_cart.dart';
 import 'package:luma/ui/pages/buyer/homepage/page_buyer_homepage_feed.dart';
 import 'package:luma/ui/pages/buyer/homepage/page_buyer_homepage_home.dart';
@@ -54,7 +55,8 @@ class _PageBuyerHomepageState extends State<PageBuyerHomepage>
                 ),
               )
             : null,
-        leading: Icon(AppIcons.appLogo),
+        title: Text("LUMA", style: AppTextStyles.description,),
+        leading: null,
         actions: [
           // SEARCH
           IconButton.filledTonal(

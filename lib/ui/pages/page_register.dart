@@ -29,11 +29,12 @@ class _PageRegisterState extends State<PageRegister> {
         height: 56,
         child: FilledButton(
           onPressed: () {
-            Navigator.push(
+            Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
                 builder: (context) => const PageBuyerHomepage(),
               ),
+              (Route<dynamic> route) => false,
             );
           },
           style: FilledButton.styleFrom(
@@ -49,11 +50,12 @@ class _PageRegisterState extends State<PageRegister> {
         height: 56,
         child: FilledButton(
           onPressed: () {
-            Navigator.push(
+            Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
                 builder: (context) => const PageSellerHomepage(),
               ),
+              (Route<dynamic> route) => false,
             );
           },
           style: FilledButton.styleFrom(
