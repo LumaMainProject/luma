@@ -111,4 +111,14 @@ class BuyerAccountLoaded extends BuyerAccountState {
 
     return amount;
   }
+
+  double actualOrdersTotalPrice() {
+    double price = 0;
+
+    for (ObjectItem element in actualOrders) {
+      price += element.price;
+    }
+
+    return price;
+  }
 }
