@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luma/domain/manager_bloc/manager_bloc.dart';
 import 'package:luma/global/classes/object_item.dart';
 import 'package:luma/global/classes/object_shop.dart';
-import 'package:luma/global/params/app_videos.dart';
+import 'package:luma/global/params/app_colors.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_item_card.dart';
 import 'package:luma/ui/widgets/widget_store.dart';
 import 'package:video_player/video_player.dart';
@@ -25,14 +25,14 @@ class WidgetFeedContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.amber,
+        color: Colors.black,
         border: BoxBorder.all(color: Theme.of(context).hoverColor),
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
       child: Stack(
         children: [
           // VIDEO
-          WidgetFeedVideoPlayer(page: page),
+          WidgetFeedVideoPlayer(page: page, video: shop.video),
 
           // ITEM
           Align(
@@ -42,7 +42,7 @@ class WidgetFeedContainer extends StatelessWidget {
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                 child: Container(
-                  color: Colors.black12,
+                  color: AppColors.vanillaIce,
                   child: ListTile(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadiusGeometry.all(
@@ -90,7 +90,12 @@ class WidgetFeedContainer extends StatelessWidget {
 
 class WidgetFeedVideoPlayer extends StatefulWidget {
   final int page;
-  const WidgetFeedVideoPlayer({super.key, required this.page});
+  final String video;
+  const WidgetFeedVideoPlayer({
+    super.key,
+    required this.page,
+    required this.video,
+  });
 
   @override
   State<WidgetFeedVideoPlayer> createState() => _WidgetFeedVideoPlayerState();
@@ -102,7 +107,7 @@ class _WidgetFeedVideoPlayerState extends State<WidgetFeedVideoPlayer> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset(AppVideos.adidasVideo)
+    _controller = VideoPlayerController.asset(widget.video)
       ..initialize().then((_) {
         setState(() {});
         _controller.play();

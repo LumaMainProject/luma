@@ -8,11 +8,13 @@ class ObjectShop {
   final int? rating;
   final int followers;
   final List<ObjectItem>? items;
+  final String video;
 
   const ObjectShop({
     required this.shopName,
     required this.icon,
     required this.header,
+    required this.video,
     this.followers = 0,
     this.rating,
     this.items,

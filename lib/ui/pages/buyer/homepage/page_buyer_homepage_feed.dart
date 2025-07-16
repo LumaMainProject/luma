@@ -25,7 +25,7 @@ class PageBuyerHomepageFeed extends StatelessWidget {
       },
       itemBuilder: (context, index) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.all(16),
           child: WidgetFeedContainer(
             shop: list[index].shop,
             item: list[index],

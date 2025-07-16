@@ -1,8 +1,9 @@
 import 'package:luma/global/classes/object_item.dart';
 import 'package:luma/global/classes/object_shop.dart';
 import 'package:luma/global/params/app_images.dart';
+import 'package:luma/global/params/app_videos.dart';
 
-abstract class SaveLists{
+abstract class SaveLists {
   static final List<ObjectItem> itemList = [
     SaveItem.adidas_1,
     SaveItem.adidas_2,
@@ -25,6 +26,7 @@ abstract class SaveShop {
     header: AppImages.adidasLogo,
     followers: 13000,
     rating: 4,
+    video: AppVideos.adidasVideo,
     // items: [
     //   SaveItem.adidas_1,
     //   SaveItem.adidas_2,
@@ -38,6 +40,7 @@ abstract class SaveShop {
     header: AppImages.pradaLogo,
     followers: 28000,
     rating: 5,
+    video: AppVideos.pradaVideo,
     // items: [
     //   SaveItem.prada_1,
     //   SaveItem.prada_2,
@@ -52,6 +55,7 @@ abstract class SaveShop {
     header: AppImages.balenciagaLogo,
     followers: 33000,
     rating: 3,
+    video: AppVideos.balenciagaVideo,
     // items: [
     //   SaveItem.balenciaga_1,
     //   SaveItem.balenciaga_2,
@@ -132,10 +136,7 @@ abstract class SaveItem {
     itemName: "Prada Кросовки",
     desctiption: "Описание",
     size: "43",
-    images: [
-      AppImages.pradaItem_2_1,
-      AppImages.pradaItem_2_2,
-    ],
+    images: [AppImages.pradaItem_2_1, AppImages.pradaItem_2_2],
     shop: SaveShop.prada,
     brand: "Prada",
     price: 399000,
@@ -159,14 +160,11 @@ abstract class SaveItem {
     reviews: 4,
   );
 
-    static final ObjectItem prada_4 = ObjectItem(
+  static final ObjectItem prada_4 = ObjectItem(
     itemName: "Prada Кросовки",
     desctiption: "Описание",
     size: "43",
-    images: [
-      AppImages.pradaItem_4_1,
-      AppImages.pradaItem_4_2,
-    ],
+    images: [AppImages.pradaItem_4_1, AppImages.pradaItem_4_2],
     shop: SaveShop.prada,
     brand: "Prada",
     price: 399000,
@@ -195,10 +193,7 @@ abstract class SaveItem {
     itemName: "Balenciaga Кросовки",
     desctiption: "Описание",
     size: "43",
-    images: [
-      AppImages.balenciagaItem_2_1,
-      AppImages.balenciagaItem_2_2,
-    ],
+    images: [AppImages.balenciagaItem_2_1, AppImages.balenciagaItem_2_2],
     shop: SaveShop.balenciaga,
     brand: "Balenciaga",
     price: 399000,
@@ -210,10 +205,7 @@ abstract class SaveItem {
     itemName: "Balenciaga Кросовки",
     desctiption: "Описание",
     size: "43",
-    images: [
-      AppImages.balenciagaItem_3_1,
-      AppImages.balenciagaItem_3_2,
-    ],
+    images: [AppImages.balenciagaItem_3_1, AppImages.balenciagaItem_3_2],
     shop: SaveShop.balenciaga,
     brand: "Balenciaga",
     price: 399000,
@@ -221,7 +213,7 @@ abstract class SaveItem {
     reviews: 4,
   );
 
-    static final ObjectItem balenciaga_4 = ObjectItem(
+  static final ObjectItem balenciaga_4 = ObjectItem(
     itemName: "Balenciaga Кросовки",
     desctiption: "Описание",
     size: "43",
