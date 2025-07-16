@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:luma/global/classes/object_item.dart';
 import 'package:luma/global/classes/object_notification.dart';
 import 'package:luma/global/classes/object_shop.dart';
 import 'package:luma/global/classes/object_user.dart';
+import 'package:luma/global/params/app_images.dart';
 
 part 'buyer_account_event.dart';
 part 'buyer_account_state.dart';
@@ -19,11 +21,19 @@ class BuyerAccountBloc extends Bloc<BuyerAccountEvent, BuyerAccountState> {
     BuyerAccountLoadEvent event,
     Emitter<BuyerAccountState> emit,
   ) async {
-    final baseState = const BuyerAccountLoaded(
+    AssetImage avatar = AppImages.appUserAvater;
+
+    final baseState = BuyerAccountLoaded(
       number: 998901234567,
-      gender: Gender.male,
+      gender: Gender.female,
       isSeller: false,
+      email: "example@email.com",
+      creditCard: ["1234 5678 9012 3456"],
+      name: "Tasha",
+      notifications: [],
       actualOrders: [],
+      avatar: avatar,
+      birthdate: DateTime(2000, 7, 11),
     );
 
     emit(baseState);

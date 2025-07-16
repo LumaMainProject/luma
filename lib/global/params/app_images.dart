@@ -4,6 +4,9 @@ abstract class AppImages {
   // APP LOGO
   static final appLogo = AssetImage('assets/images/luma.png');
 
+  // USER AVATAR
+  static final appUserAvater = AssetImage('assets/images/avatar.jpg');
+
   // REGULAR LOGOS
 
   static final adidasLogo = AssetImage('assets/images/adidas_image.png');

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:luma/domain/buyer_bloc/buyer_account_bloc.dart';
 import 'package:luma/domain/manager_bloc/manager_bloc.dart';
+import 'package:luma/domain/seller_bloc/seller_account_bloc.dart';
 import 'package:luma/global/params/app_colors.dart';
+import 'package:luma/global/saves/saves.dart';
 import 'package:luma/ui/pages/page_register.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,6 +29,12 @@ class _LumaState extends State<Luma> {
         BlocProvider<ManagerBloc>(
           create: (context) =>
               ManagerBloc()..add(ManagerLoadEvent(currentPage: 1)),
+        ),
+
+        BlocProvider<SellerAccountBloc>(
+          create: (context) =>
+              SellerAccountBloc()
+                ..add(SellerAccountLoadEvent(shop: SaveShop.adidas)),
         ),
       ],
 

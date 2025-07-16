@@ -16,8 +16,9 @@ class BuyerAccountLoaded extends BuyerAccountState {
   final Gender gender;
 
   final String? name;
-  final String? avatar;
+  final AssetImage? avatar;
   final String? email;
+  final DateTime? birthdate;
 
   final List<String>? creditCard;
   final List<String>? addresses;
@@ -40,6 +41,7 @@ class BuyerAccountLoaded extends BuyerAccountState {
     this.avatar,
     this.creditCard,
     this.email,
+    this.birthdate,
     this.historyOrders = const [],
     required this.actualOrders,
     this.name,
@@ -53,8 +55,9 @@ class BuyerAccountLoaded extends BuyerAccountState {
     Gender? gender,
 
     String? name,
-    String? avatar,
+    AssetImage? avatar,
     String? email,
+    DateTime? birthdate,
 
     List<String>? creditCard,
     List<String>? addresses,
@@ -75,6 +78,7 @@ class BuyerAccountLoaded extends BuyerAccountState {
       name: name ?? this.name,
       avatar: avatar ?? this.avatar,
       email: email ?? this.email,
+      birthdate: birthdate ?? this.birthdate,
 
       creditCard: creditCard ?? this.creditCard,
       addresses: addresses ?? this.addresses,
