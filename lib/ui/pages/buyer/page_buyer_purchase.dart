@@ -4,6 +4,7 @@ import 'package:luma/domain/buyer_bloc/buyer_account_bloc.dart';
 import 'package:luma/domain/store_manager_bloc/store_manager_bloc.dart';
 import 'package:luma/global/classes/object_item.dart';
 import 'package:luma/global/classes/object_shop.dart';
+import 'package:luma/global/params/app_colors.dart';
 import 'package:luma/global/params/app_text_styles.dart';
 import 'package:luma/global/saves/saves.dart';
 import 'package:luma/ui/widgets/widget_shop_item_stack.dart';
@@ -79,12 +80,38 @@ class PageBuyerPurchase extends StatelessWidget {
                     ),
                   ),
 
-                  // SliverToBoxAdapter(
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(16),
-                  //     child: Placeholder(),
-                  //   ),
-                  // ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: MediaQuery.of(context).size.width - 32,
+                            width: MediaQuery.of(context).size.width - 32,
+                            decoration: BoxDecoration(
+                              color: AppColors.fantasy,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(16),
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(
+                            height: MediaQuery.of(context).size.width - 32,
+                            width: MediaQuery.of(context).size.width - 32,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CircularProgressIndicator(color: Theme.of(context).primaryColor),
+                                Text("Loading map...", style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18),)
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
 
                   SliverToBoxAdapter(
                     child: Padding(
@@ -220,5 +247,3 @@ class PageBuyerPurchase extends StatelessWidget {
     );
   }
 }
-
-
