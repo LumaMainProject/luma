@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:luma/global/classes/object_item.dart';
+import 'package:luma/global/classes/object_shop.dart';
 import 'package:luma/global/params/app_text_styles.dart';
 import 'package:luma/ui/widgets/widget_store.dart';
 
 class WidgetShopCartItem extends StatelessWidget {
-  final ObjectItem item;
-  const WidgetShopCartItem({super.key, required this.item});
+  final ObjectShop shop;
+  final int index;
+  final Map<ObjectItem, ObjectShop> itemToShopDictionary;
+  const WidgetShopCartItem({
+    super.key,
+    required this.shop,
+    required this.index,
+    required this.itemToShopDictionary,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final ObjectItem item = shop.items[index];
+
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -18,7 +28,7 @@ class WidgetShopCartItem extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          WidgetStore(store: item.shop),
+          WidgetStore(store: shop, itemToShopDictionary: itemToShopDictionary),
 
           SizedBox(height: 16),
 

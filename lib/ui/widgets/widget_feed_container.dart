@@ -14,11 +14,13 @@ class WidgetFeedContainer extends StatelessWidget {
   final int page;
   final ObjectShop shop;
   final ObjectItem item;
+  final Map<ObjectItem, ObjectShop> itemToShopDictionary;
   const WidgetFeedContainer({
     super.key,
     required this.page,
     required this.shop,
     required this.item,
+    required this.itemToShopDictionary,
   });
 
   @override
@@ -67,7 +69,11 @@ class WidgetFeedContainer extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => PageBuyerItemCard(item: item),
+                          builder: (context) => PageBuyerItemCard(
+                            shop: shop,
+                            index: shop.items.indexOf(item),
+                            itemToShopDictionary: itemToShopDictionary,
+                          ),
                         ),
                       );
                     },
@@ -80,7 +86,11 @@ class WidgetFeedContainer extends StatelessWidget {
           //STORE
           Align(
             alignment: Alignment.topCenter,
-            child: WidgetStore(blurLevel: 5, store: shop),
+            child: WidgetStore(
+              blurLevel: 5,
+              store: shop,
+              itemToShopDictionary: itemToShopDictionary,
+            ),
           ),
         ],
       ),

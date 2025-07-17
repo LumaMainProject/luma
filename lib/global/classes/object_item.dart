@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:luma/global/classes/object_shop.dart';
 
 class ObjectItem {
   final String itemName;
@@ -9,7 +8,6 @@ class ObjectItem {
   final int reviews;
   final double price;
   final double quantity;
-  final ObjectShop shop;
   final List<AssetImage> images;
 
   const ObjectItem({
@@ -17,7 +15,6 @@ class ObjectItem {
     required this.desctiption,
     required this.size,
     required this.images,
-    required this.shop,
     required this.brand,
     required this.price,
     required this.quantity,

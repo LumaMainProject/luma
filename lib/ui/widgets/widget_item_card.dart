@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:luma/global/classes/object_item.dart';
+import 'package:luma/global/classes/object_shop.dart';
+import 'package:luma/global/saves/saves.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_item_card.dart';
 
 class WidgetItemCard extends StatelessWidget {
   final ObjectItem item;
-  const WidgetItemCard({super.key, required this.item});
+  final int index;
+  final Map<ObjectItem, ObjectShop> itemToShopDictionary;
+  const WidgetItemCard({
+    super.key,
+    required this.item,
+    required this.index,
+    required this.itemToShopDictionary,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +30,11 @@ class WidgetItemCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => PageBuyerItemCard(item: item),
+                builder: (context) => PageBuyerItemCard(
+                  shop: itemToShopDictionary[item] ?? SaveShop.adidas,
+                  index: index,
+                  itemToShopDictionary: itemToShopDictionary,
+                ),
               ),
             );
           },
@@ -36,7 +49,7 @@ class WidgetItemCard extends StatelessWidget {
                     borderRadius: BorderRadiusDirectional.circular(16),
                   ),
                   child: ClipRRect(
-                    borderRadius:  BorderRadiusDirectional.circular(16),
+                    borderRadius: BorderRadiusDirectional.circular(16),
                     child: Image(fit: BoxFit.cover, image: item.images[0]),
                   ),
                 ),

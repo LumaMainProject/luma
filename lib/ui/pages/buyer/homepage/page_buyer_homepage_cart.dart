@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luma/domain/buyer_bloc/buyer_account_bloc.dart';
-import 'package:luma/global/classes/object_item.dart';
+import 'package:luma/domain/store_manager_bloc/store_manager_bloc.dart';
 import 'package:luma/global/params/app_text_styles.dart';
 import 'package:luma/global/saves/saves.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_purchase.dart';
@@ -12,43 +12,61 @@ class PageBuyerHomepageCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // SHUFFLE
-    List<ObjectItem> items = SaveLists.itemList;
-    items.shuffle();
-
-    return BlocBuilder<BuyerAccountBloc, BuyerAccountState>(
+    return BlocBuilder<StoreManagerBloc, StoreManagerState>(
       builder: (context, state) {
-        if (state is! BuyerAccountLoaded) {
+        if (state is! StoreManagerLoaded) {
           return const Center(child: CircularProgressIndicator());
         }
 
-        if (state.actualOrders.isEmpty) {
-          return const Center(
-            child: Text(
-              "Похоже тут пока ничего нет",
-              style: AppTextStyles.title2,
-            ),
-          );
-        }
+        StoreManagerLoaded storeManagerLoaded = state;
 
-        return Stack(
-          children: [
-            ListView.separated(
-              itemBuilder: (context, index) {
-                if (index == state.actualOrders.length) {
-                  return const SizedBox(height: 60);
-                }
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: WidgetShopCartItem(item: state.actualOrders[index]),
-                );
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 16),
-              itemCount: state.actualOrders.length + 1,
-            ),
+        return BlocBuilder<BuyerAccountBloc, BuyerAccountState>(
+          builder: (context, state) {
+            if (state is! BuyerAccountLoaded) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-            WidgetBottomButton(),
-          ],
+            BuyerAccountLoaded buyerAccountLoaded = state;
+
+            if (state.actualOrders.isEmpty) {
+              return const Center(
+                child: Text(
+                  "Похоже тут пока ничего нет",
+                  style: AppTextStyles.title2,
+                ),
+              );
+            }
+
+            return Stack(
+              children: [
+                ListView.separated(
+                  itemBuilder: (context, index) {
+                    if (index == state.actualOrders.length) {
+                      return const SizedBox(height: 60);
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: WidgetShopCartItem(
+                        shop:
+                            storeManagerLoaded
+                                .itemToShopDictionary[buyerAccountLoaded
+                                .actualOrders[index]] ??
+                            SaveShop.adidas,
+                        index: index,
+                        itemToShopDictionary:
+                            storeManagerLoaded.itemToShopDictionary,
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 16),
+                  itemCount: state.actualOrders.length + 1,
+                ),
+
+                WidgetBottomButton(),
+              ],
+            );
+          },
         );
       },
     );

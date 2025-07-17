@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luma/domain/buyer_bloc/buyer_account_bloc.dart';
 import 'package:luma/global/classes/object_item.dart';
+import 'package:luma/global/classes/object_shop.dart';
 import 'package:luma/global/params/app_colors.dart';
 import 'package:luma/global/params/app_text_styles.dart';
 import 'package:luma/global/saves/saves.dart';
@@ -9,8 +10,15 @@ import 'package:luma/ui/widgets/widget_grid_view_promos.dart';
 import 'package:luma/ui/widgets/widget_store.dart';
 
 class PageBuyerItemCard extends StatefulWidget {
-  final ObjectItem item;
-  const PageBuyerItemCard({super.key, required this.item});
+  final ObjectShop shop;
+  final int index;
+  final Map<ObjectItem, ObjectShop> itemToShopDictionary;
+  const PageBuyerItemCard({
+    super.key,
+    required this.shop,
+    required this.index,
+    required this.itemToShopDictionary,
+  });
 
   @override
   State<PageBuyerItemCard> createState() => _PageBuyerItemCardState();
@@ -21,7 +29,7 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
   bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
-    final ObjectItem item = widget.item;
+    final ObjectItem item = widget.shop.items[widget.index];
     final bloc = BlocProvider.of<BuyerAccountBloc>(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -174,7 +182,10 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
                     ),
                     const Divider(),
 
-                    WidgetStore(store: item.shop),
+                    WidgetStore(
+                      store: widget.shop,
+                      itemToShopDictionary: widget.itemToShopDictionary,
+                    ),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -214,10 +225,7 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
                     const Divider(),
 
                     Text("Desctiption", style: AppTextStyles.title),
-                    Text(
-                      style: AppTextStyles.description,
-                      widget.item.desctiption,
-                    ),
+                    Text(style: AppTextStyles.description, item.desctiption),
                     Text(
                       style: AppTextStyles.description,
                       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -233,7 +241,10 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
 
                     Placeholder(),
                     SizedBox(height: 16),
-                    WidgetGridViewPromos(itemList: SaveLists.itemList),
+                    WidgetGridViewPromos(
+                      itemList: SaveLists.itemList,
+                      itemToShopDictionary: widget.itemToShopDictionary,
+                    ),
                     SizedBox(height: 16),
                   ],
                 ),

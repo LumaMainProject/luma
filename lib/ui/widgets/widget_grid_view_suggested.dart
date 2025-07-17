@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:luma/global/classes/object_item.dart';
+import 'package:luma/global/classes/object_shop.dart';
 import 'package:luma/ui/widgets/widget_item_card.dart';
 
 class WidgetGridViewSuggested extends StatelessWidget {
   final List<ObjectItem> itemList;
-  const WidgetGridViewSuggested({super.key, required this.itemList});
+  final Map<ObjectItem, ObjectShop> itemToShopDictionary;
+  const WidgetGridViewSuggested({
+    super.key,
+    required this.itemList,
+    required this.itemToShopDictionary,
+  });
 
   @override
   Widget build(BuildContext context) {
-        // SHUFFLE
-    List<ObjectItem> items = itemList;
-    items.shuffle();
-
     return GridView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
@@ -21,7 +23,11 @@ class WidgetGridViewSuggested extends StatelessWidget {
         childAspectRatio: .8,
         crossAxisCount: 2,
       ),
-      itemBuilder: (context, index) => WidgetItemCard(item: itemList[index]),
+      itemBuilder: (context, index) => WidgetItemCard(
+        index: index,
+        item: itemList[index],
+        itemToShopDictionary: itemToShopDictionary,
+      ),
       itemCount: itemList.length,
     );
   }

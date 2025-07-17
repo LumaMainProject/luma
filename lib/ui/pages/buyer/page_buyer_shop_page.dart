@@ -8,15 +8,16 @@ import 'package:luma/ui/widgets/widget_grid_view_suggested.dart';
 
 class PageBuyerShopPage extends StatelessWidget {
   final ObjectShop shop;
-  const PageBuyerShopPage({super.key, required this.shop});
+  final Map<ObjectItem, ObjectShop> itemToShopDictionary;
+  const PageBuyerShopPage({
+    super.key,
+    required this.shop,
+    required this.itemToShopDictionary,
+  });
 
   @override
   Widget build(BuildContext context) {
-    List<ObjectItem> items = [];
-
-    for (ObjectItem element in SaveLists.itemList) {
-      if (element.shop == shop) items.add(element);
-    }
+    List<ObjectItem> items = shop.items;
 
     return Scaffold(
       body: CustomScrollView(
@@ -25,7 +26,7 @@ class PageBuyerShopPage extends StatelessWidget {
             expandedHeight: 200,
             flexibleSpace: Container(
               color: Colors.amber,
-              child: Image(fit: BoxFit.cover, image: shop.header, height: 300,),
+              child: Image(fit: BoxFit.cover, image: shop.header, height: 300),
             ),
           ),
 
@@ -78,7 +79,10 @@ class PageBuyerShopPage extends StatelessWidget {
                 children: [
                   Text("Best Seller", style: AppTextStyles.title),
                   SizedBox(height: 16),
-                  WidgetGridViewPromos(itemList: items),
+                  WidgetGridViewPromos(
+                    itemList: items,
+                    itemToShopDictionary: itemToShopDictionary,
+                  ),
                 ],
               ),
             ),
@@ -92,7 +96,10 @@ class PageBuyerShopPage extends StatelessWidget {
                 children: [
                   Text("Promos", style: AppTextStyles.title),
                   SizedBox(height: 16),
-                  WidgetGridViewPromos(itemList: SaveLists.itemList),
+                  WidgetGridViewPromos(
+                    itemList: SaveLists.itemList,
+                    itemToShopDictionary: itemToShopDictionary,
+                  ),
                 ],
               ),
             ),
@@ -105,7 +112,10 @@ class PageBuyerShopPage extends StatelessWidget {
               child: Column(
                 children: [
                   Text("All", style: AppTextStyles.title),
-                  WidgetGridViewSuggested(itemList: SaveLists.itemList),
+                  WidgetGridViewSuggested(
+                    itemList: SaveLists.itemList,
+                    itemToShopDictionary: itemToShopDictionary,
+                  ),
                 ],
               ),
             ),

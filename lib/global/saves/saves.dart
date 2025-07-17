@@ -27,11 +27,11 @@ abstract class SaveShop {
     followers: 13000,
     rating: 4,
     video: AppVideos.adidasVideo,
-    // items: [
-    //   SaveItem.adidas_1,
-    //   SaveItem.adidas_2,
-    //   SaveItem.adidas_3,
-    // ]
+    items: [
+      SaveItem.adidas_1,
+      SaveItem.adidas_2,
+      SaveItem.adidas_3,
+    ]
   );
 
   static final ObjectShop prada = ObjectShop(
@@ -41,12 +41,12 @@ abstract class SaveShop {
     followers: 28000,
     rating: 5,
     video: AppVideos.pradaVideo,
-    // items: [
-    //   SaveItem.prada_1,
-    //   SaveItem.prada_2,
-    //   SaveItem.prada_3,
-    //   SaveItem.prada_4,
-    // ]
+    items: [
+      SaveItem.prada_1,
+      SaveItem.prada_2,
+      SaveItem.prada_3,
+      SaveItem.prada_4,
+    ]
   );
 
   static final ObjectShop balenciaga = ObjectShop(
@@ -56,12 +56,12 @@ abstract class SaveShop {
     followers: 33000,
     rating: 3,
     video: AppVideos.balenciagaVideo,
-    // items: [
-    //   SaveItem.balenciaga_1,
-    //   SaveItem.balenciaga_2,
-    //   SaveItem.balenciaga_3,
-    //   SaveItem.balenciaga_4,
-    // ]
+    items: [
+      SaveItem.balenciaga_1,
+      SaveItem.balenciaga_2,
+      SaveItem.balenciaga_3,
+      SaveItem.balenciaga_4,
+    ]
   );
 }
 
@@ -76,7 +76,6 @@ abstract class SaveItem {
       AppImages.adidasItem_1_2,
       AppImages.adidasItem_1_3,
     ],
-    shop: SaveShop.adidas,
     brand: "Adidas",
     price: 399000,
     quantity: 49,
@@ -92,7 +91,6 @@ abstract class SaveItem {
       AppImages.adidasItem_2_2,
       AppImages.adidasItem_2_3,
     ],
-    shop: SaveShop.adidas,
     brand: "Adidas",
     price: 399000,
     quantity: 49,
@@ -108,7 +106,6 @@ abstract class SaveItem {
       AppImages.adidasItem_3_2,
       AppImages.adidasItem_3_3,
     ],
-    shop: SaveShop.adidas,
     brand: "Adidas",
     price: 399000,
     quantity: 49,
@@ -125,7 +122,6 @@ abstract class SaveItem {
       AppImages.pradaItem_1_2,
       AppImages.pradaItem_1_3,
     ],
-    shop: SaveShop.prada,
     brand: "Prada",
     price: 399000,
     quantity: 49,
@@ -137,7 +133,7 @@ abstract class SaveItem {
     desctiption: "Описание",
     size: "43",
     images: [AppImages.pradaItem_2_1, AppImages.pradaItem_2_2],
-    shop: SaveShop.prada,
+
     brand: "Prada",
     price: 399000,
     quantity: 49,
@@ -153,7 +149,6 @@ abstract class SaveItem {
       AppImages.pradaItem_3_2,
       AppImages.pradaItem_3_3,
     ],
-    shop: SaveShop.prada,
     brand: "Prada",
     price: 399000,
     quantity: 49,
@@ -165,7 +160,6 @@ abstract class SaveItem {
     desctiption: "Описание",
     size: "43",
     images: [AppImages.pradaItem_4_1, AppImages.pradaItem_4_2],
-    shop: SaveShop.prada,
     brand: "Prada",
     price: 399000,
     quantity: 49,
@@ -182,7 +176,6 @@ abstract class SaveItem {
       AppImages.balenciagaItem_1_2,
       AppImages.balenciagaItem_1_3,
     ],
-    shop: SaveShop.balenciaga,
     brand: "Balenciaga",
     price: 399000,
     quantity: 49,
@@ -194,7 +187,6 @@ abstract class SaveItem {
     desctiption: "Описание",
     size: "43",
     images: [AppImages.balenciagaItem_2_1, AppImages.balenciagaItem_2_2],
-    shop: SaveShop.balenciaga,
     brand: "Balenciaga",
     price: 399000,
     quantity: 49,
@@ -206,7 +198,6 @@ abstract class SaveItem {
     desctiption: "Описание",
     size: "43",
     images: [AppImages.balenciagaItem_3_1, AppImages.balenciagaItem_3_2],
-    shop: SaveShop.balenciaga,
     brand: "Balenciaga",
     price: 399000,
     quantity: 49,
@@ -222,7 +213,6 @@ abstract class SaveItem {
       AppImages.balenciagaItem_4_2,
       AppImages.balenciagaItem_4_3,
     ],
-    shop: SaveShop.balenciaga,
     brand: "Balenciaga",
     price: 399000,
     quantity: 49,

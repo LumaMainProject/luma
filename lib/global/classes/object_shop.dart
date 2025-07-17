@@ -7,7 +7,7 @@ class ObjectShop {
   final AssetImage header;
   final int? rating;
   final int followers;
-  final List<ObjectItem>? items;
+  final List<ObjectItem> items;
   final String video;
 
   const ObjectShop({
@@ -15,8 +15,8 @@ class ObjectShop {
     required this.icon,
     required this.header,
     required this.video,
+    required this.items,
     this.followers = 0,
     this.rating,
-    this.items,
   });
 }
