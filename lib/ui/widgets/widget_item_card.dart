@@ -32,7 +32,7 @@ class WidgetItemCard extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => PageBuyerItemCard(
                   shop: itemToShopDictionary[item] ?? SaveShop.adidas,
-                  index: index,
+                  item: item,
                   itemToShopDictionary: itemToShopDictionary,
                 ),
               ),

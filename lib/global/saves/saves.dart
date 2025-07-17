@@ -70,16 +70,17 @@ abstract class SaveItem {
   static final ObjectItem adidas_1 = ObjectItem(
     itemName: "Adidas Кросовки",
     desctiption: "Описание",
-    size: "43",
+    size: "42",
     images: [
       AppImages.adidasItem_1_1,
       AppImages.adidasItem_1_2,
       AppImages.adidasItem_1_3,
     ],
     brand: "Adidas",
-    price: 399000,
-    quantity: 49,
+    price: 59000,
+    quantity: 38,
     reviews: 4,
+    itemSold: 39
   );
 
   static final ObjectItem adidas_2 = ObjectItem(
@@ -95,6 +96,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
+    itemSold: 28
   );
 
   static final ObjectItem adidas_3 = ObjectItem(
@@ -110,6 +112,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
+    itemSold: 34
   );
 
   // PRADA
@@ -126,6 +129,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
+    itemSold: 49
   );
 
   static final ObjectItem prada_2 = ObjectItem(
@@ -138,6 +142,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
+    itemSold: 17
   );
 
   static final ObjectItem prada_3 = ObjectItem(
@@ -153,6 +158,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
+    itemSold: 17
   );
 
   static final ObjectItem prada_4 = ObjectItem(
@@ -164,6 +170,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
+    itemSold: 27
   );
 
   // BALENCIAGA
@@ -180,6 +187,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
+    itemSold: 14
   );
 
   static final ObjectItem balenciaga_2 = ObjectItem(
@@ -191,6 +199,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
+    itemSold: 3
   );
 
   static final ObjectItem balenciaga_3 = ObjectItem(
@@ -202,6 +211,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
+    itemSold: 21
   );
 
   static final ObjectItem balenciaga_4 = ObjectItem(
@@ -217,5 +227,6 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
+    itemSold: 18
   );
 }

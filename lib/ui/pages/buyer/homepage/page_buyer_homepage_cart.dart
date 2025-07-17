@@ -52,7 +52,7 @@ class PageBuyerHomepageCart extends StatelessWidget {
                                 .itemToShopDictionary[buyerAccountLoaded
                                 .actualOrders[index]] ??
                             SaveShop.adidas,
-                        index: index,
+                        item: buyerAccountLoaded.actualOrders[index],
                         itemToShopDictionary:
                             storeManagerLoaded.itemToShopDictionary,
                       ),

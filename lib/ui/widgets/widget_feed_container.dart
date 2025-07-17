@@ -71,7 +71,7 @@ class WidgetFeedContainer extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => PageBuyerItemCard(
                             shop: shop,
-                            index: shop.items.indexOf(item),
+                            item: item,
                             itemToShopDictionary: itemToShopDictionary,
                           ),
                         ),

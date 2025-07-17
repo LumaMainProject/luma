@@ -8,6 +8,7 @@ class ObjectItem {
   final int reviews;
   final double price;
   final double quantity;
+  final double itemSold;
   final List<AssetImage> images;
 
   const ObjectItem({
@@ -18,6 +19,7 @@ class ObjectItem {
     required this.brand,
     required this.price,
     required this.quantity,
+    required this.itemSold,
     required this.reviews,
   });
 }

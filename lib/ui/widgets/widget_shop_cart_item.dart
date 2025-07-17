@@ -6,19 +6,17 @@ import 'package:luma/ui/widgets/widget_store.dart';
 
 class WidgetShopCartItem extends StatelessWidget {
   final ObjectShop shop;
-  final int index;
+  final ObjectItem item;
   final Map<ObjectItem, ObjectShop> itemToShopDictionary;
   const WidgetShopCartItem({
     super.key,
     required this.shop,
-    required this.index,
+    required this.item,
     required this.itemToShopDictionary,
   });
 
   @override
   Widget build(BuildContext context) {
-    final ObjectItem item = shop.items[index];
-
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
