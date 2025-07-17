@@ -80,7 +80,7 @@ class PageBuyerHomepageCart extends StatelessWidget {
                   },
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 16),
-                  itemCount: buyerAccountLoaded.actualOrders.length,
+                  itemCount: buyerAccountLoaded.actualOrders.length + 1,
                 ),
 
                 WidgetBottomButton(),

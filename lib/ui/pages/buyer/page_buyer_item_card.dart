@@ -224,14 +224,12 @@ class PageBuyerItemCardButtons extends StatelessWidget {
             onPressed: () {
               bloc.add(AddActualOrdersEvent(item: item));
               Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PageBuyerHomepage(
-                  pageIndex: 2,
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PageBuyerHomepage(pageIndex: 2),
                 ),
-              ),
-              (Route<dynamic> route) => false,
-            );
+                (Route<dynamic> route) => false,
+              );
             },
             child: Text("Купить сейчас", style: AppTextStyles.title),
           ),
@@ -276,10 +274,11 @@ class _WidgetPageBuyerItemCardAddToCardButtonState
               bottomRight: Radius.circular(32),
             ),
           ),
-          child: state.actualOrdersItemAmount(widget.item) == 0
+          child: !state.actualOrders.contains(widget.item)
               ? TextButton(
                   onPressed: () {
                     bloc.add(AddActualOrdersEvent(item: widget.item));
+                    setState(() {});
                   },
                   child: Text("Добавить в корзину", style: AppTextStyles.title),
                 )
