@@ -9,10 +9,12 @@ import 'package:luma/ui/pages/buyer/page_buyer_shop_page.dart';
 class WidgetStore extends StatelessWidget {
   final ObjectShop store;
   final double blurLevel;
+  final Color color;
   final Map<ObjectItem, ObjectShop> itemToShopDictionary;
   const WidgetStore({
     super.key,
     this.blurLevel = 0,
+    this.color = AppColors.vanillaIce,
     required this.store,
     required this.itemToShopDictionary,
   });
@@ -24,7 +26,7 @@ class WidgetStore extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: blurLevel, sigmaY: blurLevel),
         child: Container(
-          color: AppColors.vanillaIce,
+          color: color,
           child: ListTile(
             leading: ClipRRect(
               borderRadius: const BorderRadiusGeometry.all(Radius.circular(16)),

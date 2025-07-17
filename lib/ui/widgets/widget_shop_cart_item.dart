@@ -26,7 +26,10 @@ class WidgetShopCartItem extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          WidgetStore(store: shop, itemToShopDictionary: itemToShopDictionary),
+          WidgetStore(
+            store: shop,
+            itemToShopDictionary: itemToShopDictionary,
+          ),
 
           SizedBox(height: 16),
 

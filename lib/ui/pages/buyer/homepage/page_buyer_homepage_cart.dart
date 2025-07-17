@@ -37,6 +37,16 @@ class PageBuyerHomepageCart extends StatelessWidget {
               );
             }
 
+            // int length = 0;
+            // List<String> exclude = [];
+
+            // for (ObjectItem element in buyerAccountLoaded.actualOrders) {
+            //   if (!exclude.contains(element.brand)) {
+            //     exclude.add(element.brand);
+            //     length++;
+            //   }
+            // }
+
             return Stack(
               children: [
                 ListView.separated(
@@ -56,11 +66,21 @@ class PageBuyerHomepageCart extends StatelessWidget {
                         itemToShopDictionary:
                             storeManagerLoaded.itemToShopDictionary,
                       ),
+                      // child: WidgetShopItemStack(
+                      //   item: buyerAccountLoaded.actualOrders,
+                      //   shop:
+                      //       storeManagerLoaded
+                      //           .itemToShopDictionary[buyerAccountLoaded
+                      //           .actualOrders[index]] ??
+                      //       SaveShop.adidas,
+                      //   itemToShopDictionary:
+                      //       storeManagerLoaded.itemToShopDictionary,
+                      // ),
                     );
                   },
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 16),
-                  itemCount: state.actualOrders.length + 1,
+                  itemCount: buyerAccountLoaded.actualOrders.length,
                 ),
 
                 WidgetBottomButton(),
