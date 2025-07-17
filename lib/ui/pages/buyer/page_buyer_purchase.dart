@@ -48,22 +48,43 @@ class PageBuyerPurchase extends StatelessWidget {
                 slivers: [
                   SliverAppBar(title: Text("Checkout")),
 
-                  SliverList.separated(
-                    itemCount: objectShop.length,
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 16),
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: WidgetShopItemStack(
-                          item: buyerAccountLoaded.actualOrders,
-                          shop: objectShop[index],
-                          itemToShopDictionary:
-                              storeManagerLoaded.itemToShopDictionary,
-                        ),
-                      );
-                    },
+                  SliverToBoxAdapter(
+                    child: ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: WidgetShopItemStack(
+                            item: buyerAccountLoaded.actualOrders,
+                            shop: objectShop[index],
+                            itemToShopDictionary:
+                                storeManagerLoaded.itemToShopDictionary,
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 16),
+                      itemCount: objectShop.length,
+                    ),
                   ),
+
+                  // SliverList.separated(
+                  //   itemCount: objectShop.length,
+                  //   separatorBuilder: (context, index) =>
+                  //       const SizedBox(height: 16),
+                  //   itemBuilder: (context, index) {
+                  //     return Padding(
+                  //       padding: const EdgeInsets.symmetric(horizontal: 16),
+                  //       child: WidgetShopItemStack(
+                  //         item: buyerAccountLoaded.actualOrders,
+                  //         shop: objectShop[index],
+                  //         itemToShopDictionary:
+                  //             storeManagerLoaded.itemToShopDictionary,
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
 
                   SliverToBoxAdapter(
                     child: Padding(
@@ -103,8 +124,16 @@ class PageBuyerPurchase extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                CircularProgressIndicator(color: Theme.of(context).primaryColor),
-                                Text("Loading map...", style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18),)
+                                CircularProgressIndicator(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                Text(
+                                  "Loading map...",
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 18,
+                                  ),
+                                ),
                               ],
                             ),
                           ),

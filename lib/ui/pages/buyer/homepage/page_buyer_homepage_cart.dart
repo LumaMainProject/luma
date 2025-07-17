@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luma/domain/buyer_bloc/buyer_account_bloc.dart';
 import 'package:luma/domain/store_manager_bloc/store_manager_bloc.dart';
+import 'package:luma/global/classes/object_item.dart';
+import 'package:luma/global/classes/object_shop.dart';
 import 'package:luma/global/params/app_text_styles.dart';
 import 'package:luma/global/saves/saves.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_purchase.dart';
-import 'package:luma/ui/widgets/widget_shop_cart_item.dart';
+import 'package:luma/ui/widgets/widget_shop_item_stack.dart';
 
 class PageBuyerHomepageCart extends StatelessWidget {
   const PageBuyerHomepageCart({super.key});
@@ -37,6 +39,19 @@ class PageBuyerHomepageCart extends StatelessWidget {
               );
             }
 
+            List<ObjectShop> objectShop = [];
+
+              for (ObjectItem item in buyerAccountLoaded.actualOrders) {
+                if (!objectShop.contains(
+                  storeManagerLoaded.itemToShopDictionary[item],
+                )) {
+                  objectShop.add(
+                    storeManagerLoaded.itemToShopDictionary[item] ??
+                        SaveShop.adidas,
+                  );
+                }
+              }
+
             // int length = 0;
             // List<String> exclude = [];
 
@@ -51,21 +66,17 @@ class PageBuyerHomepageCart extends StatelessWidget {
               children: [
                 ListView.separated(
                   itemBuilder: (context, index) {
-                    if (index == state.actualOrders.length) {
+                    if (index == objectShop.length) {
                       return const SizedBox(height: 60);
                     }
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: WidgetShopCartItem(
-                        shop:
-                            storeManagerLoaded
-                                .itemToShopDictionary[buyerAccountLoaded
-                                .actualOrders[index]] ??
-                            SaveShop.adidas,
-                        item: buyerAccountLoaded.actualOrders[index],
-                        itemToShopDictionary:
-                            storeManagerLoaded.itemToShopDictionary,
-                      ),
+                      child: WidgetShopItemStack(
+                          item: buyerAccountLoaded.actualOrders,
+                          shop: objectShop[index],
+                          itemToShopDictionary:
+                              storeManagerLoaded.itemToShopDictionary,
+                        ),
                       // child: WidgetShopItemStack(
                       //   item: buyerAccountLoaded.actualOrders,
                       //   shop:
@@ -80,7 +91,7 @@ class PageBuyerHomepageCart extends StatelessWidget {
                   },
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 16),
-                  itemCount: buyerAccountLoaded.actualOrders.length + 1,
+                  itemCount: objectShop.length + 1,
                 ),
 
                 WidgetBottomButton(),

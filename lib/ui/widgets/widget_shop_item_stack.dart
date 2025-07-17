@@ -56,7 +56,8 @@ class _WidgetShopItemStackState extends State<WidgetShopItemStack> {
                 itemToShopDictionary: widget.itemToShopDictionary,
               ),
 
-              //const SizedBox(height: 8),
+              const SizedBox(height: 16),
+              
               ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
