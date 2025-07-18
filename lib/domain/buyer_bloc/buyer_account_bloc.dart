@@ -6,6 +6,7 @@ import 'package:luma/global/classes/object_notification.dart';
 import 'package:luma/global/classes/object_shop.dart';
 import 'package:luma/global/classes/object_user.dart';
 import 'package:luma/global/params/app_images.dart';
+import 'package:luma/global/saves/saves.dart';
 
 part 'buyer_account_event.dart';
 part 'buyer_account_state.dart';
@@ -30,7 +31,7 @@ class BuyerAccountBloc extends Bloc<BuyerAccountEvent, BuyerAccountState> {
       email: "example@email.com",
       creditCard: ["1234 5678 9012 3456"],
       name: "Tasha",
-      notifications: [],
+      notifications: SaveNotifications.notificationList,
       actualOrders: [],
       avatar: avatar,
       birthdate: DateTime(2000, 7, 11),

@@ -1,7 +1,54 @@
 import 'package:luma/global/classes/object_item.dart';
+import 'package:luma/global/classes/object_notification.dart';
 import 'package:luma/global/classes/object_shop.dart';
 import 'package:luma/global/params/app_images.dart';
+import 'package:luma/global/params/app_notifications_status.dart';
 import 'package:luma/global/params/app_videos.dart';
+
+abstract class SaveNotifications {
+  static final ObjectNotification await = ObjectNotification(
+    amount: 2,
+    status: AppNotificationsStatus.await,
+    item: SaveItem.adidas_1,
+    shop: SaveShop.adidas,
+  );
+
+  static final ObjectNotification confirmed = ObjectNotification(
+    amount: 1,
+    status: AppNotificationsStatus.confirmed,
+    item: SaveItem.balenciaga_4,
+    shop: SaveShop.balenciaga,
+  );
+
+  static final ObjectNotification inDelivery = ObjectNotification(
+    amount: 1,
+    status: AppNotificationsStatus.inDelivery,
+    item: SaveItem.balenciaga_2,
+    shop: SaveShop.balenciaga,
+  );
+
+  static final ObjectNotification canseled = ObjectNotification(
+    amount: 2,
+    status: AppNotificationsStatus.canseled,
+    item: SaveItem.adidas_3,
+    shop: SaveShop.adidas,
+  );
+
+  static final ObjectNotification delivered = ObjectNotification(
+    amount: 4,
+    status: AppNotificationsStatus.delivered,
+    item: SaveItem.prada_3,
+    shop: SaveShop.prada,
+  );
+
+  static final List<ObjectNotification> notificationList = [
+    await,
+    confirmed,
+    inDelivery,
+    canseled,
+    delivered,
+  ];
+}
 
 abstract class SaveLists {
   static final List<ObjectItem> itemList = [
@@ -27,11 +74,7 @@ abstract class SaveShop {
     followers: 13000,
     rating: 4,
     video: AppVideos.adidasVideo,
-    items: [
-      SaveItem.adidas_1,
-      SaveItem.adidas_2,
-      SaveItem.adidas_3,
-    ]
+    items: [SaveItem.adidas_1, SaveItem.adidas_2, SaveItem.adidas_3],
   );
 
   static final ObjectShop prada = ObjectShop(
@@ -46,7 +89,7 @@ abstract class SaveShop {
       SaveItem.prada_2,
       SaveItem.prada_3,
       SaveItem.prada_4,
-    ]
+    ],
   );
 
   static final ObjectShop balenciaga = ObjectShop(
@@ -61,7 +104,7 @@ abstract class SaveShop {
       SaveItem.balenciaga_2,
       SaveItem.balenciaga_3,
       SaveItem.balenciaga_4,
-    ]
+    ],
   );
 }
 
@@ -80,7 +123,7 @@ abstract class SaveItem {
     price: 59000,
     quantity: 38,
     reviews: 4,
-    itemSold: 39
+    itemSold: 39,
   );
 
   static final ObjectItem adidas_2 = ObjectItem(
@@ -96,7 +139,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
-    itemSold: 28
+    itemSold: 28,
   );
 
   static final ObjectItem adidas_3 = ObjectItem(
@@ -112,7 +155,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
-    itemSold: 34
+    itemSold: 34,
   );
 
   // PRADA
@@ -129,7 +172,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
-    itemSold: 49
+    itemSold: 49,
   );
 
   static final ObjectItem prada_2 = ObjectItem(
@@ -142,7 +185,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
-    itemSold: 17
+    itemSold: 17,
   );
 
   static final ObjectItem prada_3 = ObjectItem(
@@ -158,7 +201,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
-    itemSold: 17
+    itemSold: 17,
   );
 
   static final ObjectItem prada_4 = ObjectItem(
@@ -170,7 +213,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
-    itemSold: 27
+    itemSold: 27,
   );
 
   // BALENCIAGA
@@ -187,7 +230,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
-    itemSold: 14
+    itemSold: 14,
   );
 
   static final ObjectItem balenciaga_2 = ObjectItem(
@@ -199,7 +242,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
-    itemSold: 3
+    itemSold: 3,
   );
 
   static final ObjectItem balenciaga_3 = ObjectItem(
@@ -211,7 +254,7 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
-    itemSold: 21
+    itemSold: 21,
   );
 
   static final ObjectItem balenciaga_4 = ObjectItem(
@@ -227,6 +270,6 @@ abstract class SaveItem {
     price: 399000,
     quantity: 49,
     reviews: 4,
-    itemSold: 18
+    itemSold: 18,
   );
 }

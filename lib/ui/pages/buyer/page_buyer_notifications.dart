@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luma/domain/buyer_bloc/buyer_account_bloc.dart';
-import 'package:luma/global/params/app_icons.dart';
+import 'package:luma/ui/widgets/widget_buyer_notification.dart';
 
 class PageBuyerNotifications extends StatelessWidget {
   const PageBuyerNotifications({super.key});
@@ -17,7 +17,7 @@ class PageBuyerNotifications extends StatelessWidget {
           appBar: AppBar(
             elevation: 0,
             scrolledUnderElevation: 0,
-            backgroundColor: Colors.transparent,
+            //backgroundColor: Colors.transparent,
             centerTitle: true,
             title: Text("Notifications"),
           ),
@@ -26,18 +26,16 @@ class PageBuyerNotifications extends StatelessWidget {
               ? const Center(child: Text("Похоже у вас нет оповещений"))
               : ListView.separated(
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: Icon(AppIcons.account),
-                      title: Text("Title"),
-                      subtitle: Text("Subtitle"),
-                      trailing: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.list),
+                    return Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: WidgetBuyerNotification(
+                        notification: state.notifications[index],
                       ),
                     );
                   },
-                  separatorBuilder: (context, index) => Divider(),
-                  itemCount: 20,
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 8),
+                  itemCount: state.notifications.length,
                 ),
         );
       },
