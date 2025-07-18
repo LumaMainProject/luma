@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:luma/global/params/app_colors.dart';
+import 'package:luma/global/params/app_images.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_homepage.dart';
 import 'package:luma/ui/pages/seller/page_seller_homepage.dart';
 
@@ -14,15 +16,27 @@ class _PageRegisterState extends State<PageRegister> {
   @override
   Widget build(BuildContext context) {
     List<Widget> listViewWidgets = [
-      Text("Registration", style: TextStyle(fontSize: 24)),
-      TextField(
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-          ),
-          label: Text("Phone Number"),
+      Image(image: AppImages.appLogo),
+
+      // TextField(
+      //   decoration: InputDecoration(
+      //     border: OutlineInputBorder(
+      //       borderRadius: BorderRadius.all(Radius.circular(16)),
+      //     ),
+      //     label: Text("Phone Number"),
+      //   ),
+      //   keyboardType: TextInputType.number,
+      // ),
+      Align(
+        alignment: Alignment.center,
+        child: Text(
+          "LUMA",
+          style: TextStyle(fontSize: 28, color: AppColors.mainColor),
         ),
-        keyboardType: TextInputType.number,
+      ),
+      Align(
+        alignment: Alignment.center,
+        child: Text("Choose account", style: TextStyle(fontSize: 24, color: AppColors.mainColor)),
       ),
 
       SizedBox(
@@ -67,7 +81,7 @@ class _PageRegisterState extends State<PageRegister> {
         ),
       ),
 
-      Divider(),
+      //Divider(),
       // Row(
       //   children: [
       //     IconButton(onPressed: () {}, icon: Icon(AppIcons.googleIcon)),
