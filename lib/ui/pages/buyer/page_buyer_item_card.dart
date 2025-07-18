@@ -178,15 +178,9 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
             ],
           ),
 
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: PageBuyerItemCardButtons(
-                item: widget.item,
-                isSeller: widget.isSeller,
-              ),
-            ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: BuyerItemButton(item: item, isSeller: widget.isSeller),
           ),
         ],
       ),
@@ -225,41 +219,71 @@ class PageBuyerItemCardButtons extends StatelessWidget {
         if (!state.actualOrders.contains(item)) {
           return Align(
             alignment: Alignment.bottomRight,
-            child: FloatingActionButton.large(
-              onPressed: () {
-                bloc.add(AddActualOrdersEvent(item: item));
-              },
-              child: const Icon(AppIcons.shopCart),
+            child: WidgetPageBuyerItemCardAddToCardButton(
+              item: item,
+              maxSize: true,
             ),
           );
         }
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
-                color: AppColors.vanillaIce,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(8),
-                  bottomRight: Radius.circular(8),
-                  topLeft: Radius.circular(32),
-                  topRight: Radius.circular(32),
-                ),
+        if (state.actualOrders.contains(item)) {
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     // Container(
+              //     //   width: MediaQuery.of(context).size.width - 140,
+              //     //   decoration: const BoxDecoration(
+              //     //     color: AppColors.vanillaIce,
+              //     //     borderRadius: BorderRadius.only(
+              //     //       bottomLeft: Radius.circular(8),
+              //     //       bottomRight: Radius.circular(8),
+              //     //       topLeft: Radius.circular(32),
+              //     //       topRight: Radius.circular(8),
+              //     //     ),
+              //     //   ),
+              //     //   child: TextButton(
+              //     //     style: TextButton.styleFrom(
+              //     //       shape: RoundedRectangleBorder(
+              //     //         borderRadius: BorderRadiusGeometry.only(
+              //     //           bottomLeft: Radius.circular(8),
+              //     //           bottomRight: Radius.circular(8),
+              //     //           topLeft: Radius.circular(32),
+              //     //           topRight: Radius.circular(8),
+              //     //         ),
+              //     //       ),
+              //     //     ),
+              //     //     onPressed: () {
+              //     //       if (!state.actualOrders.contains(item)) {
+              //     //         bloc.add(AddActualOrdersEvent(item: item));
+              //     //       }
+
+              //     //       Navigator.pushAndRemoveUntil(
+              //     //         context,
+              //     //         MaterialPageRoute(
+              //     //           builder: (context) => PageBuyerHomepage(pageIndex: 2),
+              //     //         ),
+              //     //         (Route<dynamic> route) => false,
+              //     //       );
+              //     //     },
+              //     //     child: Text("Купить сейчас", style: AppTextStyles.title),
+              //     //   ),
+              //     // ),
+              //     const SizedBox(height: 4),
+              //   ],
+              // ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: WidgetPageBuyerItemCardAddToCardButton(item: item),
               ),
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadiusGeometry.only(
-                      bottomLeft: Radius.circular(8),
-                      bottomRight: Radius.circular(8),
-                      topLeft: Radius.circular(32),
-                      topRight: Radius.circular(32),
-                    ),
-                  ),
-                ),
+
+              const SizedBox(width: 4),
+
+              TextButton(
                 onPressed: () {
                   if (!state.actualOrders.contains(item)) {
                     bloc.add(AddActualOrdersEvent(item: item));
@@ -273,15 +297,25 @@ class PageBuyerItemCardButtons extends StatelessWidget {
                     (Route<dynamic> route) => false,
                   );
                 },
-                child: Text("Купить сейчас", style: AppTextStyles.title),
+                style: TextButton.styleFrom(
+                  backgroundColor: AppColors.vanillaIce,
+                  fixedSize: Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.only(
+                      bottomLeft: Radius.circular(8),
+                      bottomRight: Radius.circular(32),
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(32),
+                    ),
+                  ),
+                ),
+                child: Icon(AppIcons.shopCart, size: 32),
               ),
-            ),
+            ],
+          );
+        }
 
-            const SizedBox(height: 4),
-
-            WidgetPageBuyerItemCardAddToCardButton(item: item),
-          ],
-        );
+        return const SizedBox();
       },
     );
   }
@@ -289,7 +323,12 @@ class PageBuyerItemCardButtons extends StatelessWidget {
 
 class WidgetPageBuyerItemCardAddToCardButton extends StatefulWidget {
   final ObjectItem item;
-  const WidgetPageBuyerItemCardAddToCardButton({super.key, required this.item});
+  final bool maxSize;
+  const WidgetPageBuyerItemCardAddToCardButton({
+    super.key,
+    required this.item,
+    this.maxSize = false,
+  });
 
   @override
   State<WidgetPageBuyerItemCardAddToCardButton> createState() =>
@@ -308,14 +347,16 @@ class _WidgetPageBuyerItemCardAddToCardButtonState
         }
 
         return Container(
-          width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(
+          width: widget.maxSize
+              ? MediaQuery.of(context).size.width
+              : MediaQuery.of(context).size.width - 110,
+          decoration: BoxDecoration(
             color: AppColors.vanillaIce,
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8),
-              topRight: Radius.circular(8),
+              topLeft: Radius.circular(32),
+              topRight: Radius.circular(widget.maxSize ? 32 : 8),
               bottomLeft: Radius.circular(32),
-              bottomRight: Radius.circular(32),
+              bottomRight: Radius.circular(widget.maxSize ? 32 : 8),
             ),
           ),
           child: !state.actualOrders.contains(widget.item)
@@ -324,6 +365,19 @@ class _WidgetPageBuyerItemCardAddToCardButtonState
                     bloc.add(AddActualOrdersEvent(item: widget.item));
                     setState(() {});
                   },
+
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.only(
+                        bottomLeft: Radius.circular(32),
+                        bottomRight: Radius.circular(0),
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(0),
+                      ),
+                    ),
+                    fixedSize: Size(MediaQuery.of(context).size.width, 50),
+                  ),
+
                   child: Text("Добавить в корзину", style: AppTextStyles.title),
                 )
               : Row(
@@ -380,6 +434,142 @@ class _WidgetPageBuyerItemCardAddToCardButtonState
                     ),
                   ],
                 ),
+        );
+      },
+    );
+  }
+}
+
+class BuyerItemButton extends StatefulWidget {
+  final ObjectItem item;
+  final bool isSeller;
+  const BuyerItemButton({super.key, required this.item, this.isSeller = false});
+
+  @override
+  State<BuyerItemButton> createState() => _BuyerItemButtonState();
+}
+
+class _BuyerItemButtonState extends State<BuyerItemButton> {
+  @override
+  Widget build(BuildContext context) {
+    final bloc = BlocProvider.of<BuyerAccountBloc>(context);
+    return BlocBuilder<BuyerAccountBloc, BuyerAccountState>(
+      builder: (context, state) {
+        if (state is! BuyerAccountLoaded) {
+          return const SizedBox();
+        }
+
+        final ButtonStyle style = TextButton.styleFrom(
+          backgroundColor: AppColors.vanillaIce,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadiusGeometry.only(
+              bottomLeft: Radius.circular(16),
+              bottomRight: Radius.circular(16),
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+          ),
+        );
+
+        return Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                flex: 5,
+                child: AspectRatio(
+                  aspectRatio: 5,
+                  child: !state.actualOrders.contains(widget.item)
+                      ? TextButton(
+                          onPressed: () {
+                            bloc.add(AddActualOrdersEvent(item: widget.item));
+                            setState(() {});
+                          },
+                          style: style,
+                          child: Text("Добавить в корзину"),
+                        )
+                      : Container(
+                          decoration: const BoxDecoration(
+                            color: AppColors.vanillaIce,
+                            borderRadius: BorderRadiusGeometry.only(
+                              bottomLeft: Radius.circular(16),
+                              bottomRight: Radius.circular(16),
+                              topLeft: Radius.circular(16),
+                              topRight: Radius.circular(16),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                child: TextButton(
+                                  onPressed: () {
+                                    bloc.add(
+                                      RemoveActualOrdersEvent(
+                                        item: widget.item,
+                                      ),
+                                    );
+                                    setState(() {});
+                                  },
+                                  style: style,
+                                  child: Icon(Icons.remove),
+                                ),
+                              ),
+                              Text(
+                                state
+                                    .actualOrdersItemAmount(widget.item)
+                                    .toString(),
+                              ),
+                              Expanded(
+                                child: TextButton(
+                                  onPressed: () {
+                                    bloc.add(
+                                      AddActualOrdersEvent(item: widget.item),
+                                    );
+                                    setState(() {});
+                                  },
+                                  style: style,
+                                  child: Icon(Icons.add),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                ),
+              ),
+              state.actualOrders.contains(widget.item)
+                  ? const SizedBox(width: 16)
+                  : const SizedBox(),
+              state.actualOrders.contains(widget.item)
+                  ? Expanded(
+                      flex: 1,
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: TextButton(
+                          onPressed: () {
+                            if (!state.actualOrders.contains(widget.item)) {
+                              bloc.add(AddActualOrdersEvent(item: widget.item));
+                            }
+
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    PageBuyerHomepage(pageIndex: 2),
+                              ),
+                              (Route<dynamic> route) => false,
+                            );
+                          },
+                          style: style,
+                          child: Icon(AppIcons.shopCart),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
+            ],
+          ),
         );
       },
     );

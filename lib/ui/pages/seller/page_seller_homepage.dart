@@ -122,7 +122,7 @@ class _PageSellerHomepageState extends State<PageSellerHomepage>
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: Icon(Icons.camera_alt_outlined),
+        child: Icon(Icons.add),
       ),
     );
   }
