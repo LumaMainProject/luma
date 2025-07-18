@@ -7,9 +7,11 @@ import 'package:luma/ui/pages/buyer/page_buyer_item_card.dart';
 class WidgetItemCard extends StatelessWidget {
   final ObjectItem item;
   final int index;
+  final bool isSeller;
   final Map<ObjectItem, ObjectShop> itemToShopDictionary;
   const WidgetItemCard({
     super.key,
+    this.isSeller = false,
     required this.item,
     required this.index,
     required this.itemToShopDictionary,
@@ -34,6 +36,7 @@ class WidgetItemCard extends StatelessWidget {
                   shop: itemToShopDictionary[item] ?? SaveShop.adidas,
                   item: item,
                   itemToShopDictionary: itemToShopDictionary,
+                  isSeller: isSeller,
                 ),
               ),
             );

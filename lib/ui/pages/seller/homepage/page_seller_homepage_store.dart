@@ -146,6 +146,7 @@ class PageSellerHomepageStoreSliver extends StatelessWidget {
                     WidgetGridViewPromos(
                       itemList: state.itemsNewArrivals,
                       itemToShopDictionary: state.itemToShopDictionary,
+                      isSeller: true,
                     ),
                   ],
                 ),
@@ -163,6 +164,7 @@ class PageSellerHomepageStoreSliver extends StatelessWidget {
                     WidgetGridViewPromos(
                       itemList: state.itemsPromos,
                       itemToShopDictionary: state.itemToShopDictionary,
+                      isSeller: true,
                     ),
                   ],
                 ),
@@ -179,6 +181,7 @@ class PageSellerHomepageStoreSliver extends StatelessWidget {
                     WidgetGridViewSuggested(
                       itemList: state.itemsSuggested,
                       itemToShopDictionary: state.itemToShopDictionary,
+                      isSeller: true,
                     ),
                   ],
                 ),

@@ -63,11 +63,14 @@ class PageSellerHomepageHome extends StatelessWidget {
             //   child: PieGraph(),
             // ),
             SliverToBoxAdapter(
-              child: Row(
-                children: [
-                  LinesGraph(spotsA: spotsA, spotsB: spotsB, spotsC: spotsC),
-                  PieGraph(),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Row(
+                  children: [
+                    LinesGraph(spotsA: spotsA, spotsB: spotsB, spotsC: spotsC),
+                    PieGraph(),
+                  ],
+                ),
               ),
             ),
 
@@ -182,6 +185,14 @@ class LinesGraph extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: LineChart(
           LineChartData(
+            borderData: FlBorderData(
+              border: Border(left: BorderSide(), bottom: BorderSide()),
+            ),
+            gridData: const FlGridData(
+              drawHorizontalLine: false,
+              drawVerticalLine: false,
+            ),
+            titlesData: const FlTitlesData(topTitles: AxisTitles(), rightTitles: AxisTitles()),
             lineBarsData: [
               LineChartBarData(
                 color: Colors.blueAccent,
@@ -189,14 +200,14 @@ class LinesGraph extends StatelessWidget {
                 preventCurveOverShooting: true,
                 spots: spotsA,
               ),
-        
+
               LineChartBarData(
                 color: Colors.purpleAccent,
                 isCurved: true,
                 preventCurveOverShooting: true,
                 spots: spotsB,
               ),
-        
+
               LineChartBarData(
                 color: Colors.orangeAccent,
                 isCurved: true,

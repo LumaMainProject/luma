@@ -7,9 +7,11 @@ class WidgetGridViewPromos extends StatelessWidget {
   final List<ObjectItem> itemList;
   final Map<ObjectItem, ObjectShop> itemToShopDictionary;
   final double paddings;
+  final bool isSeller;
   const WidgetGridViewPromos({
     super.key,
     this.paddings = 0,
+    this.isSeller = false,
     required this.itemList,
     required this.itemToShopDictionary,
   });
@@ -30,6 +32,7 @@ class WidgetGridViewPromos extends StatelessWidget {
           index: index,
           item: itemList[index],
           itemToShopDictionary: itemToShopDictionary,
+          isSeller: isSeller,
         ),
         itemCount: itemList.length,
       ),

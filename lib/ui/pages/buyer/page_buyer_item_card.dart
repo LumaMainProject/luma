@@ -4,6 +4,7 @@ import 'package:luma/domain/buyer_bloc/buyer_account_bloc.dart';
 import 'package:luma/global/classes/object_item.dart';
 import 'package:luma/global/classes/object_shop.dart';
 import 'package:luma/global/params/app_colors.dart';
+import 'package:luma/global/params/app_icons.dart';
 import 'package:luma/global/params/app_text_styles.dart';
 import 'package:luma/ui/pages/buyer/page_buyer_homepage.dart';
 import 'package:luma/ui/widgets/widget_store.dart';
@@ -11,12 +12,14 @@ import 'package:luma/ui/widgets/widget_store.dart';
 class PageBuyerItemCard extends StatefulWidget {
   final ObjectShop shop;
   final ObjectItem item;
+  final bool isSeller;
   final Map<ObjectItem, ObjectShop> itemToShopDictionary;
   const PageBuyerItemCard({
     super.key,
     required this.shop,
     required this.item,
     required this.itemToShopDictionary,
+    this.isSeller = false,
   });
 
   @override
@@ -179,7 +182,10 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
             width: MediaQuery.of(context).size.width,
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: PageBuyerItemCardButtons(item: widget.item),
+              child: PageBuyerItemCardButtons(
+                item: widget.item,
+                isSeller: widget.isSeller,
+              ),
             ),
           ),
         ],
@@ -189,8 +195,13 @@ class _PageBuyerItemCardState extends State<PageBuyerItemCard> {
 }
 
 class PageBuyerItemCardButtons extends StatelessWidget {
+  final bool isSeller;
   final ObjectItem item;
-  const PageBuyerItemCardButtons({super.key, required this.item});
+  const PageBuyerItemCardButtons({
+    super.key,
+    required this.item,
+    required this.isSeller,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -199,6 +210,28 @@ class PageBuyerItemCardButtons extends StatelessWidget {
       builder: (context, state) {
         if (state is! BuyerAccountLoaded) {
           return const SizedBox();
+        }
+
+        if (isSeller) {
+          return Align(
+            alignment: Alignment.bottomRight,
+            child: FloatingActionButton(
+              onPressed: () {},
+              child: Icon(Icons.edit),
+            ),
+          );
+        }
+
+        if (!state.actualOrders.contains(item)) {
+          return Align(
+            alignment: Alignment.bottomRight,
+            child: FloatingActionButton.large(
+              onPressed: () {
+                bloc.add(AddActualOrdersEvent(item: item));
+              },
+              child: const Icon(AppIcons.shopCart),
+            ),
+          );
         }
 
         return Column(
@@ -231,7 +264,7 @@ class PageBuyerItemCardButtons extends StatelessWidget {
                   if (!state.actualOrders.contains(item)) {
                     bloc.add(AddActualOrdersEvent(item: item));
                   }
-                  
+
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
