@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:luma/global/params/app_icons.dart';
+import 'package:luma/global/params/app_images.dart';
+import 'package:luma/global/params/app_text_styles.dart';
 import 'package:luma/global/saves/saves.dart';
 import 'package:luma/ui/pages/seller/homepage/page_seller_homepage_billing.dart';
 import 'package:luma/ui/pages/seller/homepage/page_seller_homepage_home.dart';
@@ -31,7 +33,7 @@ class _PageSellerHomepageState extends State<PageSellerHomepage>
     );
 
     final List<Widget> pages = [
-      PageSellerHomepageStore(shop: SaveShop.adidas,),
+      PageSellerHomepageStore(shop: SaveShop.adidas),
       PageSellerHomepageHome(),
       PageSellerHomepageBilling(),
       PageSellerHomepageSettings(),
@@ -71,7 +73,13 @@ class _PageSellerHomepageState extends State<PageSellerHomepage>
                 ),
               )
             : null,
-        leading: Icon(AppIcons.appLogo),
+        title: const Text("LUMA", style: AppTextStyles.logo),
+        leading: Image(
+          image: AppImages.appLogo,
+          height: 50,
+          width: 50,
+          fit: BoxFit.cover,
+        ),
         actions: [
           // NOTIFICATIONS
           IconButton.filledTonal(

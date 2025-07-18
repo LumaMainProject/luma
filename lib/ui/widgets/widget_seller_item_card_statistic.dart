@@ -29,7 +29,7 @@ class WidgetSellerItemCardStatistic extends StatelessWidget {
           const SizedBox(width: 16),
           Text(item.itemName, style: AppTextStyles.title2),
           const Spacer(),
-          Text(item.quantity.toString(), style: AppTextStyles.title2),
+          Text(item.itemSold.toString(), style: AppTextStyles.title2),
         ],
       ),
     );

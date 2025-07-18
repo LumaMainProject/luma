@@ -195,50 +195,61 @@ class PageBuyerItemCardButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<BuyerAccountBloc>(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(
-            color: AppColors.vanillaIce,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8),
-              bottomRight: Radius.circular(8),
-              topLeft: Radius.circular(32),
-              topRight: Radius.circular(32),
-            ),
-          ),
-          child: TextButton(
-            style: TextButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadiusGeometry.only(
+    return BlocBuilder<BuyerAccountBloc, BuyerAccountState>(
+      builder: (context, state) {
+        if (state is! BuyerAccountLoaded) {
+          return const SizedBox();
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                color: AppColors.vanillaIce,
+                borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(8),
                   bottomRight: Radius.circular(8),
                   topLeft: Radius.circular(32),
                   topRight: Radius.circular(32),
                 ),
               ),
-            ),
-            onPressed: () {
-              bloc.add(AddActualOrdersEvent(item: item));
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PageBuyerHomepage(pageIndex: 2),
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.only(
+                      bottomLeft: Radius.circular(8),
+                      bottomRight: Radius.circular(8),
+                      topLeft: Radius.circular(32),
+                      topRight: Radius.circular(32),
+                    ),
+                  ),
                 ),
-                (Route<dynamic> route) => false,
-              );
-            },
-            child: Text("Купить сейчас", style: AppTextStyles.title),
-          ),
-        ),
+                onPressed: () {
+                  if (!state.actualOrders.contains(item)) {
+                    bloc.add(AddActualOrdersEvent(item: item));
+                  }
+                  
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PageBuyerHomepage(pageIndex: 2),
+                    ),
+                    (Route<dynamic> route) => false,
+                  );
+                },
+                child: Text("Купить сейчас", style: AppTextStyles.title),
+              ),
+            ),
 
-        const SizedBox(height: 4),
+            const SizedBox(height: 4),
 
-        WidgetPageBuyerItemCardAddToCardButton(item: item),
-      ],
+            WidgetPageBuyerItemCardAddToCardButton(item: item),
+          ],
+        );
+      },
     );
   }
 }
