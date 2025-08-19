@@ -99,12 +99,14 @@ class _PageRegisterState extends State<PageRegister> {
 
 class PageRegisterCustomButton extends StatelessWidget {
   final bool isActive;
+  final bool isIcon;
   final String text;
   final IconData icon;
   final Function() function;
   const PageRegisterCustomButton({
     super.key,
     this.isActive = false,
+    this.isIcon = true,
     this.text = "TEST",
     this.icon = Icons.abc,
     required this.function,
@@ -121,19 +123,25 @@ class PageRegisterCustomButton extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 22),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(32),
-              child: Container(
-                color: isActive ? AppColors.mainColor : AppColors.secondColor,
-                padding: const EdgeInsets.all(10),
-                child: Icon(
-                  icon,
-                  size: 20,
-                  color: isActive ? AppColors.whiteColor : AppColors.mainColor,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
+            isIcon
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(32),
+                    child: Container(
+                      color: isActive
+                          ? AppColors.mainColor
+                          : AppColors.secondColor,
+                      padding: const EdgeInsets.all(10),
+                      child: Icon(
+                        icon,
+                        size: 20,
+                        color: isActive
+                            ? AppColors.whiteColor
+                            : AppColors.mainColor,
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
+            isIcon ? const SizedBox(height: 10) : const SizedBox(),
             Text(text, style: AppTextStyles.title),
             const SizedBox(height: 22),
           ],

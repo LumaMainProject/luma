@@ -3,6 +3,7 @@ import 'package:luma/domain/buyer_bloc/buyer_account_bloc.dart';
 import 'package:luma/domain/manager_bloc/manager_bloc.dart';
 import 'package:luma/domain/seller_bloc/seller_account_bloc.dart';
 import 'package:luma/domain/store_manager_bloc/store_manager_bloc.dart';
+import 'package:luma/global/params/app_colors.dart';
 import 'package:luma/global/params/app_router.dart';
 import 'package:luma/global/saves/saves.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,6 +55,15 @@ class _LumaState extends State<Luma> {
           useMaterial3: true,
           brightness: Brightness.light,
           fontFamily: 'ARIAL',
+
+          scaffoldBackgroundColor: AppColors.backgroundColor,
+
+          appBarTheme: AppBarTheme(
+            iconTheme: IconThemeData(color: AppColors.iconColor),
+            backgroundColor: AppColors.whiteColor,
+            surfaceTintColor: AppColors.whiteColor,
+            elevation: 0,
+          ),
         ),
 
         initialRoute: AppRouter.names[AppRouterEnum.routerRegisterPage],

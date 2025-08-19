@@ -14,6 +14,7 @@ abstract class AppIcons {
 
   static const visibility = Icons.visibility_outlined;
   static const photoMode = Icons.camera_alt_outlined;
+  static const gallery = Icons.add_photo_alternate_outlined;
 
   static const google = Icons.android_outlined;
   static const ios = Icons.add_to_drive;
@@ -31,4 +32,7 @@ abstract class AppIcons {
 
   static const raitings = Icons.star_rounded;
   static const raitingsNone = Icons.star_outline_rounded;
+
+  static const cash = Icons.money;
+  static const card = Icons.credit_card;
 }

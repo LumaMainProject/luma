@@ -72,6 +72,19 @@ abstract class AppButtonStyle {
     color: AppColors.whiteColor,
     borderRadius: BorderRadius.all(Radius.circular(AppSettings.borderAngle)),
     border: BoxBorder.all(color: AppColors.inactiveBorderColor),
+
+    boxShadow: [
+        BoxShadow(
+          color: Colors.black12,
+          blurRadius: 10,
+          offset: Offset(0, 4),
+        ),
+      ],
+  );
+
+  static final BoxDecoration customBottomNavBarFix = BoxDecoration(
+    color: AppColors.whiteColor,
+    borderRadius: BorderRadius.all(Radius.circular(AppSettings.borderAngle)),
   );
 
   static final ButtonStyle navBarIconButton = ButtonStyle(
@@ -86,6 +99,26 @@ abstract class AppButtonStyle {
       ),
     ),
     padding: WidgetStatePropertyAll(EdgeInsets.all(20)),
+  );
+
+  static final ButtonStyle notificationsActive = ButtonStyle(
+    backgroundColor: WidgetStatePropertyAll(AppColors.mainColor),
+    shape: WidgetStatePropertyAll(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSettings.borderAngle),
+      ),
+    ),
+    padding: WidgetStatePropertyAll(EdgeInsets.all(4)),
+  );
+
+  static final ButtonStyle notificationsDeactive = ButtonStyle(
+    backgroundColor: WidgetStatePropertyAll(AppColors.secondColor),
+    shape: WidgetStatePropertyAll(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSettings.borderAngle),
+      ),
+    ),
+    padding: WidgetStatePropertyAll(EdgeInsets.all(4)),
   );
 
   static final BoxDecoration circleIconActive = BoxDecoration(
@@ -135,6 +168,7 @@ abstract class AppButtonStyle {
 
   static final BoxDecoration itemHint = BoxDecoration(
     color: AppColors.mainColor,
+    borderRadius: BorderRadius.all(Radius.circular(36)),
   );
 
   static final ButtonStyle itemButton = ButtonStyle(
@@ -147,7 +181,34 @@ abstract class AppButtonStyle {
     color: AppColors.secondColor,
   );
 
-  static final BoxDecoration sale = BoxDecoration(
-    color: AppColors.saleColor,
+  static final BoxDecoration sale = BoxDecoration(color: AppColors.saleColor);
+
+  static final BoxDecoration notification = BoxDecoration(
+    color: AppColors.whiteColor,
+    borderRadius: BorderRadius.all(Radius.circular(AppSettings.borderAngle)),
+
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black12,
+        spreadRadius: 1,
+        blurRadius: 4,
+        offset: Offset(0, 2),
+      ),
+    ],
+  );
+
+  static final BoxDecoration cartShopWidget = BoxDecoration(
+    color: AppColors.whiteColor,
+    borderRadius: BorderRadius.all(Radius.circular(AppSettings.borderAngle)),
+    border: BoxBorder.all(color: AppColors.cartBorder),
+
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black12,
+        spreadRadius: 1,
+        blurRadius: 4,
+        offset: Offset(0, 2),
+      ),
+    ],
   );
 }

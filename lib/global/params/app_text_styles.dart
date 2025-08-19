@@ -104,4 +104,30 @@ abstract class AppTextStyles {
     fontSize: 14,
     color: AppColors.whiteColor,
   );
+
+  static const TextStyle shopCartTitle = TextStyle(
+    fontSize: 12.3,
+    color: AppColors.mainColor,
+  );
+
+  static const TextStyle shopCartDescription = TextStyle(
+    fontSize: 12.3,
+    color: AppColors.textColor,
+  );
+
+  static const TextStyle shopCartDelivery = TextStyle(
+    fontSize: 10.5,
+    color: AppColors.mainColor,
+  );
+
+  static const TextStyle shopCartTag = TextStyle(
+    fontSize: 10.5,
+    color: AppColors.textColor,
+  );
+
+  static const TextStyle orderAddressTitle = TextStyle(
+    fontSize: 12.3,
+    color: AppColors.textColor,
+    fontWeight: FontWeight.bold,
+  );
 }

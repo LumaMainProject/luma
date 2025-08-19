@@ -15,11 +15,12 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
+    return Container(
+      margin: const EdgeInsets.all(10),
+      decoration: AppButtonStyle.customBottomNavBar,
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 8),
-        decoration: AppButtonStyle.customBottomNavBar,
+        decoration: AppButtonStyle.customBottomNavBarFix,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:luma/ui/pages/buyer/buyer_finalize_order.dart';
 import 'package:luma/ui/pages/buyer/buyer_homepage.dart';
 import 'package:luma/ui/pages/buyer/buyer_item_page.dart';
+import 'package:luma/ui/pages/buyer/page_buyer_notifications.dart';
 import 'package:luma/ui/pages/page_register.dart';
 
 abstract class AppRouter {
@@ -18,6 +20,12 @@ abstract class AppRouter {
           builder: (_) => BuyerItemPage(title: args.title),
         );
 
+      case '/buyer/notifications':
+        return MaterialPageRoute(builder: (_) => PageBuyerNotifications());
+
+      case '/buyer/finalize_order':
+        return MaterialPageRoute(builder: (_) => BuyerFinalizeOrder());
+
       default:
         return MaterialPageRoute(
           builder: (_) =>
@@ -30,6 +38,8 @@ abstract class AppRouter {
     AppRouterEnum.routerRegisterPage: '/',
     AppRouterEnum.routerBuyerHomePage: '/buyer/home',
     AppRouterEnum.routerBuyerItemPage: '/buyer/item_page',
+    AppRouterEnum.routerBuyerNotifications: '/buyer/notifications',
+    AppRouterEnum.routerBuyerFinalizeOrder: '/buyer/finalize_order',
   };
 }
 
@@ -37,6 +47,8 @@ enum AppRouterEnum {
   routerRegisterPage,
   routerBuyerHomePage,
   routerBuyerItemPage,
+  routerBuyerNotifications,
+  routerBuyerFinalizeOrder,
 }
 
 /// Arguments for BuyerItemPage
