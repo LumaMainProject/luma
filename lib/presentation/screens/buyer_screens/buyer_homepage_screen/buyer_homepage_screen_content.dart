@@ -1,0 +1,219 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:luma_2/core/constants/app_icons.dart';
+import 'package:luma_2/core/constants/app_strings.dart';
+import 'package:luma_2/core/router/app_routes.dart';
+import 'package:luma_2/core/theme/app_colors.dart';
+import 'package:luma_2/core/theme/app_sizes.dart';
+import 'package:luma_2/core/theme/app_spacing.dart';
+import 'package:luma_2/core/theme/app_text_styles.dart';
+import 'package:luma_2/data/models/store.dart';
+import 'package:luma_2/logic/auth/auth_cubit.dart';
+import 'package:luma_2/logic/products/products_cubit.dart';
+import 'package:luma_2/logic/stores/stores_cubit.dart';
+import 'package:luma_2/presentation/widgets/item_widget.dart';
+
+class BuyerHomepageScreenContent extends StatelessWidget {
+  const BuyerHomepageScreenContent({super.key});
+
+  void _navigateToLogin(BuildContext context) {
+    context.go(AppRoute.auth.path);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        foregroundColor: AppColors.primary,
+        iconTheme: IconThemeData(color: AppColors.primary),
+        backgroundColor: AppColors.white,
+        leading: IconButton(
+          onPressed: () {},
+          icon: Icon(AppIcons.notification),
+        ),
+        title: Text(
+          AppStrings.buyerHomepageTitle,
+          style: AppTextStyles.headline.copyWith(color: AppColors.primary),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _navigateToLogin(context);
+              context.read<AuthCubit>().signOut();
+            },
+            icon: const Icon(Icons.logout),
+          ),
+        ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(58),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.paddingMd,
+              vertical: AppSpacing.paddingSm,
+            ),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: AppStrings.buyerHomepageSearch,
+              ),
+            ),
+          ),
+        ),
+      ),
+      body: BlocBuilder<ProductsCubit, ProductsState>(
+        builder: (context, productsState) {
+          return BlocBuilder<StoresCubit, StoresState>(
+            builder: (context, storesState) {
+              if (productsState is ProductsLoading ||
+                  storesState is StoresLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (productsState is ProductsLoaded &&
+                  storesState is StoresLoaded) {
+                if (productsState.products.isEmpty) {
+                  return const Center(child: Text("Нет продуктов"));
+                }
+
+                final storesMap = {for (var s in storesState.stores) s.id: s};
+
+                // --- Фильтруем скидки ---
+                final discountProducts =
+                    productsState.products
+                        .where((p) => (p.discountPrice ?? 0) > 0)
+                        .toList()
+                      ..sort(
+                        (a, b) => (b.discountPrice ?? 0).compareTo(
+                          a.discountPrice ?? 0,
+                        ),
+                      );
+
+                // --- Фильтруем хиты сезона 2025 ---
+                final hitProducts = List.from(productsState.products)
+                  ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
+                return SingleChildScrollView(
+                  padding: EdgeInsets.only(bottom: AppSpacing.bottomNavBar),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Скидки
+                      const SizedBox(height: AppSpacing.paddingMd),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.paddingMd,
+                        ),
+                        child: Text("Скидки", style: AppTextStyles.headline),
+                      ),
+                      const SizedBox(height: AppSpacing.paddingMd),
+                      SizedBox(
+                        height: AppSizes.cartSm,
+                        child: ListView.separated(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.paddingMd,
+                          ),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: discountProducts.length,
+                          itemBuilder: (context, i) {
+                            final product = discountProducts[i];
+                            final store =
+                                storesMap[product.sellerId] ?? Store.empty();
+                            return ItemWidget(
+                              product: product,
+                              store: store,
+                              width: AppSizes.productSm,
+                            );
+                          },
+                          separatorBuilder: (_, __) => AppSpacing.horizontalSm,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.paddingLg),
+
+                      // Хит сезона 2025
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.paddingMd,
+                        ),
+                        child: Text(
+                          "Хит сезона 2025",
+                          style: AppTextStyles.headline,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.paddingMd),
+                      SizedBox(
+                        height: AppSizes.cartMd,
+                        child: ListView.separated(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.paddingMd,
+                          ),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: hitProducts.length,
+                          itemBuilder: (context, i) {
+                            final product = hitProducts[i];
+                            final store =
+                                storesMap[product.sellerId] ?? Store.empty();
+                            return ItemWidget(
+                              product: product,
+                              store: store,
+                              width: AppSizes.productMd,
+                              customText: "Hit '25",
+                            );
+                          },
+                          separatorBuilder: (_, __) => AppSpacing.horizontalSm,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.paddingLg),
+
+                      // Grid view всех товаров
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.paddingMd,
+                        ),
+                        child: Text(
+                          "Популярное",
+                          style: AppTextStyles.headline,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.paddingMd),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.paddingMd,
+                        ),
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: AppSpacing.paddingMd,
+                                mainAxisSpacing: AppSpacing.paddingMd,
+                                childAspectRatio: 0.65,
+                              ),
+                          itemCount: productsState.products.length,
+                          itemBuilder: (context, i) {
+                            final product = productsState.products[i];
+                            final store =
+                                storesMap[product.sellerId] ?? Store.empty();
+                            return ItemWidget(product: product, store: store);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              } else if (productsState is ProductsError) {
+                return Center(
+                  child: Text("Ошибка продуктов: ${productsState.message}"),
+                );
+              } else if (storesState is StoresError) {
+                return Center(
+                  child: Text("Ошибка магазинов: ${storesState.message}"),
+                );
+              }
+
+              return const SizedBox();
+            },
+          );
+        },
+      ),
+    );
+  }
+}
