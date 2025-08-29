@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luma_2/core/constants/app_icons.dart';
 import 'package:luma_2/core/constants/app_strings.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
@@ -9,6 +10,7 @@ import 'package:luma_2/core/theme/app_text_styles.dart';
 import 'package:luma_2/data/models/product.dart';
 import 'package:luma_2/data/models/store.dart';
 import 'package:luma_2/data/models/user_profile.dart';
+import 'package:luma_2/logic/user/user_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShopWidget extends StatelessWidget {
@@ -205,14 +207,10 @@ class ShopWidgetItem extends StatelessWidget {
               width: AppSizes.avatarLg,
               height: AppSizes.avatarLg,
               fit: BoxFit.cover,
-              placeholder: (context, url) => Shimmer.fromColors(
-                baseColor: Colors.grey.shade300,
-                highlightColor: Colors.grey.shade100,
-                child: Container(
-                  width: AppSizes.avatarLg,
-                  height: AppSizes.avatarLg,
-                  color: Colors.white,
-                ),
+              placeholder: (context, url) => Container(
+                width: AppSizes.avatarLg,
+                height: AppSizes.avatarLg,
+                color: Colors.grey.shade200,
               ),
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
@@ -220,15 +218,13 @@ class ShopWidgetItem extends StatelessWidget {
 
           AppSpacing.horizontalMd,
 
-          // Название и цены вертикально
+          // Название и цены
           Expanded(
             child: SizedBox(
-              height:
-                  AppSizes.avatarLg, // 👈 ограничиваем высоту как у картинки
+              height: AppSizes.avatarLg,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment:
-                    MainAxisAlignment.spaceBetween, // 👈 разносит на максимум
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     product.name,
@@ -262,9 +258,26 @@ class ShopWidgetItem extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: QuantitySelector(
               count: order.quantity,
-              onAdd: () {},
-              onDelete: () {},
-              onRemove: () {},
+              onAdd: () {
+                context.read<UserBloc>().add(
+                  UpdateProductQuantity(product: product, delta: 1),
+                );
+              },
+              onRemove: () {
+                if (order.quantity > 0) {
+                  context.read<UserBloc>().add(
+                    UpdateProductQuantity(product: product, delta: -1),
+                  );
+                }
+              },
+              onDelete: () {
+                context.read<UserBloc>().add(
+                  UpdateProductQuantity(
+                    product: product,
+                    delta: -order.quantity,
+                  ),
+                );
+              },
             ),
           ),
         ],

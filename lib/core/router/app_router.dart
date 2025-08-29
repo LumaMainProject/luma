@@ -72,7 +72,7 @@ class AppRouter {
 
             final Product product = extra['product'] as Product;
             final Store store = extra['store'] as Store;
-            return BuyerPruductScreen(product: product, store: store);
+            return BuyerProductScreen(product: product, store: store);
           },
         ),
       ],
