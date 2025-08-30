@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:collection/collection.dart'; // для firstWhereOrNull
+import 'package:go_router/go_router.dart';
 import 'package:luma_2/core/constants/app_icons.dart';
 import 'package:luma_2/core/constants/app_strings.dart';
+import 'package:luma_2/core/router/app_routes.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/core/theme/app_sizes.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
@@ -106,7 +108,15 @@ class BottomBuyBar extends StatelessWidget {
                 SizedBox(
                   width: AppSizes.productMd,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (quantityInCart == 0) {
+                        context.read<UserBloc>().add(
+                          UpdateProductQuantity(product: product, delta: 1),
+                        );
+                      }
+
+                      context.pushNamed(AppRoute.buyerPurchase.name);
+                    },
                     child: Text(AppStrings.buyerProductScreenBuy),
                   ),
                 ),

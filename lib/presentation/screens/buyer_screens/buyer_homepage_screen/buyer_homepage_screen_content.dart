@@ -177,22 +177,37 @@ class BuyerHomepageScreenContent extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                           horizontal: AppSpacing.paddingMd,
                         ),
-                        child: GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: AppSpacing.paddingMd,
-                                mainAxisSpacing: AppSpacing.paddingMd,
-                                childAspectRatio: 0.65,
-                              ),
-                          itemCount: productsState.products.length,
-                          itemBuilder: (context, i) {
-                            final product = productsState.products[i];
-                            final store =
-                                storesMap[product.sellerId] ?? Store.empty();
-                            return ItemWidget(product: product, store: store);
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            int crossAxisCount = 2; // по умолчанию телефон
+                            if (constraints.maxWidth >= 900) {
+                              crossAxisCount = 5; // ПК
+                            } else if (constraints.maxWidth >= 600) {
+                              crossAxisCount = 3; // планшет
+                            }
+
+                            return GridView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: crossAxisCount,
+                                    crossAxisSpacing: AppSpacing.paddingMd,
+                                    mainAxisSpacing: AppSpacing.paddingMd,
+                                    childAspectRatio: 0.65,
+                                  ),
+                              itemCount: productsState.products.length,
+                              itemBuilder: (context, i) {
+                                final product = productsState.products[i];
+                                final store =
+                                    storesMap[product.sellerId] ??
+                                    Store.empty();
+                                return ItemWidget(
+                                  product: product,
+                                  store: store,
+                                );
+                              },
+                            );
                           },
                         ),
                       ),

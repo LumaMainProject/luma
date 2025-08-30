@@ -1,4 +1,14 @@
-enum AppRoute { splash, auth, buyerHomepage, buyerProduct }
+enum AppRoute {
+  splash,
+  auth,
+  buyerHomepage,
+  buyerProduct,
+  buyerPurchase,
+  buyerAccountEdit,
+  buyerAccountFavorite,
+  buyerAccountMessenger,
+  buyerAccountOrders,
+}
 
 extension AppRoutePath on AppRoute {
   String get path {
@@ -11,6 +21,17 @@ extension AppRoutePath on AppRoute {
         return '/buyer/home';
       case AppRoute.buyerProduct:
         return '/buyer/product';
+      case AppRoute.buyerPurchase:
+        return '/buyer/purchase';
+
+      case AppRoute.buyerAccountEdit:
+        return '/buyer/buyerAccountEdit';
+      case AppRoute.buyerAccountFavorite:
+        return '/buyer/buyerAccountFavorite';
+      case AppRoute.buyerAccountMessenger:
+        return '/buyer/buyerAccountMessenger';
+      case AppRoute.buyerAccountOrders:
+        return '/buyer/buyerAccountOrders';
     }
   }
 

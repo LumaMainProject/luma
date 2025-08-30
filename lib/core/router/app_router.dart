@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:luma_2/data/models/product.dart';
 import 'package:luma_2/data/models/store.dart';
+import 'package:luma_2/presentation/screens/buyer_account_screens/buyer_account_edit.dart';
+import 'package:luma_2/presentation/screens/buyer_account_screens/buyer_account_favorite.dart';
+import 'package:luma_2/presentation/screens/buyer_account_screens/buyer_account_messenger.dart';
+import 'package:luma_2/presentation/screens/buyer_account_screens/buyer_account_orders.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_homepage_screen.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_pruduct_screen.dart';
+import 'package:luma_2/presentation/screens/buyer_screens/buyer_purchase_screen.dart';
 import 'package:luma_2/presentation/screens/register_sceens/splash_screen.dart';
 import 'package:luma_2/presentation/screens/register_sceens/welcome_screen.dart';
 
@@ -74,6 +79,33 @@ class AppRouter {
             final Store store = extra['store'] as Store;
             return BuyerProductScreen(product: product, store: store);
           },
+        ),
+        GoRoute(
+          path: AppRoute.buyerPurchase.path,
+          name: AppRoute.buyerPurchase.name,
+          builder: (context, state) => const BuyerPurchaseScreen(),
+        ),
+
+        // ACCOUNT
+        GoRoute(
+          path: AppRoute.buyerAccountEdit.path,
+          name: AppRoute.buyerAccountEdit.name,
+          builder: (context, state) => const BuyerAccountEdit(),
+        ),
+        GoRoute(
+          path: AppRoute.buyerAccountFavorite.path,
+          name: AppRoute.buyerAccountFavorite.name,
+          builder: (context, state) => const BuyerAccountFavorite(),
+        ),
+        GoRoute(
+          path: AppRoute.buyerAccountMessenger.path,
+          name: AppRoute.buyerAccountMessenger.name,
+          builder: (context, state) => const BuyerAccountMessenger(),
+        ),
+        GoRoute(
+          path: AppRoute.buyerAccountOrders.path,
+          name: AppRoute.buyerAccountOrders.name,
+          builder: (context, state) => const BuyerAccountOrders(),
         ),
       ],
     );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:luma_2/core/constants/app_strings.dart';
+import 'package:luma_2/core/router/app_routes.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/core/theme/app_sizes.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
@@ -159,10 +161,14 @@ class BuyerHomepageScreenShop extends StatelessWidget {
                                       const Spacer(),
 
                                       SizedBox(
-                                        height: AppSizes.iconXl, // фиксируем только высоту
+                                        height: AppSizes
+                                            .iconXl, // фиксируем только высоту
                                         width: AppSizes.productLg,
                                         child: ElevatedButton(
                                           onPressed: () {
+                                            context.pushNamed(
+                                              AppRoute.buyerPurchase.name,
+                                            );
                                           },
                                           child: Text(
                                             AppStrings.buyerHomepageShopButton,

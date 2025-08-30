@@ -25,9 +25,9 @@ abstract class AppSizes {
   static const double cartMd = 280;
 
   // Размеры карточек продукта
-  static const double productSm = 100;
-  static const double productMd = 160;
-  static const double productLg = 200;
+  static const double productSm = 105;
+  static const double productMd = 165;
+  static const double productLg = 205;
 
   // Nav har
   static const double navBarHeight = 72;
