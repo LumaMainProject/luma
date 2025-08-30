@@ -4,6 +4,7 @@ enum AppRoute {
   buyerHomepage,
   buyerProduct,
   buyerPurchase,
+  buyerNotifications,
   buyerAccountEdit,
   buyerAccountFavorite,
   buyerAccountMessenger,
@@ -23,6 +24,8 @@ extension AppRoutePath on AppRoute {
         return '/buyer/product';
       case AppRoute.buyerPurchase:
         return '/buyer/purchase';
+      case AppRoute.buyerNotifications:
+        return '/buyer/buyerNotifications';
 
       case AppRoute.buyerAccountEdit:
         return '/buyer/buyerAccountEdit';

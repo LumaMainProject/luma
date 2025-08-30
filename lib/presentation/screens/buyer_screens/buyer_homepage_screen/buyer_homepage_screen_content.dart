@@ -29,7 +29,9 @@ class BuyerHomepageScreenContent extends StatelessWidget {
         iconTheme: IconThemeData(color: AppColors.primary),
         backgroundColor: AppColors.white,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            context.pushNamed(AppRoute.buyerNotifications.name);
+          },
           icon: Icon(AppIcons.notification),
         ),
         title: Text(

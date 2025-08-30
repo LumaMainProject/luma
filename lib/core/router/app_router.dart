@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:luma_2/data/models/product.dart';
 import 'package:luma_2/data/models/store.dart';
-import 'package:luma_2/presentation/screens/buyer_account_screens/buyer_account_edit.dart';
-import 'package:luma_2/presentation/screens/buyer_account_screens/buyer_account_favorite.dart';
-import 'package:luma_2/presentation/screens/buyer_account_screens/buyer_account_messenger.dart';
-import 'package:luma_2/presentation/screens/buyer_account_screens/buyer_account_orders.dart';
+import 'package:luma_2/presentation/screens/buyer_screens/buyer_account_screens/buyer_account_edit.dart';
+import 'package:luma_2/presentation/screens/buyer_screens/buyer_account_screens/buyer_account_favorite.dart';
+import 'package:luma_2/presentation/screens/buyer_screens/buyer_account_screens/buyer_account_messenger.dart';
+import 'package:luma_2/presentation/screens/buyer_screens/buyer_account_screens/buyer_account_orders.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_homepage_screen.dart';
+import 'package:luma_2/presentation/screens/buyer_screens/buyer_notifications.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_pruduct_screen.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_purchase_screen.dart';
 import 'package:luma_2/presentation/screens/register_sceens/splash_screen.dart';
@@ -84,6 +85,11 @@ class AppRouter {
           path: AppRoute.buyerPurchase.path,
           name: AppRoute.buyerPurchase.name,
           builder: (context, state) => const BuyerPurchaseScreen(),
+        ),
+        GoRoute(
+          path: AppRoute.buyerNotifications.path,
+          name: AppRoute.buyerNotifications.name,
+          builder: (context, state) => const BuyerNotifications(),
         ),
 
         // ACCOUNT
