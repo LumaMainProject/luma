@@ -1,4 +1,6 @@
 import 'package:luma_2/data/models/app_notifications.dart';
+import 'package:luma_2/data/models/chat.dart';
+import 'package:luma_2/data/models/message.dart';
 import 'package:luma_2/data/models/product.dart';
 import 'package:luma_2/data/models/review.dart';
 import 'package:luma_2/data/models/store.dart';
@@ -365,6 +367,75 @@ class ObjectsToAdd {
       actionLabel: "Открыть",
     ),
   ];
+
+  // Добавляем чаты
+  final chats = [
+    Chat(
+      id: "chat_1",
+      participants: ["user_1", "user_2"],
+      participantAvatars: {
+        "user_1": "https://i.pravatar.cc/150?img=1",
+        "user_2": "https://i.pravatar.cc/150?img=2",
+      },
+      lastMessage: "Привет, интересует смартфон Samsung Galaxy S23",
+      lastUpdated: DateTime.now().subtract(const Duration(minutes: 5)),
+      lastReadAt: {
+        "user_1": DateTime.now().subtract(const Duration(minutes: 10)),
+        "user_2": DateTime.now().subtract(const Duration(minutes: 15)),
+      },
+    ),
+    Chat(
+      id: "chat_2",
+      participants: ["user_1", "user_3"],
+      participantAvatars: {
+        "user_1": "https://i.pravatar.cc/150?img=1",
+        "user_3": "https://i.pravatar.cc/150?img=3",
+      },
+      lastMessage: "Добрый день! Есть кроссовки Adidas Ultraboost?",
+      lastUpdated: DateTime.now().subtract(const Duration(hours: 2)),
+      lastReadAt: {
+        "user_1": DateTime.now().subtract(const Duration(hours: 3)),
+        "user_3": DateTime.now().subtract(
+          const Duration(hours: 3, minutes: 30),
+        ),
+      },
+    ),
+  ];
+
+  final messages = {
+    "chat_1": [
+      Message(
+        id: "msg_1",
+        senderId: "user_2",
+        text: "Привет! Я хочу купить Samsung Galaxy S23",
+        createdAt: DateTime.now(), // уже DateTime, не Timestamp
+        isRead: false,
+      ),
+      Message(
+        id: "msg_2",
+        senderId: "user_1",
+        text: "Привет! Да, конечно. Он в наличии.",
+        createdAt: DateTime.now(),
+        isRead: true,
+      ),
+    ],
+    "chat_2": [
+      Message(
+        id: "msg_3",
+        senderId: "user_3",
+        text: "Добрый день! Есть кроссовки Adidas Ultraboost?",
+        createdAt: DateTime.now(),
+        isRead: false,
+      ),
+      Message(
+        id: "msg_4",
+        senderId: "user_1",
+        text: "Здравствуйте! Да, остались последние размеры.",
+        createdAt: DateTime.now(),
+        isRead: true,
+      ),
+    ],
+  };
 }
 
 class TestSeeder {
@@ -402,6 +473,24 @@ class TestSeeder {
 
       batch.set(ref, notif.toJson());
     }
+
+    // ---------- CHATS ----------
+    for (final chat in objects.chats) {
+      final ref = _firestore.collection("chats").doc(chat.id);
+      batch.set(ref, chat.toJson());
+    }
+
+    // ---------- MESSAGES ----------
+    objects.messages.forEach((chatId, msgs) {
+      for (final msg in msgs) {
+        final ref = _firestore
+            .collection("chats")
+            .doc(chatId)
+            .collection("messages")
+            .doc(msg.id);
+        batch.set(ref, msg.toJson());
+      }
+    });
 
     await batch.commit();
     print("✅ Test data uploaded successfully (with notifications)!");

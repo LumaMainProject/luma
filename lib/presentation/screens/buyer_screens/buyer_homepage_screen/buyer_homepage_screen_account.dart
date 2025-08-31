@@ -7,6 +7,7 @@ import 'package:luma_2/core/router/app_routes.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/core/theme/app_sizes.dart';
 import 'package:luma_2/core/theme/app_text_styles.dart';
+import 'package:luma_2/logic/bloc/chat_bloc.dart';
 import 'package:luma_2/logic/user/user_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -21,143 +22,157 @@ class BuyerHomepageScreenAccount extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
-        final List<_ProfileItem> topItems = [
-          _ProfileItem(
-            title: "Мои заказы",
-            description: "${state.user.currentOrders.length} заказов",
-            icon: AppIcons.shop,
-            route: AppRoute.buyerAccountOrders,
-          ),
-          _ProfileItem(
-            title: "Избранное",
-            description: "${state.user.favoriteProducts.length} товаров",
-            icon: AppIcons.favorite,
-            route: AppRoute.buyerAccountFavorite,
-          ),
-          _ProfileItem(
-            title: "Сообщения",
-            description: "0 новых",
-            icon: AppIcons.message,
-            route: AppRoute.buyerAccountMessenger,
-          ),
-        ];
+        return BlocBuilder<ChatBloc, ChatState>(
+          builder: (context, chatState) {
+            if (chatState is! ChatLoaded) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-        final List<_ProfileItem> settingsItems = [
-          _ProfileItem(
-            title: "Уведомления",
-            description: "Настройка push-уведомлений",
-            icon: AppIcons.notification,
-          ),
-          _ProfileItem(
-            title: "Способы оплаты",
-            description: "2 карты привязано",
-            icon: AppIcons.card,
-          ),
-          _ProfileItem(
-            title: "Адреса доставки",
-            description: "Дом, Работа",
-            icon: AppIcons.gps,
-          ),
-          _ProfileItem(
-            title: "Безопасность",
-            description: "Пароль, двухфакторная аутентификация",
-            icon: AppIcons.security,
-          ),
-          _ProfileItem(
-            title: "Помощь и поддержка",
-            description: "FAQ, связаться с нами",
-            icon: AppIcons.navBarHome,
-          ),
-        ];
-
-        return Scaffold(
-          appBar: AppBar(
-            title: Text("Профиль"),
-            centerTitle: true,
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(60),
-              child: _ProfileHeader(
-                avatarUrl: state.user.avatarUrl,
-                name: state.user.name,
+            final List<_ProfileItem> topItems = [
+              _ProfileItem(
+                title: "Мои заказы",
+                description: "${state.user.currentOrders.length} заказов",
+                icon: AppIcons.shop,
+                route: AppRoute.buyerAccountOrders,
               ),
-            ),
-          ),
-          body: SingleChildScrollView(
-            padding: const EdgeInsets.all(14),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Верхние кнопки
-                ...topItems.map(
-                  (item) => Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: OutlinedButton.icon(
-                      icon: _IconWithBg(icon: item.icon, color: AppColors.primary),
-                      label: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(item.title, style: AppTextStyles.headline),
-                          Text(item.description, style: AppTextStyles.text),
-                        ],
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: AppColors.white,
-                        side: BorderSide(color: AppColors.borderColor),
-                        minimumSize: const Size.fromHeight(60),
-                        alignment: Alignment.centerLeft,
-                      ),
-                      onPressed: () {
-                        if (item.route != null) {
-                          context.pushNamed(item.route!.name);
-                        }
-                      },
-                    ),
+              _ProfileItem(
+                title: "Избранное",
+                description: "${state.user.favoriteProducts.length} товаров",
+                icon: AppIcons.favorite,
+                route: AppRoute.buyerAccountFavorite,
+              ),
+              _ProfileItem(
+                title: "Сообщения",
+                description: "${chatState.chats.length} новых",
+                icon: AppIcons.message,
+                route: AppRoute.buyerAccountMessenger,
+              ),
+            ];
+
+            final List<_ProfileItem> settingsItems = [
+              _ProfileItem(
+                title: "Уведомления",
+                description: "Настройка push-уведомлений",
+                icon: AppIcons.notification,
+              ),
+              _ProfileItem(
+                title: "Способы оплаты",
+                description: "2 карты привязано",
+                icon: AppIcons.card,
+              ),
+              _ProfileItem(
+                title: "Адреса доставки",
+                description: "Дом, Работа",
+                icon: AppIcons.gps,
+              ),
+              _ProfileItem(
+                title: "Безопасность",
+                description: "Пароль, двухфакторная аутентификация",
+                icon: AppIcons.security,
+              ),
+              _ProfileItem(
+                title: "Помощь и поддержка",
+                description: "FAQ, связаться с нами",
+                icon: AppIcons.navBarHome,
+              ),
+            ];
+
+            return Scaffold(
+              appBar: AppBar(
+                title: Text("Профиль"),
+                centerTitle: true,
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(60),
+                  child: _ProfileHeader(
+                    avatarUrl: state.user.avatarUrl,
+                    name: state.user.name,
                   ),
                 ),
-
-                const SizedBox(height: 22),
-                const Divider(),
-                const SizedBox(height: 22),
-
-                const Text("Настройки", style: AppTextStyles.headline),
-                const SizedBox(height: 10),
-
-                ListView.separated(
-                  itemBuilder: (context, index) {
-                    final item = settingsItems[index];
-                    return OutlinedButton.icon(
-                      icon: _IconWithBg(icon: item.icon, color: AppColors.primary),
-                      label: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(item.title, style: AppTextStyles.headline),
-                          Text(item.description, style: AppTextStyles.text),
-                        ],
+              ),
+              body: SingleChildScrollView(
+                padding: const EdgeInsets.all(14),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Верхние кнопки
+                    ...topItems.map(
+                      (item) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: OutlinedButton.icon(
+                          icon: _IconWithBg(
+                            icon: item.icon,
+                            color: AppColors.primary,
+                          ),
+                          label: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(item.title, style: AppTextStyles.headline),
+                              Text(item.description, style: AppTextStyles.text),
+                            ],
+                          ),
+                          style: OutlinedButton.styleFrom(
+                            backgroundColor: AppColors.white,
+                            side: BorderSide(color: AppColors.borderColor),
+                            minimumSize: const Size.fromHeight(60),
+                            alignment: Alignment.centerLeft,
+                          ),
+                          onPressed: () {
+                            if (item.route != null) {
+                              context.pushNamed(item.route!.name);
+                            }
+                          },
+                        ),
                       ),
-                      onPressed: () {
-                        // 🚧 пока заглушки
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Открыть: ${item.title}")),
+                    ),
+
+                    const SizedBox(height: 22),
+                    const Divider(),
+                    const SizedBox(height: 22),
+
+                    const Text("Настройки", style: AppTextStyles.headline),
+                    const SizedBox(height: 10),
+
+                    ListView.separated(
+                      itemBuilder: (context, index) {
+                        final item = settingsItems[index];
+                        return OutlinedButton.icon(
+                          icon: _IconWithBg(
+                            icon: item.icon,
+                            color: AppColors.primary,
+                          ),
+                          label: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(item.title, style: AppTextStyles.headline),
+                              Text(item.description, style: AppTextStyles.text),
+                            ],
+                          ),
+                          onPressed: () {
+                            // 🚧 пока заглушки
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Открыть: ${item.title}")),
+                            );
+                          },
+                          style: OutlinedButton.styleFrom(
+                            backgroundColor: AppColors.white,
+                            side: BorderSide(color: AppColors.borderColor),
+                            minimumSize: const Size.fromHeight(60),
+                            alignment: Alignment.centerLeft,
+                          ),
                         );
                       },
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: AppColors.white,
-                        side: BorderSide(color: AppColors.borderColor),
-                        minimumSize: const Size.fromHeight(60),
-                        alignment: Alignment.centerLeft,
-                      ),
-                    );
-                  },
-                  separatorBuilder: (_, __) => const SizedBox(height: 10),
-                  itemCount: settingsItems.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                ),
+                      separatorBuilder: (_, __) => const SizedBox(height: 10),
+                      itemCount: settingsItems.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                    ),
 
-                const SizedBox(height: 80),
-              ],
-            ),
-          ),
+                    const SizedBox(height: 80),
+                  ],
+                ),
+              ),
+            );
+          },
         );
       },
     );
@@ -230,10 +245,7 @@ class _IconWithBg extends StatelessWidget {
   final IconData icon;
   final Color color;
 
-  const _IconWithBg({
-    required this.icon,
-    required this.color,
-  });
+  const _IconWithBg({required this.icon, required this.color});
 
   @override
   Widget build(BuildContext context) {

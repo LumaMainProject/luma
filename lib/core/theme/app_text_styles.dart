@@ -18,6 +18,7 @@ abstract class AppTextStyles {
   static const buttonDeactive = TextStyle(
     fontSize: 14,
     color: AppColors.textDark,
+    overflow: TextOverflow.ellipsis
   );
 
   static const buttonActive = TextStyle(
@@ -36,6 +37,7 @@ abstract class AppTextStyles {
   static const textButton = TextStyle(
     fontSize: 10.5,
     color: AppColors.text,
+    overflow: TextOverflow.ellipsis
   );
 
   static const cardMainText = TextStyle(
@@ -47,6 +49,7 @@ abstract class AppTextStyles {
   static const cardSecondText = TextStyle(
     fontSize: 12,
     color: AppColors.text,
+    overflow: TextOverflow.ellipsis
   );
 
   static const cardPrice = TextStyle(

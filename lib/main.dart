@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
-//import 'package:luma_2/core/objects_to_add.dart';
+// import 'package:luma_2/core/objects_to_add.dart';
 
 import 'package:luma_2/core/router/app_router.dart';
 import 'package:luma_2/core/theme/app_theme.dart';
@@ -13,8 +13,10 @@ import 'package:luma_2/data/repositories/store_repository.dart';
 import 'package:luma_2/data/repositories/user_repository.dart';
 import 'package:luma_2/data/repositories/auth_repository.dart';
 import 'package:luma_2/data/repositories/notifications_repository.dart';
+import 'package:luma_2/data/repositories/chat_repository.dart';
 
 import 'package:luma_2/firebase_options.dart';
+import 'package:luma_2/logic/bloc/chat_bloc.dart';
 
 import 'package:luma_2/logic/products/products_cubit.dart';
 import 'package:luma_2/logic/stores/stores_cubit.dart';
@@ -27,15 +29,9 @@ void main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.android);
 
-  // Инициализация локали для intl
   await initializeDateFormatting('ru', null);
 
-  final uri = Uri.base;
-  if (uri.queryParameters['finishSignIn'] == 'true') {
-    // здесь можно завершить sign-in через email link
-  }
-
-  //TestSeeder().seedTestData();
+  // TestSeeder().seedTestData();
 
   await Hive.initFlutter();
 
@@ -47,13 +43,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authRepository = AuthRepository.instance; // singleton
+    final authRepository = AuthRepository.instance;
     final authCubit = AuthCubit(authRepository);
 
     final productsRepository = ProductsRepository();
     final storesRepository = StoresRepository();
     final userRepository = UserRepository();
     final notificationsRepository = NotificationsRepository();
+    final chatRepository = ChatRepository(); // 👈 добавили
 
     return MultiBlocProvider(
       providers: [
@@ -62,24 +59,34 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => StoresCubit(storesRepository)),
         BlocProvider(create: (_) => UserBloc(userRepository)),
         BlocProvider(create: (_) => NotificationsBloc(notificationsRepository)),
+        BlocProvider(
+          create: (_) => ChatBloc(chatRepository),
+        ), // 👈 блок сообщений
       ],
       child: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           final userBloc = context.read<UserBloc>();
           final notificationsBloc = context.read<NotificationsBloc>();
+          final chatBloc = context.read<ChatBloc>(); // 👈 блок сообщений
 
           if (state is Authenticated) {
-            userBloc.add(LoadUser(state.user.uid));
-            notificationsBloc.add(LoadNotifications(state.user.uid));
+            final userId = state.user.uid;
+            userBloc.add(LoadUser(userId));
+            notificationsBloc.add(LoadNotifications(userId));
+            chatBloc.add(LoadUserChats(userId)); // загружаем чаты
           } else if (state is AuthenticatedProfile) {
+            final userId = state.profile.id;
             userBloc.add(SetUserProfile(state.profile));
-            notificationsBloc.add(LoadNotifications(state.profile.id));
+            notificationsBloc.add(LoadNotifications(userId));
+            chatBloc.add(LoadUserChats(userId));
           } else if (state is GuestAuthenticated) {
             userBloc.add(ClearUser());
-            notificationsBloc.add(ClearNotifications()); // гость → пусто
+            notificationsBloc.add(ClearNotifications());
+            chatBloc.add(ClearUserChats()); // гость → чаты пустые
           } else if (state is Unauthenticated) {
             userBloc.add(ClearUser());
-            notificationsBloc.add(ClearNotifications()); // тоже пусто
+            notificationsBloc.add(ClearNotifications());
+            chatBloc.add(ClearUserChats()); // тоже пусто
           }
         },
         child: MaterialApp.router(
