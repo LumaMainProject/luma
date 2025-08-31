@@ -72,7 +72,7 @@ class BuyerHomepageScreenAccount extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text("Профиль", style: AppTextStyles.text),
+            title: Text("Профиль"),
             centerTitle: true,
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(60),
