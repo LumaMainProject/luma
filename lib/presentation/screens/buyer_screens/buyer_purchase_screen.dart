@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:luma_2/core/constants/app_icons.dart';
+import 'package:luma_2/core/router/app_routes.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/core/theme/app_sizes.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
@@ -468,7 +470,24 @@ class _BottomSummaryBar extends StatelessWidget {
               SizedBox(
                 width: 150,
                 child: ElevatedButton(
-                  onPressed: enabled ? () {} : null,
+                  onPressed: enabled
+                      ? () {
+                          final userState = context.read<UserBloc>().state;
+                          if (userState is UserLoaded &&
+                              userState.user.currentOrders.isNotEmpty) {
+                            context.read<UserBloc>().add(
+                              PlaceOrder(userState.user.currentOrders),
+                            );
+
+                            // 👇 при желании можно сразу возвращать на главную
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Заказ оформлен!")),
+                            );
+
+                            context.pushNamed(AppRoute.buyerAccountOrders.name);
+                          }
+                        }
+                      : null,
                   child: const Text("Заказать"),
                 ),
               ),

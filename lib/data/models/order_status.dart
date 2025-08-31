@@ -23,7 +23,7 @@ extension OrderStatusExtension on OrderStatus {
     switch (value) {
       case 'processing':
         return OrderStatus.processing;
-      case 'shipping':
+      case 'delivery':
         return OrderStatus.shipping;
       case 'delivered':
         return OrderStatus.delivered;

@@ -115,3 +115,11 @@ class RemoveFromFavorites extends UserEvent {
   @override
   List<Object?> get props => [productId];
 }
+
+class PlaceOrder extends UserEvent {
+  final List<CurrentOrder> orders;
+  const PlaceOrder(this.orders);
+  
+  @override
+  List<Object?> get props => [orders];
+}

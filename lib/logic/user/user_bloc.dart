@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luma_2/data/models/enum_gender.dart';
 import 'package:luma_2/data/models/product.dart';
@@ -233,6 +234,37 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           );
         } catch (_) {
           emit(UserLoaded(user)); // откат при ошибке
+        }
+      }
+    });
+
+    // 🔹 Оформление заказа
+    on<PlaceOrder>((event, emit) async {
+      if (state is UserLoaded) {
+        final user = (state as UserLoaded).user;
+
+        // переносим заказы
+        final updatedUser = user.copyWith(
+          currentOrders: [],
+          inTrackOrders: [
+            ...user.inTrackOrders,
+            ...event.orders.map(
+              (o) => o.copyWith(
+                status: "in_track", // или другой статус
+                updatedAt: Timestamp.fromDate(DateTime.now()),
+              ),
+            ),
+          ],
+        );
+
+        // локально обновляем
+        emit(UserLoaded(updatedUser));
+
+        try {
+          await userRepository.updateUserProfile(updatedUser);
+        } catch (e) {
+          // откат при ошибке
+          emit(UserLoaded(user));
         }
       }
     });

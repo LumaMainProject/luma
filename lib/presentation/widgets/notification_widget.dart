@@ -1,11 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/core/theme/app_sizes.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
 import 'package:luma_2/core/theme/app_text_styles.dart';
 import 'package:luma_2/data/models/app_notifications.dart';
-import 'package:luma_2/presentation/widgets/buyer_product_widgets/product_image.dart';
 import 'package:luma_2/presentation/widgets/item_widget.dart';
+import 'package:shimmer/shimmer.dart';
 
 class NotificationWidget extends StatelessWidget {
   final bool isNew;
@@ -58,8 +59,21 @@ class NotificationWidget extends StatelessWidget {
                         child: SizedBox(
                           width: 60,
                           height: 60,
-                          child: ProductImage(
-                            imageUrl: notification.imageUrl ?? "",
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                              AppSizes.buttonRadius,
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: notification.imageUrl ?? "",
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => Shimmer.fromColors(
+                                baseColor: Colors.grey.shade300,
+                                highlightColor: Colors.grey.shade100,
+                                child: Container(color: Colors.white),
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
                           ),
                         ),
                       ),

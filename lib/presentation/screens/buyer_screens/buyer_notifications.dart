@@ -49,10 +49,11 @@ class _BuyerNotificationsState extends State<BuyerNotifications> {
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: SizedBox(
-            height: 40,
+            height: 40 + AppSpacing.paddingMd * 2,
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(
                 horizontal: AppSpacing.paddingMd,
+                vertical: AppSpacing.paddingMd,
               ),
               scrollDirection: Axis.horizontal,
               itemCount: filters.length,
