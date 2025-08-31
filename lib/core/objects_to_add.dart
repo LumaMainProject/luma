@@ -1,3 +1,4 @@
+import 'package:luma_2/data/models/app_notifications.dart';
 import 'package:luma_2/data/models/product.dart';
 import 'package:luma_2/data/models/review.dart';
 import 'package:luma_2/data/models/store.dart';
@@ -317,6 +318,53 @@ class ObjectsToAdd {
       avatarUrl: "https://i.pravatar.cc/150?img=7",
     ),
   ];
+
+  final notifications = [
+    AppNotification(
+      id: "notif_1",
+      userId: "user_1", // Анна Смирнова
+      title: "Ваш заказ подтвержден",
+      body: "Магазин TechnoShop подтвердил заказ Samsung Galaxy S23",
+      type: "order",
+      isRead: false,
+      createdAt: DateTime.now().subtract(const Duration(minutes: 3)),
+      imageUrl: "https://picsum.photos/800/400?random=1", // картинка товара
+      actionLabel: "Посмотреть",
+    ),
+    AppNotification(
+      id: "notif_2",
+      userId: "user_1",
+      title: "Ваш заказ отправлен",
+      body: "Заказ на Sony WH-1000XM5 передан в доставку",
+      type: "delivery",
+      isRead: false,
+      createdAt: DateTime.now().subtract(const Duration(hours: 1)),
+      imageUrl: "https://picsum.photos/800/400?random=2",
+      actionLabel: "Отследить",
+    ),
+    AppNotification(
+      id: "notif_3",
+      userId: "user_1", // Олег Иванов
+      title: "Товар снова в наличии",
+      body: "Кроссовки Adidas Ultraboost доступны для заказа",
+      type: "stock",
+      isRead: true,
+      createdAt: DateTime.now().subtract(const Duration(days: 1)),
+      imageUrl: "https://picsum.photos/800/400?random=4",
+      actionLabel: "Купить",
+    ),
+    AppNotification(
+      id: "notif_4",
+      userId: "user_1",
+      title: "🔥 Скидки до -50%",
+      body: "Не пропустите распродажу в FashionLine",
+      type: "promo",
+      isRead: false,
+      createdAt: DateTime.now().subtract(const Duration(days: 2)),
+      imageUrl: "https://picsum.photos/800/400?random=14",
+      actionLabel: "Открыть",
+    ),
+  ];
 }
 
 class TestSeeder {
@@ -344,7 +392,18 @@ class TestSeeder {
       batch.set(ref, user.toJson());
     }
 
+    // ---------- NOTIFICATIONS ----------
+    for (final notif in objects.notifications) {
+      final ref = _firestore
+          .collection("users")
+          .doc(notif.userId)
+          .collection("notifications")
+          .doc(notif.id);
+
+      batch.set(ref, notif.toJson());
+    }
+
     await batch.commit();
-    print("✅ Test data uploaded successfully!");
+    print("✅ Test data uploaded successfully (with notifications)!");
   }
 }

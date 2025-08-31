@@ -3,11 +3,19 @@ import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/core/theme/app_sizes.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
 import 'package:luma_2/core/theme/app_text_styles.dart';
+import 'package:luma_2/data/models/app_notifications.dart';
+import 'package:luma_2/presentation/widgets/buyer_product_widgets/product_image.dart';
 import 'package:luma_2/presentation/widgets/item_widget.dart';
 
 class NotificationWidget extends StatelessWidget {
   final bool isNew;
-  const NotificationWidget({super.key, this.isNew = false});
+  final AppNotification notification;
+
+  const NotificationWidget({
+    super.key,
+    this.isNew = false,
+    required this.notification,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,27 +39,27 @@ class NotificationWidget extends StatelessWidget {
             children: [
               IntrinsicHeight(
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch, // важно!
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    // левая цветная полоса
                     isNew
                         ? Container(width: 4, color: AppColors.primary)
                         : const SizedBox(width: 4),
 
                     const SizedBox(width: 10),
 
+                    // аватар/картинка товара
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: AppSpacing.paddingMd,
                       ),
                       child: Align(
-                        alignment:
-                            Alignment.topCenter, // или .centerLeft, если нужно
+                        alignment: Alignment.topCenter,
                         child: SizedBox(
-                          width: 32,
-                          height: 32,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(36),
-                            child: Container(color: Colors.amber),
+                          width: 60,
+                          height: 60,
+                          child: ProductImage(
+                            imageUrl: notification.imageUrl ?? "",
                           ),
                         ),
                       ),
@@ -59,31 +67,36 @@ class NotificationWidget extends StatelessWidget {
 
                     const SizedBox(width: 10),
 
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: AppSpacing.paddingMd,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "Новый заказ",
-                            style: AppTextStyles.cardMainText,
-                          ),
-                          Text(
-                            "Urban подтвердил ваш заказ • 3 мин назад",
-                            style: AppTextStyles.textButton,
-                            maxLines: 5,
-                          ),
-                          ItemWidgetTag(text: "Посмотреть"),
-                        ],
+                    // текст уведомления
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppSpacing.paddingMd,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              notification.title,
+                              style: AppTextStyles.cardMainText,
+                            ),
+                            Text(
+                              notification.body,
+                              style: AppTextStyles.textButton,
+                              maxLines: 5,
+                            ),
+                            if (notification.actionLabel != null)
+                              ItemWidgetTag(text: notification.actionLabel!),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
 
+              // кнопка справа (прочитать / время)
               Padding(
                 padding: const EdgeInsets.all(AppSpacing.paddingMd),
                 child: Row(
@@ -102,7 +115,10 @@ class NotificationWidget extends StatelessWidget {
                                 )
                               : const SizedBox(width: 8),
                           const SizedBox(width: 4),
-                          Text("3 МИН >", style: AppTextStyles.textButton),
+                          Text(
+                            "3 МИН >", // TODO: заменить на форматированное время из createdAt
+                            style: AppTextStyles.textButton,
+                          ),
                         ],
                       ),
                     ),

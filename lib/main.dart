@@ -3,18 +3,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
-// import 'package:luma_2/core/objects_to_add.dart';
+//import 'package:luma_2/core/objects_to_add.dart';
+
 import 'package:luma_2/core/router/app_router.dart';
 import 'package:luma_2/core/theme/app_theme.dart';
+
 import 'package:luma_2/data/repositories/products_repository.dart';
 import 'package:luma_2/data/repositories/store_repository.dart';
 import 'package:luma_2/data/repositories/user_repository.dart';
+import 'package:luma_2/data/repositories/auth_repository.dart';
+import 'package:luma_2/data/repositories/notifications_repository.dart';
+
 import 'package:luma_2/firebase_options.dart';
+
 import 'package:luma_2/logic/products/products_cubit.dart';
 import 'package:luma_2/logic/stores/stores_cubit.dart';
 import 'package:luma_2/logic/user/user_bloc.dart';
-import 'package:luma_2/data/repositories/auth_repository.dart';
 import 'package:luma_2/logic/auth/auth_cubit.dart';
+import 'package:luma_2/logic/notifications/notifications_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,8 +35,7 @@ void main() async {
     // здесь можно завершить sign-in через email link
   }
 
-  // Вызвать сидер только один раз
-  // await TestSeeder().seedTestData();
+  //TestSeeder().seedTestData();
 
   await Hive.initFlutter();
 
@@ -48,6 +53,7 @@ class MyApp extends StatelessWidget {
     final productsRepository = ProductsRepository();
     final storesRepository = StoresRepository();
     final userRepository = UserRepository();
+    final notificationsRepository = NotificationsRepository();
 
     return MultiBlocProvider(
       providers: [
@@ -55,17 +61,25 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => ProductsCubit(productsRepository)),
         BlocProvider(create: (_) => StoresCubit(storesRepository)),
         BlocProvider(create: (_) => UserBloc(userRepository)),
+        BlocProvider(create: (_) => NotificationsBloc(notificationsRepository)),
       ],
       child: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           final userBloc = context.read<UserBloc>();
+          final notificationsBloc = context.read<NotificationsBloc>();
 
           if (state is Authenticated) {
             userBloc.add(LoadUser(state.user.uid));
+            notificationsBloc.add(LoadNotifications(state.user.uid));
           } else if (state is AuthenticatedProfile) {
             userBloc.add(SetUserProfile(state.profile));
+            notificationsBloc.add(LoadNotifications(state.profile.id));
+          } else if (state is GuestAuthenticated) {
+            userBloc.add(ClearUser());
+            notificationsBloc.add(ClearNotifications()); // гость → пусто
           } else if (state is Unauthenticated) {
             userBloc.add(ClearUser());
+            notificationsBloc.add(ClearNotifications()); // тоже пусто
           }
         },
         child: MaterialApp.router(

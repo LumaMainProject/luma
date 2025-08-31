@@ -91,24 +91,26 @@ class BuyerHomepageScreenAccount extends StatelessWidget {
                 ...topItems.map(
                   (item) => Padding(
                     padding: const EdgeInsets.only(bottom: 10),
-                    child: ElevatedButton.icon(
-                      icon: Icon(item.icon, color: AppColors.primary),
+                    child: OutlinedButton.icon(
+                      icon: _IconWithBg(icon: item.icon, color: AppColors.primary),
                       label: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(item.title, style: AppTextStyles.text),
+                          Text(item.title, style: AppTextStyles.headline),
                           Text(item.description, style: AppTextStyles.text),
                         ],
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: AppColors.white,
+                        side: BorderSide(color: AppColors.borderColor),
+                        minimumSize: const Size.fromHeight(60),
+                        alignment: Alignment.centerLeft,
                       ),
                       onPressed: () {
                         if (item.route != null) {
                           context.pushNamed(item.route!.name);
                         }
                       },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(60),
-                        alignment: Alignment.centerLeft,
-                      ),
                     ),
                   ),
                 ),
@@ -123,12 +125,12 @@ class BuyerHomepageScreenAccount extends StatelessWidget {
                 ListView.separated(
                   itemBuilder: (context, index) {
                     final item = settingsItems[index];
-                    return ElevatedButton.icon(
-                      icon: Icon(item.icon, color: AppColors.primary),
+                    return OutlinedButton.icon(
+                      icon: _IconWithBg(icon: item.icon, color: AppColors.primary),
                       label: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(item.title, style: AppTextStyles.text),
+                          Text(item.title, style: AppTextStyles.headline),
                           Text(item.description, style: AppTextStyles.text),
                         ],
                       ),
@@ -138,7 +140,9 @@ class BuyerHomepageScreenAccount extends StatelessWidget {
                           SnackBar(content: Text("Открыть: ${item.title}")),
                         );
                       },
-                      style: ElevatedButton.styleFrom(
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: AppColors.white,
+                        side: BorderSide(color: AppColors.borderColor),
                         minimumSize: const Size.fromHeight(60),
                         alignment: Alignment.centerLeft,
                       ),
@@ -219,4 +223,28 @@ class _ProfileItem {
     required this.icon,
     this.route,
   });
+}
+
+// 👇 общий виджет для иконки с фоном
+class _IconWithBg extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+
+  const _IconWithBg({
+    required this.icon,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 36,
+      height: 36,
+      decoration: BoxDecoration(
+        color: color.withAlpha(90), // фон с прозрачностью
+        shape: BoxShape.circle,
+      ),
+      child: Icon(icon, color: color, size: 20),
+    );
+  }
 }
