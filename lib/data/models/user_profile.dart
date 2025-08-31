@@ -10,13 +10,14 @@ class UserProfile extends Equatable {
   final List<String> phones;
   final String? avatarUrl;
   final Gender gender;
-  final DateTime? birthDate; // 🔹 Дата рождения
+  final DateTime? birthDate;
 
   final List<String> favoriteProducts;
   final List<String> favoriteStores;
 
   final List<String> orderHistory;
-  final List<CurrentOrder> currentOrders;
+  final List<CurrentOrder> currentOrders; // корзина
+  final List<CurrentOrder> inTrackOrders; // заказы в процессе
 
   final List<UserAddress> addresses;
   final List<PaymentMethod> paymentMethods;
@@ -41,6 +42,7 @@ class UserProfile extends Equatable {
     this.favoriteStores = const [],
     this.orderHistory = const [],
     this.currentOrders = const [],
+    this.inTrackOrders = const [],
     this.addresses = const [],
     this.paymentMethods = const [],
     this.role = "user",
@@ -57,13 +59,14 @@ class UserProfile extends Equatable {
     String? name,
     List<String>? emails,
     Gender? gender,
-    DateTime? birthDate, // 🔹 copyWith
+    DateTime? birthDate,
     List<String>? phones,
     String? avatarUrl,
     List<String>? favoriteProducts,
     List<String>? favoriteStores,
     List<String>? orderHistory,
     List<CurrentOrder>? currentOrders,
+    List<CurrentOrder>? inTrackOrders,
     List<UserAddress>? addresses,
     List<PaymentMethod>? paymentMethods,
     String? role,
@@ -79,12 +82,13 @@ class UserProfile extends Equatable {
       emails: emails ?? this.emails,
       phones: phones ?? this.phones,
       gender: gender ?? this.gender,
-      birthDate: birthDate ?? this.birthDate, // 🔹 copyWith
+      birthDate: birthDate ?? this.birthDate,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       favoriteProducts: favoriteProducts ?? this.favoriteProducts,
       favoriteStores: favoriteStores ?? this.favoriteStores,
       orderHistory: orderHistory ?? this.orderHistory,
       currentOrders: currentOrders ?? this.currentOrders,
+      inTrackOrders: inTrackOrders ?? this.inTrackOrders,
       addresses: addresses ?? this.addresses,
       paymentMethods: paymentMethods ?? this.paymentMethods,
       role: role ?? this.role,
@@ -111,11 +115,14 @@ class UserProfile extends Equatable {
           : Gender.unknown,
       birthDate: json['birthDate'] != null
           ? (json['birthDate'] as Timestamp).toDate()
-          : null, // 🔹 fromJson
+          : null,
       favoriteProducts: List<String>.from(json['favoriteProducts'] ?? []),
       favoriteStores: List<String>.from(json['favoriteStores'] ?? []),
       orderHistory: List<String>.from(json['orderHistory'] ?? []),
       currentOrders: (json['currentOrders'] as List<dynamic>? ?? [])
+          .map((o) => CurrentOrder.fromJson(o))
+          .toList(),
+      inTrackOrders: (json['inTrackOrders'] as List<dynamic>? ?? [])
           .map((o) => CurrentOrder.fromJson(o))
           .toList(),
       addresses: (json['addresses'] as List<dynamic>? ?? [])
@@ -140,13 +147,12 @@ class UserProfile extends Equatable {
       "phones": phones,
       "avatarUrl": avatarUrl,
       "gender": gender.toString().split('.').last,
-      "birthDate": birthDate != null
-          ? Timestamp.fromDate(birthDate!)
-          : null, // 🔹 toJson
+      "birthDate": birthDate != null ? Timestamp.fromDate(birthDate!) : null,
       "favoriteProducts": favoriteProducts,
       "favoriteStores": favoriteStores,
       "orderHistory": orderHistory,
       "currentOrders": currentOrders.map((o) => o.toJson()).toList(),
+      "inTrackOrders": inTrackOrders.map((o) => o.toJson()).toList(),
       "addresses": addresses.map((a) => a.toJson()).toList(),
       "paymentMethods": paymentMethods.map((p) => p.toJson()).toList(),
       "role": role,
@@ -166,11 +172,12 @@ class UserProfile extends Equatable {
     phones,
     avatarUrl,
     gender,
-    birthDate, // 🔹 props
+    birthDate,
     favoriteProducts,
     favoriteStores,
     orderHistory,
     currentOrders,
+    inTrackOrders,
     addresses,
     paymentMethods,
     role,

@@ -247,30 +247,33 @@ class ObjectsToAdd {
           totalPrice: 1900000.0,
           status: "pending",
         ),
+      ],
+      inTrackOrders: [
         CurrentOrder(
-          id: "order_3",
+          id: "track_1",
           productId: "prod_3",
           storeId: "store_2",
           quantity: 1,
           selectedColor: "Черный",
-          selectedSize: null,
+          selectedSize: "M",
           unitPrice: 35000.0,
           totalPrice: 35000.0,
-          status: "pending",
+          status: "processing", // В обработке
         ),
         CurrentOrder(
-          id: "order_4",
+          id: "track_2",
           productId: "prod_4",
           storeId: "store_2",
-          quantity: 3,
-          selectedColor: "Черный",
-          selectedSize: null,
+          quantity: 2,
+          selectedColor: "Синий",
+          selectedSize: "42",
           unitPrice: 150000.0,
-          totalPrice: 450000.0,
-          status: "pending",
+          totalPrice: 300000.0,
+          status: "delivery", // Доставка
         ),
       ],
     ),
+
     UserProfile(
       id: "user_2",
       name: "Анна Смирнова",

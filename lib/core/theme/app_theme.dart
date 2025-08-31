@@ -128,5 +128,11 @@ abstract class AppTheme {
       type: BottomNavigationBarType.fixed,
       elevation: 8,
     ),
+
+    dividerTheme: DividerThemeData(
+      color: AppColors.secondary, // цвет линии
+      thickness: 1, // толщина линии
+      space: 0, // отступы сверху/снизу (по умолчанию 16)
+    ),
   );
 }

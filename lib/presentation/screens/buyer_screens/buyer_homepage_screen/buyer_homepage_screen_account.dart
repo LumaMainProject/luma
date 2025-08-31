@@ -31,7 +31,7 @@ class BuyerHomepageScreenAccount extends StatelessWidget {
             final List<_ProfileItem> topItems = [
               _ProfileItem(
                 title: "Мои заказы",
-                description: "${state.user.currentOrders.length} заказов",
+                description: "${state.user.inTrackOrders.length} заказов",
                 icon: AppIcons.shop,
                 route: AppRoute.buyerAccountOrders,
               ),
