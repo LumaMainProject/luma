@@ -6,6 +6,7 @@ import 'package:luma_2/data/models/store.dart';
 import 'package:luma_2/logic/products/products_cubit.dart';
 import 'package:luma_2/logic/stores/stores_cubit.dart';
 import 'package:luma_2/presentation/widgets/item_widget.dart';
+import 'package:luma_2/presentation/widgets/photo_search_overlay.dart';
 import 'package:luma_2/presentation/widgets/shop_button_widget.dart';
 
 class BuyerSearchScreen extends StatefulWidget {
@@ -15,13 +16,27 @@ class BuyerSearchScreen extends StatefulWidget {
   State<BuyerSearchScreen> createState() => _BuyerSearchScreenState();
 }
 
-class _BuyerSearchScreenState extends State<BuyerSearchScreen> {
+class _BuyerSearchScreenState extends State<BuyerSearchScreen>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _controller = TextEditingController();
   String query = "";
+
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 250),
+    );
+  }
 
   @override
   void dispose() {
     _controller.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -29,6 +44,15 @@ class _BuyerSearchScreenState extends State<BuyerSearchScreen> {
     setState(() {
       query = value.toLowerCase();
     });
+  }
+
+  void _showCameraDialog() {
+    showDialog(
+      context: context,
+      barrierColor: Colors
+          .transparent, // чтобы фон был полупрозрачным через BackdropFilter
+      builder: (_) => PhotoSearchOverlay(onClose: () => Navigator.pop(context)),
+    );
   }
 
   @override
@@ -49,6 +73,10 @@ class _BuyerSearchScreenState extends State<BuyerSearchScreen> {
               decoration: InputDecoration(
                 hintText: "Найти товар, бренд, магазин",
                 prefixIcon: const Icon(Icons.search),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.camera_alt),
+                  onPressed: _showCameraDialog,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.grey),
@@ -88,7 +116,7 @@ class _BuyerSearchScreenState extends State<BuyerSearchScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // 🔹 Магазины вверху
+                      // Магазины
                       if (filteredStores.isNotEmpty) ...[
                         Text("Магазины", style: AppTextStyles.headline),
                         const SizedBox(height: AppSpacing.paddingSm),
@@ -108,7 +136,7 @@ class _BuyerSearchScreenState extends State<BuyerSearchScreen> {
                         const SizedBox(height: AppSpacing.paddingLg),
                       ],
 
-                      // 🔹 Продукты в GridView
+                      // Продукты
                       if (filteredProducts.isNotEmpty) ...[
                         Text("Товары", style: AppTextStyles.headline),
                         const SizedBox(height: AppSpacing.paddingSm),
@@ -146,6 +174,7 @@ class _BuyerSearchScreenState extends State<BuyerSearchScreen> {
                           },
                         ),
                       ],
+
                       if (filteredStores.isEmpty && filteredProducts.isEmpty)
                         const Center(child: Text("Ничего не найдено")),
                     ],

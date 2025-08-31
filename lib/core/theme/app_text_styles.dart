@@ -12,44 +12,41 @@ abstract class AppTextStyles {
     fontSize: 16,
     fontWeight: FontWeight.bold,
     color: AppColors.textDark,
-    overflow: TextOverflow.ellipsis
+    overflow: TextOverflow.ellipsis,
   );
 
   static const buttonDeactive = TextStyle(
     fontSize: 14,
     color: AppColors.textDark,
-    overflow: TextOverflow.ellipsis
+    overflow: TextOverflow.ellipsis,
   );
 
-  static const buttonActive = TextStyle(
-    fontSize: 14,
-    color: AppColors.primary,
-  );
+  static const buttonActive = TextStyle(fontSize: 14, color: AppColors.primary);
 
   static const text = TextStyle(
     fontSize: 14,
     color: AppColors.text,
-    overflow: TextOverflow.ellipsis
+    overflow: TextOverflow.ellipsis,
   );
-
-
 
   static const textButton = TextStyle(
     fontSize: 10.5,
     color: AppColors.text,
-    overflow: TextOverflow.ellipsis
+    overflow: TextOverflow.ellipsis,
   );
 
   static const cardMainText = TextStyle(
     fontSize: 12,
     color: AppColors.textDark,
-    overflow: TextOverflow.ellipsis
+    overflow: TextOverflow.ellipsis,
+    decoration: TextDecoration.none, // убираем возможное подчеркивание
   );
-  
+
   static const cardSecondText = TextStyle(
     fontSize: 12,
     color: AppColors.text,
-    overflow: TextOverflow.ellipsis
+    overflow: TextOverflow.ellipsis,
+    decoration: TextDecoration.none,
   );
 
   static const cardPrice = TextStyle(
@@ -61,7 +58,7 @@ abstract class AppTextStyles {
   static const cardDiscountPrice = TextStyle(
     fontSize: 10,
     color: AppColors.text,
-    decoration: TextDecoration.lineThrough
+    decoration: TextDecoration.lineThrough,
   );
 
   static const cardTag = TextStyle(
