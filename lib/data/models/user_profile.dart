@@ -1,24 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:luma_2/data/models/enum_gender.dart';
 
 // ---------------- USER PROFILE ----------------
 class UserProfile extends Equatable {
-  final String id; // UID из FirebaseAuth
-  final String name; // Имя + фамилия
+  final String id;
+  final String name;
   final List<String> emails;
   final List<String> phones;
   final String? avatarUrl;
+  final Gender gender;
+  final DateTime? birthDate; // 🔹 Дата рождения
 
   final List<String> favoriteProducts;
   final List<String> favoriteStores;
 
-  final List<String> orderHistory; // завершённые заказы
-  final List<CurrentOrder> currentOrders; // 🔥 новые заказы (в процессе)
+  final List<String> orderHistory;
+  final List<CurrentOrder> currentOrders;
 
   final List<UserAddress> addresses;
   final List<PaymentMethod> paymentMethods;
 
-  final String role; // user, seller, admin
+  final String role;
   final bool notificationsEnabled;
   final String language;
   final String currency;
@@ -29,6 +32,8 @@ class UserProfile extends Equatable {
   UserProfile({
     required this.id,
     required this.name,
+    this.gender = Gender.unknown,
+    this.birthDate,
     this.emails = const [],
     this.phones = const [],
     this.avatarUrl,
@@ -47,11 +52,12 @@ class UserProfile extends Equatable {
   }) : createdAt = createdAt ?? Timestamp.now(),
        updatedAt = updatedAt ?? Timestamp.now();
 
-  // ---------------- COPYWITH ----------------
   UserProfile copyWith({
     String? id,
     String? name,
     List<String>? emails,
+    Gender? gender,
+    DateTime? birthDate, // 🔹 copyWith
     List<String>? phones,
     String? avatarUrl,
     List<String>? favoriteProducts,
@@ -72,6 +78,8 @@ class UserProfile extends Equatable {
       name: name ?? this.name,
       emails: emails ?? this.emails,
       phones: phones ?? this.phones,
+      gender: gender ?? this.gender,
+      birthDate: birthDate ?? this.birthDate, // 🔹 copyWith
       avatarUrl: avatarUrl ?? this.avatarUrl,
       favoriteProducts: favoriteProducts ?? this.favoriteProducts,
       favoriteStores: favoriteStores ?? this.favoriteStores,
@@ -88,7 +96,6 @@ class UserProfile extends Equatable {
     );
   }
 
-  // ---------------- FROM JSON ----------------
   factory UserProfile.fromJson(Map<String, dynamic> json, String id) {
     return UserProfile(
       id: id,
@@ -96,6 +103,15 @@ class UserProfile extends Equatable {
       emails: List<String>.from(json['emails'] ?? []),
       phones: List<String>.from(json['phones'] ?? []),
       avatarUrl: json['avatarUrl'],
+      gender: (json['gender'] != null)
+          ? Gender.values.firstWhere(
+              (e) => e.toString() == 'Gender.${json['gender']}',
+              orElse: () => Gender.unknown,
+            )
+          : Gender.unknown,
+      birthDate: json['birthDate'] != null
+          ? (json['birthDate'] as Timestamp).toDate()
+          : null, // 🔹 fromJson
       favoriteProducts: List<String>.from(json['favoriteProducts'] ?? []),
       favoriteStores: List<String>.from(json['favoriteStores'] ?? []),
       orderHistory: List<String>.from(json['orderHistory'] ?? []),
@@ -117,13 +133,16 @@ class UserProfile extends Equatable {
     );
   }
 
-  // ---------------- TO JSON ----------------
   Map<String, dynamic> toJson() {
     return {
       "name": name,
       "emails": emails,
       "phones": phones,
       "avatarUrl": avatarUrl,
+      "gender": gender.toString().split('.').last,
+      "birthDate": birthDate != null
+          ? Timestamp.fromDate(birthDate!)
+          : null, // 🔹 toJson
       "favoriteProducts": favoriteProducts,
       "favoriteStores": favoriteStores,
       "orderHistory": orderHistory,
@@ -146,6 +165,8 @@ class UserProfile extends Equatable {
     emails,
     phones,
     avatarUrl,
+    gender,
+    birthDate, // 🔹 props
     favoriteProducts,
     favoriteStores,
     orderHistory,

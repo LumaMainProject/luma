@@ -12,6 +12,8 @@ abstract class AppIcons {
 
   static const IconData raiting = Icons.star_rounded;
 
+  static const IconData photoMode = Icons.photo_camera_rounded;
+
   // nav bar
   static const IconData homepage = Icons.home_rounded;
   static const IconData player = Icons.play_arrow_rounded;
