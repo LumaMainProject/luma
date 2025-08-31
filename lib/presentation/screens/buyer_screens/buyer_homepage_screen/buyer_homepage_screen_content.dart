@@ -55,8 +55,23 @@ class BuyerHomepageScreenContent extends StatelessWidget {
               vertical: AppSpacing.paddingSm,
             ),
             child: TextField(
+              readOnly: true, // ✅ чтобы клавиатура не открывалась
+              onTap: () {
+                context.pushNamed(
+                  AppRoute.buyerSearchScreen.name
+                ); // или AppRoute.search.path
+              },
               decoration: InputDecoration(
                 hintText: AppStrings.buyerHomepageSearch,
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
+                  borderSide: BorderSide(color: AppColors.borderColor),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
+                ),
               ),
             ),
           ),

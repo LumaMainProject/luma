@@ -10,6 +10,7 @@ import 'package:luma_2/presentation/screens/buyer_screens/buyer_homepage_screen.
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_notifications.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_pruduct_screen.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_purchase_screen.dart';
+import 'package:luma_2/presentation/screens/buyer_screens/buyer_search_screen.dart';
 import 'package:luma_2/presentation/screens/register_sceens/splash_screen.dart';
 import 'package:luma_2/presentation/screens/register_sceens/welcome_screen.dart';
 
@@ -90,6 +91,11 @@ class AppRouter {
           path: AppRoute.buyerNotifications.path,
           name: AppRoute.buyerNotifications.name,
           builder: (context, state) => const BuyerNotifications(),
+        ),
+        GoRoute(
+          path: AppRoute.buyerSearchScreen.path,
+          name: AppRoute.buyerSearchScreen.name,
+          builder: (context, state) => const BuyerSearchScreen(),
         ),
 
         // ACCOUNT
