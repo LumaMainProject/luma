@@ -7,7 +7,7 @@ import 'package:luma_2/core/router/app_routes.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/core/theme/app_sizes.dart';
 import 'package:luma_2/core/theme/app_text_styles.dart';
-import 'package:luma_2/logic/bloc/chat_bloc.dart';
+import 'package:luma_2/logic/chat/chat_bloc.dart';
 import 'package:luma_2/logic/user/user_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 

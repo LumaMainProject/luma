@@ -217,7 +217,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 AppSpacing.verticalMd,
 
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pushNamed(AppRoute.registrer.name);
+                  },
                   child: Text(AppStrings.registerTitle),
                 ),
               ],

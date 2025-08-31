@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
-import 'package:luma_2/logic/bloc/chat_bloc.dart';
+import 'package:luma_2/logic/chat/chat_bloc.dart';
 import 'package:luma_2/logic/user/user_bloc.dart';
 import 'package:luma_2/presentation/widgets/messenger_widget.dart';
 

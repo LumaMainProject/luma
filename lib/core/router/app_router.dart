@@ -11,6 +11,7 @@ import 'package:luma_2/presentation/screens/buyer_screens/buyer_notifications.da
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_pruduct_screen.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_purchase_screen.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_search_screen.dart';
+import 'package:luma_2/presentation/screens/register_sceens/registration_screen.dart';
 import 'package:luma_2/presentation/screens/register_sceens/splash_screen.dart';
 import 'package:luma_2/presentation/screens/register_sceens/welcome_screen.dart';
 
@@ -38,8 +39,9 @@ class AppRouter {
           return isSplash ? null : AppRoute.splash.path;
         }
 
-        // 🚀 2. Если не залогинен → auth
-        if (authState is Unauthenticated && !isAuthRoute) {
+        // 🚀 2. Если не залогинен → auth (кроме auth и registration)
+        if (authState is Unauthenticated &&
+            !(isAuthRoute || state.fullPath == AppRoute.registrer.path)) {
           return AppRoute.auth.path;
         }
 
@@ -64,6 +66,11 @@ class AppRouter {
           path: AppRoute.auth.path,
           name: AppRoute.auth.name,
           builder: (context, state) => const WelcomeScreen(),
+        ),
+        GoRoute(
+          path: AppRoute.registrer.path,
+          name: AppRoute.registrer.name,
+          builder: (context, state) => const RegistrationScreen(),
         ),
         GoRoute(
           path: AppRoute.buyerHomepage.path,

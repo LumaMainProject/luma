@@ -1,6 +1,7 @@
 enum AppRoute {
   splash,
   auth,
+  registrer,
   buyerHomepage,
   buyerProduct,
   buyerPurchase,
@@ -19,6 +20,8 @@ extension AppRoutePath on AppRoute {
         return '/';
       case AppRoute.auth:
         return '/auth';
+      case AppRoute.registrer:
+        return '/register';
       case AppRoute.buyerHomepage:
         return '/buyer/home';
       case AppRoute.buyerProduct:

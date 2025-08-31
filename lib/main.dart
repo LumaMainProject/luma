@@ -16,7 +16,7 @@ import 'package:luma_2/data/repositories/notifications_repository.dart';
 import 'package:luma_2/data/repositories/chat_repository.dart';
 
 import 'package:luma_2/firebase_options.dart';
-import 'package:luma_2/logic/bloc/chat_bloc.dart';
+import 'package:luma_2/logic/chat/chat_bloc.dart';
 
 import 'package:luma_2/logic/products/products_cubit.dart';
 import 'package:luma_2/logic/stores/stores_cubit.dart';
