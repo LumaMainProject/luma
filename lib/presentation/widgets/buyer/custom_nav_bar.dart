@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:luma_2/core/constants/app_icons.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/core/theme/app_sizes.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
 
 class CustomNavBar extends StatelessWidget {
+  final List<IconData> icons;
   final int selectedIndex;
   final ValueChanged<int> onTap;
 
   const CustomNavBar({
     super.key,
+    required this.icons,
     required this.selectedIndex,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final icons = [
-      AppIcons.homepage,
-      AppIcons.player,
-      AppIcons.shop,
-      AppIcons.account,
-    ];
 
     return Container(
       height: AppSizes.navBarHeight,

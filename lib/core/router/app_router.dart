@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:luma_2/data/models/product.dart';
 import 'package:luma_2/data/models/store.dart';
+import 'package:luma_2/data/models/user_role.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_account_screens/buyer_account_edit.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_account_screens/buyer_account_favorite.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_account_screens/buyer_account_messenger.dart';
@@ -14,6 +15,10 @@ import 'package:luma_2/presentation/screens/buyer_screens/buyer_search_screen.da
 import 'package:luma_2/presentation/screens/register_sceens/registration_screen.dart';
 import 'package:luma_2/presentation/screens/register_sceens/splash_screen.dart';
 import 'package:luma_2/presentation/screens/register_sceens/welcome_screen.dart';
+import 'package:luma_2/presentation/screens/seller_screens/seller_homepage_screen.dart';
+import 'package:luma_2/presentation/screens/seller_screens/seller_notifications_screen.dart';
+import 'package:luma_2/presentation/screens/seller_screens/seller_product_edit_screen.dart';
+import 'package:luma_2/presentation/screens/seller_screens/seller_promo_screen.dart';
 
 import 'app_routes.dart';
 import '../../logic/auth/auth_cubit.dart';
@@ -34,26 +39,28 @@ class AppRouter {
         final isSplash = state.fullPath == AppRoute.splash.path;
         final isAuthRoute = state.fullPath == AppRoute.auth.path;
 
-        // 🚀 1. Пока не знаем состояние — остаёмся на сплэше
         if (authState is AuthInitial) {
           return isSplash ? null : AppRoute.splash.path;
         }
 
-        // 🚀 2. Если не залогинен → auth (кроме auth и registration)
         if (authState is Unauthenticated &&
             !(isAuthRoute || state.fullPath == AppRoute.registrer.path)) {
           return AppRoute.auth.path;
         }
 
-        // 🚀 3. Если залогинен → с auth/splash перекидываем в buyerHomepage
         if ((authState is Authenticated ||
                 authState is GuestAuthenticated ||
                 authState is AuthenticatedProfile) &&
             (isAuthRoute || isSplash)) {
-          return AppRoute.buyerHomepage.path;
+          // ✅ редирект по роли
+          if (authCubit.role == UserRole.seller) {
+            return AppRoute.sellerHomepageScreen.path;
+          } else {
+            return AppRoute.buyerHomepage.path;
+          }
         }
 
-        return null; // ничего не делаем
+        return null;
       },
 
       routes: [
@@ -125,6 +132,28 @@ class AppRouter {
           path: AppRoute.buyerAccountOrders.path,
           name: AppRoute.buyerAccountOrders.name,
           builder: (context, state) => const BuyerAccountOrders(),
+        ),
+
+        // SELLER
+        GoRoute(
+          path: AppRoute.sellerHomepageScreen.path,
+          name: AppRoute.sellerHomepageScreen.name,
+          builder: (context, state) => const SellerHomepageScreen(),
+        ),
+        GoRoute(
+          path: AppRoute.sellerNoticifactions.path,
+          name: AppRoute.sellerNoticifactions.name,
+          builder: (context, state) => const SellerNotificationsScreen(),
+        ),
+        GoRoute(
+          path: AppRoute.sellerProductEdit.path,
+          name: AppRoute.sellerProductEdit.name,
+          builder: (context, state) => const SellerProductEditScreen(),
+        ),
+        GoRoute(
+          path: AppRoute.sellerPromo.path,
+          name: AppRoute.sellerPromo.name,
+          builder: (context, state) => const SellerPromoScreen(),
         ),
       ],
     );

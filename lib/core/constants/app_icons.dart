@@ -20,6 +20,13 @@ abstract class AppIcons {
   static const IconData shop = Icons.shopping_cart_rounded;
   static const IconData account = Icons.person_rounded;
 
+  // nav bar seller
+  static const IconData sellerHomepage = Icons.home_outlined;
+  static const IconData sellerProducts = Icons.inventory_2_outlined;
+  static const IconData sellerOrders = Icons.shopping_bag_outlined;
+  static const IconData sellerAnalitics = Icons.analytics_outlined;
+  static const IconData sellerAccount = Icons.person_outline;
+
   static const IconData favorite = Icons.favorite_rounded;
   static const IconData message = Icons.message_rounded;
 

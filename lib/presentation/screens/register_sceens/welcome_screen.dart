@@ -8,6 +8,7 @@ import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/core/theme/app_sizes.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
 import 'package:luma_2/core/theme/app_text_styles.dart';
+import 'package:luma_2/data/models/user_role.dart';
 import 'package:luma_2/logic/auth/auth_cubit.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -57,7 +58,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   void _navigateToHome() {
     if (!mounted) return;
-    context.go(AppRoute.buyerHomepage.path);
+
+    final role = context.read<AuthCubit>().role;
+    if (role == UserRole.seller) {
+      context.go(AppRoute.sellerHomepageScreen.path);
+    } else {
+      context.go(AppRoute.buyerHomepage.path);
+    }
   }
 
   @override
@@ -72,6 +79,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           );
         }
       },
+
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 0,
@@ -98,8 +106,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () {
-                            isBuyer = true;
-                            setState(() {});
+                            context.read<AuthCubit>().setRole(UserRole.buyer);
+                            setState(() => isBuyer = true);
                           },
                           style: OutlinedButton.styleFrom(
                             minimumSize: const Size.fromHeight(double.infinity),
@@ -122,8 +130,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () {
-                            isBuyer = false;
-                            setState(() {});
+                            context.read<AuthCubit>().setRole(UserRole.seller);
+                            setState(() => isBuyer = false);
                           },
                           style: OutlinedButton.styleFrom(
                             minimumSize: const Size.fromHeight(double.infinity),

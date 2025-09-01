@@ -47,3 +47,12 @@ class LinkSent extends AuthState {
   @override
   List<Object?> get props => [email];
 }
+
+class RoleSelected extends AuthState {
+  final UserRole role;
+
+  const RoleSelected(this.role);
+
+  @override
+  List<Object?> get props => [role];
+}

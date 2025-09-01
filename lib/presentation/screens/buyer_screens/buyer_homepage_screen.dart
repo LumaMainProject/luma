@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:luma_2/core/constants/app_icons.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_homepage_screen/buyer_homepage_screen_account.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_homepage_screen/buyer_homepage_screen_content.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_homepage_screen/buyer_homepage_screen_player.dart';
@@ -33,6 +34,12 @@ class _BuyerHomepageScreenState extends State<BuyerHomepageScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: CustomNavBar(
+              icons: [
+                AppIcons.homepage,
+                AppIcons.player,
+                AppIcons.shop,
+                AppIcons.account,
+              ],
               selectedIndex: selectedIndex,
               onTap: (index) {
                 setState(() {
