@@ -92,6 +92,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp.router(
           title: 'Marketplace Demo',
           theme: AppTheme.light,
+          debugShowCheckedModeBanner: false,
           routerConfig: AppRouter.build(authCubit),
         ),
       ),
