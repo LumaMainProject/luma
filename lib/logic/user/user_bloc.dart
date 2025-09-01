@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luma_2/data/models/enum_gender.dart';
 import 'package:luma_2/data/models/product.dart';
@@ -219,6 +218,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
               id: '', // сервер сгенерирует
               productId: event.product.id,
               storeId: event.product.sellerId,
+              userId: user.id, // добавлено
               quantity: event.delta,
               unitPrice: event.product.price,
               totalPrice: event.product.price * event.delta,
@@ -243,28 +243,34 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       if (state is UserLoaded) {
         final user = (state as UserLoaded).user;
 
-        // переносим заказы
+        // Локально очищаем корзину и добавляем id заказов в inTrackOrders
         final updatedUser = user.copyWith(
           currentOrders: [],
           inTrackOrders: [
             ...user.inTrackOrders,
-            ...event.orders.map(
-              (o) => o.copyWith(
-                status: "in_track", // или другой статус
-                updatedAt: Timestamp.fromDate(DateTime.now()),
-              ),
-            ),
+            ...List.generate(
+              event.orders.length,
+              (_) => "",
+            ), // временные пустые id
           ],
         );
 
-        // локально обновляем
         emit(UserLoaded(updatedUser));
 
         try {
-          await userRepository.updateUserProfile(updatedUser);
+          // Создаём заказы на сервере и получаем реальные id
+          final orderIds = await userRepository.placeOrder(
+            user.id,
+            event.orders,
+          );
+
+          final finalUser = updatedUser.copyWith(
+            inTrackOrders: [...user.inTrackOrders, ...orderIds],
+          );
+
+          emit(UserLoaded(finalUser));
         } catch (e) {
-          // откат при ошибке
-          emit(UserLoaded(user));
+          emit(UserLoaded(user)); // откат при ошибке
         }
       }
     });

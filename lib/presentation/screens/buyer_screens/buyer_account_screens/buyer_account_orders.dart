@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
-import 'package:luma_2/core/theme/app_spacing.dart';
-import 'package:luma_2/core/theme/app_text_styles.dart';
 import 'package:luma_2/data/models/order_status.dart';
-import 'package:luma_2/logic/user/user_bloc.dart';
+import 'package:luma_2/data/models/user_profile.dart';
+import 'package:luma_2/logic/orders_bloc/orders_bloc.dart';
 import 'package:luma_2/presentation/widgets/buyer/in_track_order_widget.dart';
 
 class BuyerAccountOrders extends StatefulWidget {
@@ -16,7 +15,6 @@ class BuyerAccountOrders extends StatefulWidget {
 
 class _BuyerAccountOrdersState extends State<BuyerAccountOrders> {
   int activeIndex = 0;
-
   final List<String> filters = ["Все", "В обработке", "Доставка", "Доставлено"];
 
   @override
@@ -27,12 +25,9 @@ class _BuyerAccountOrdersState extends State<BuyerAccountOrders> {
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: SizedBox(
-            height: 40 + AppSpacing.paddingMd * 2,
+            height: 40 + 16, // paddingMd*2
             child: ListView.separated(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.paddingMd,
-                vertical: AppSpacing.paddingMd,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               scrollDirection: Axis.horizontal,
               itemCount: filters.length,
               separatorBuilder: (_, __) => const SizedBox(width: 8),
@@ -41,19 +36,17 @@ class _BuyerAccountOrdersState extends State<BuyerAccountOrders> {
                 return OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     backgroundColor: isActive
-                        ? AppColors.primary.withAlpha(30)
+                        ? AppColors.primary.withAlpha(125)
                         : AppColors.white,
                     side: BorderSide(
-                      color: isActive
-                          ? AppColors.primary
-                          : AppColors.borderColor,
+                      color: isActive ? AppColors.primary : AppColors.white,
                     ),
                   ),
                   onPressed: () => setState(() => activeIndex = index),
                   child: Text(
                     filters[index],
-                    style: AppTextStyles.text.copyWith(
-                      color: isActive ? AppColors.primary : AppColors.textDark,
+                    style: TextStyle(
+                      color: isActive ? Colors.blue : Colors.black,
                     ),
                   ),
                 );
@@ -62,14 +55,15 @@ class _BuyerAccountOrdersState extends State<BuyerAccountOrders> {
           ),
         ),
       ),
-      body: BlocBuilder<UserBloc, UserState>(
+      body: BlocBuilder<OrdersBloc, OrdersState>(
         builder: (context, state) {
-          if (state is UserLoading) {
+          if (state is OrdersLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is UserLoaded) {
-            List orders = state.user.inTrackOrders;
+          } else if (state is OrdersLoaded) {
+            // Берем заказы текущего пользователя
+            List<CurrentOrder> orders = state.orders;
 
-            // Фильтр через OrderStatus
+            // Фильтруем по выбранному статусу
             if (activeIndex != 0) {
               final selectedFilter = filters[activeIndex];
               orders = orders.where((o) {
@@ -91,7 +85,7 @@ class _BuyerAccountOrdersState extends State<BuyerAccountOrders> {
                 return InTrackOrderWidget(order: order);
               },
             );
-          } else if (state is UserError) {
+          } else if (state is OrdersError) {
             return Center(child: Text("Ошибка: ${state.message}"));
           } else {
             return const SizedBox.shrink();

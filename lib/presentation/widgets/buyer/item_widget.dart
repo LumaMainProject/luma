@@ -172,8 +172,13 @@ class ItemWidget extends StatelessWidget {
 
 class ItemWidgetTag extends StatelessWidget {
   final String text;
+  final Color color;
 
-  const ItemWidgetTag({super.key, required this.text});
+  const ItemWidgetTag({
+    super.key,
+    required this.text,
+    this.color = AppColors.primary,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +188,7 @@ class ItemWidgetTag extends StatelessWidget {
         vertical: AppSpacing.paddingAs,
       ),
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: color,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(

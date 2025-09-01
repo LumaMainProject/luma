@@ -15,9 +15,9 @@ class UserProfile extends Equatable {
   final List<String> favoriteProducts;
   final List<String> favoriteStores;
 
-  final List<String> orderHistory;
+  final List<String> orderHistory; // завершённые заказы
   final List<CurrentOrder> currentOrders; // корзина
-  final List<CurrentOrder> inTrackOrders; // заказы в процессе
+  final List<String> inTrackOrders; // id заказов в процессе
 
   final List<UserAddress> addresses;
   final List<PaymentMethod> paymentMethods;
@@ -66,7 +66,7 @@ class UserProfile extends Equatable {
     List<String>? favoriteStores,
     List<String>? orderHistory,
     List<CurrentOrder>? currentOrders,
-    List<CurrentOrder>? inTrackOrders,
+    List<String>? inTrackOrders,
     List<UserAddress>? addresses,
     List<PaymentMethod>? paymentMethods,
     String? role,
@@ -122,9 +122,7 @@ class UserProfile extends Equatable {
       currentOrders: (json['currentOrders'] as List<dynamic>? ?? [])
           .map((o) => CurrentOrder.fromJson(o))
           .toList(),
-      inTrackOrders: (json['inTrackOrders'] as List<dynamic>? ?? [])
-          .map((o) => CurrentOrder.fromJson(o))
-          .toList(),
+      inTrackOrders: List<String>.from(json['inTrackOrders'] ?? []),
       addresses: (json['addresses'] as List<dynamic>? ?? [])
           .map((a) => UserAddress.fromJson(a))
           .toList(),
@@ -152,7 +150,7 @@ class UserProfile extends Equatable {
       "favoriteStores": favoriteStores,
       "orderHistory": orderHistory,
       "currentOrders": currentOrders.map((o) => o.toJson()).toList(),
-      "inTrackOrders": inTrackOrders.map((o) => o.toJson()).toList(),
+      "inTrackOrders": inTrackOrders, // теперь только список id
       "addresses": addresses.map((a) => a.toJson()).toList(),
       "paymentMethods": paymentMethods.map((p) => p.toJson()).toList(),
       "role": role,
@@ -194,6 +192,7 @@ class CurrentOrder extends Equatable {
   final String id; // UID заказа
   final String productId;
   final String storeId;
+  final String userId; // теперь обязательно
   final int quantity;
   final String? selectedColor;
   final String? selectedSize;
@@ -207,6 +206,7 @@ class CurrentOrder extends Equatable {
     required this.id,
     required this.productId,
     required this.storeId,
+    required this.userId,
     this.quantity = 1,
     this.selectedColor,
     this.selectedSize,
@@ -223,6 +223,7 @@ class CurrentOrder extends Equatable {
       id: json['id'] ?? '',
       productId: json['productId'] ?? '',
       storeId: json['storeId'] ?? '',
+      userId: json['userId'] ?? '', // теперь читаем userId
       quantity: json['quantity'] ?? 1,
       selectedColor: json['selectedColor'],
       selectedSize: json['selectedSize'],
@@ -239,6 +240,7 @@ class CurrentOrder extends Equatable {
       "id": id,
       "productId": productId,
       "storeId": storeId,
+      "userId": userId, // добавили в JSON
       "quantity": quantity,
       "selectedColor": selectedColor,
       "selectedSize": selectedSize,
@@ -254,6 +256,7 @@ class CurrentOrder extends Equatable {
     String? id,
     String? productId,
     String? storeId,
+    String? userId,
     int? quantity,
     String? selectedColor,
     String? selectedSize,
@@ -267,6 +270,7 @@ class CurrentOrder extends Equatable {
       id: id ?? this.id,
       productId: productId ?? this.productId,
       storeId: storeId ?? this.storeId,
+      userId: userId ?? this.userId, // теперь можно менять
       quantity: quantity ?? this.quantity,
       selectedColor: selectedColor ?? this.selectedColor,
       selectedSize: selectedSize ?? this.selectedSize,
@@ -283,6 +287,7 @@ class CurrentOrder extends Equatable {
     id,
     productId,
     storeId,
+    userId, // добавлено в props
     quantity,
     selectedColor,
     selectedSize,

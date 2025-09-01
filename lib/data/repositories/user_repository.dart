@@ -38,7 +38,9 @@ class UserRepository {
       final productSnapshot = await tx.get(productRef);
       if (!userSnapshot.exists || !productSnapshot.exists) return;
 
-      final favorites = List<String>.from(userSnapshot['favoriteProducts'] ?? []);
+      final favorites = List<String>.from(
+        userSnapshot['favoriteProducts'] ?? [],
+      );
       if (!favorites.contains(productId)) {
         favorites.add(productId);
         tx.update(userRef, {'favoriteProducts': favorites});
@@ -59,7 +61,9 @@ class UserRepository {
       final productSnapshot = await tx.get(productRef);
       if (!userSnapshot.exists || !productSnapshot.exists) return;
 
-      final favorites = List<String>.from(userSnapshot['favoriteProducts'] ?? []);
+      final favorites = List<String>.from(
+        userSnapshot['favoriteProducts'] ?? [],
+      );
       if (favorites.contains(productId)) {
         favorites.remove(productId);
         tx.update(userRef, {'favoriteProducts': favorites});
@@ -70,5 +74,53 @@ class UserRepository {
         });
       }
     });
+  }
+
+  // UserRepository
+  Future<List<String>> placeOrder(
+    String userId,
+    List<CurrentOrder> orders,
+  ) async {
+    final batch = _firestore.batch();
+    final userRef = _firestore.collection("users").doc(userId);
+
+    List<String> orderIds = [];
+
+    for (var order in orders) {
+      final orderRef = _firestore.collection("orders").doc();
+      orderIds.add(orderRef.id);
+
+      batch.set(orderRef, {
+        "id": orderRef.id,
+        "userId": userId,
+        "productId": order.productId,
+        "storeId": order.storeId,
+        "quantity": order.quantity,
+        "selectedColor": order.selectedColor,
+        "selectedSize": order.selectedSize,
+        "unitPrice": order.unitPrice,
+        "totalPrice": order.totalPrice,
+        "status": "in_track",
+        "createdAt": Timestamp.now(),
+        "updatedAt": Timestamp.now(),
+      });
+    }
+
+    final userSnapshot = await userRef.get();
+    if (!userSnapshot.exists) throw Exception("User not found");
+
+    final inTrackOrders = List<String>.from(
+      userSnapshot['inTrackOrders'] ?? [],
+    );
+    inTrackOrders.addAll(orderIds);
+
+    batch.update(userRef, {
+      "inTrackOrders": inTrackOrders,
+      "currentOrders": [],
+    });
+
+    await batch.commit();
+
+    return orderIds; // возвращаем список
   }
 }

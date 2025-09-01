@@ -36,4 +36,8 @@ abstract class AppIcons {
   static const IconData navBarHome = Icons.help_center_outlined;
 
   static const IconData edit = Icons.edit_rounded;
+
+  static const IconData sellerProductView = Icons.remove_red_eye_outlined;
+  static const IconData sellerProductEdit = Icons.edit_note_rounded;
+  static const IconData sellerProductOptions = Icons.more_vert_rounded;
 }

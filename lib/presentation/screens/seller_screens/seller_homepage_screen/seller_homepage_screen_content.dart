@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luma_2/logic/stores/stores_cubit.dart';
 
-class SellerHomepageScreenContent extends StatelessWidget {
+class SellerHomepageScreenContent extends StatefulWidget {
   const SellerHomepageScreenContent({super.key});
 
+  @override
+  State<SellerHomepageScreenContent> createState() =>
+      _SellerHomepageScreenContentState();
+}
+
+class _SellerHomepageScreenContentState
+    extends State<SellerHomepageScreenContent> {
+  int currentStore = 0;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<StoresCubit, StoresState>(
@@ -12,7 +20,7 @@ class SellerHomepageScreenContent extends StatelessWidget {
         if (state is! StoresLoaded) {
           return const Center(child: CircularProgressIndicator());
         }
-        return Scaffold(appBar: AppBar(title: Text(state.stores[0].name)));
+        return Scaffold();
       },
     );
   }

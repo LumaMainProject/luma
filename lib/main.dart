@@ -7,6 +7,7 @@ import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:luma_2/core/router/app_router.dart';
 import 'package:luma_2/core/theme/app_theme.dart';
+import 'package:luma_2/data/repositories/orders_repository.dart';
 
 import 'package:luma_2/data/repositories/products_repository.dart';
 import 'package:luma_2/data/repositories/store_repository.dart';
@@ -17,6 +18,8 @@ import 'package:luma_2/data/repositories/chat_repository.dart';
 
 import 'package:luma_2/firebase_options.dart';
 import 'package:luma_2/logic/chat/chat_bloc.dart';
+import 'package:luma_2/logic/multi_store_orders/multi_store_orders_bloc.dart';
+import 'package:luma_2/logic/orders_bloc/orders_bloc.dart';
 
 import 'package:luma_2/logic/products/products_cubit.dart';
 import 'package:luma_2/logic/seller_stores/seller_stores_bloc.dart';
@@ -52,6 +55,7 @@ class MyApp extends StatelessWidget {
     final userRepository = UserRepository();
     final notificationsRepository = NotificationsRepository();
     final chatRepository = ChatRepository();
+    final ordersRepository = OrdersRepository();
 
     return MultiBlocProvider(
       providers: [
@@ -62,6 +66,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => NotificationsBloc(notificationsRepository)),
         BlocProvider(create: (_) => ChatBloc(chatRepository)),
         BlocProvider(create: (_) => SellerStoresBloc(storesRepository)),
+        BlocProvider(create: (_) => OrdersBloc(repository: ordersRepository)),
+        BlocProvider(
+          create: (_) => MultiStoreOrdersBloc(repository: ordersRepository),
+        ),
       ],
       child: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
@@ -69,29 +77,55 @@ class MyApp extends StatelessWidget {
           final notificationsBloc = context.read<NotificationsBloc>();
           final chatBloc = context.read<ChatBloc>();
           final userStoresBloc = context.read<SellerStoresBloc>();
+          final ordersBloc = context.read<OrdersBloc>();
+          final multiStoreOrdersBloc = context.read<MultiStoreOrdersBloc>();
 
           if (state is Authenticated) {
             final userId = state.user.uid;
+
+            // Загружаем данные пользователя и связанные сущности
             userBloc.add(LoadUser(userId));
             notificationsBloc.add(LoadNotifications(userId));
-            chatBloc.add(LoadUserChats(userId)); // загружаем чаты
+            chatBloc.add(LoadUserChats(userId));
             userStoresBloc.add(LoadSellerStores(userId));
+            ordersBloc.add(LoadOrders(userId));
+
+            // Подписка на изменения магазинов пользователя
+            userStoresBloc.stream.listen((storesState) {
+              if (storesState is SellerStoresLoaded) {
+                final storeIds = storesState.stores.map((s) => s.id).toList();
+
+                // Для каждого магазина загружаем его заказы
+                for (final storeId in storeIds) {
+                  multiStoreOrdersBloc.add(LoadStoreOrders(storeId));
+                }
+              }
+            });
           } else if (state is AuthenticatedProfile) {
             final userId = state.profile.id;
+
             userBloc.add(SetUserProfile(state.profile));
             notificationsBloc.add(LoadNotifications(userId));
             chatBloc.add(LoadUserChats(userId));
             userStoresBloc.add(LoadSellerStores(userId));
-          } else if (state is GuestAuthenticated) {
+            ordersBloc.add(LoadOrders(userId));
+
+            userStoresBloc.stream.listen((storesState) {
+              if (storesState is SellerStoresLoaded) {
+                final storeIds = storesState.stores.map((s) => s.id).toList();
+                for (final storeId in storeIds) {
+                  multiStoreOrdersBloc.add(LoadStoreOrders(storeId));
+                }
+              }
+            });
+          } else if (state is GuestAuthenticated || state is Unauthenticated) {
+            // Очищаем данные при выходе или гостевом входе
             userBloc.add(ClearUser());
             notificationsBloc.add(ClearNotifications());
-            chatBloc.add(ClearUserChats()); // гость → чаты пустые
+            chatBloc.add(ClearUserChats());
             userStoresBloc.add(ClearSellerStores());
-          } else if (state is Unauthenticated) {
-            userBloc.add(ClearUser());
-            notificationsBloc.add(ClearNotifications());
-            chatBloc.add(ClearUserChats()); // тоже пусто
-            userStoresBloc.add(ClearSellerStores());
+            ordersBloc.add(ClearOrders());
+            multiStoreOrdersBloc.add(MultiStoreClearOrders());
           }
         },
         child: MaterialApp.router(

@@ -216,6 +216,36 @@ class ObjectsToAdd {
     ),
   ];
 
+  final orders = [
+    // Текущие заказы (currentOrders)
+
+    // Заказы в обработке/доставке (inTrackOrders)
+    CurrentOrder(
+      id: "track_1",
+      productId: "prod_3",
+      storeId: "store_2",
+      userId: "user_1",
+      quantity: 1,
+      selectedColor: "Черный",
+      selectedSize: "M",
+      unitPrice: 35000.0,
+      totalPrice: 35000.0,
+      status: "processing",
+    ),
+    CurrentOrder(
+      id: "track_2",
+      productId: "prod_4",
+      storeId: "store_2",
+      userId: "user_1",
+      quantity: 2,
+      selectedColor: "Синий",
+      selectedSize: "42",
+      unitPrice: 150000.0,
+      totalPrice: 300000.0,
+      status: "delivery",
+    ),
+  ];
+
   final users = [
     UserProfile(
       id: "user_1",
@@ -229,6 +259,7 @@ class ObjectsToAdd {
           id: "order_1",
           productId: "prod_2",
           storeId: "store_1",
+          userId: "user_1",
           quantity: 4,
           selectedColor: "Черный",
           selectedSize: null,
@@ -240,6 +271,7 @@ class ObjectsToAdd {
           id: "order_2",
           productId: "prod_1",
           storeId: "store_1",
+          userId: "user_1",
           quantity: 2,
           selectedColor: "Черный",
           selectedSize: null,
@@ -248,30 +280,7 @@ class ObjectsToAdd {
           status: "pending",
         ),
       ],
-      inTrackOrders: [
-        CurrentOrder(
-          id: "track_1",
-          productId: "prod_3",
-          storeId: "store_2",
-          quantity: 1,
-          selectedColor: "Черный",
-          selectedSize: "M",
-          unitPrice: 35000.0,
-          totalPrice: 35000.0,
-          status: "processing", // В обработке
-        ),
-        CurrentOrder(
-          id: "track_2",
-          productId: "prod_4",
-          storeId: "store_2",
-          quantity: 2,
-          selectedColor: "Синий",
-          selectedSize: "42",
-          unitPrice: 150000.0,
-          totalPrice: 300000.0,
-          status: "delivery", // Доставка
-        ),
-      ],
+      inTrackOrders: ["track_1", "track_2"],
     ),
 
     UserProfile(
@@ -481,6 +490,14 @@ class TestSeeder {
     for (final chat in objects.chats) {
       final ref = _firestore.collection("chats").doc(chat.id);
       batch.set(ref, chat.toJson());
+    }
+
+    // ---------- ORDERS ----------
+    for (final order in objects.orders) {
+      final orderRef = _firestore
+          .collection("orders")
+          .doc(order.id); // или auto-id
+      batch.set(orderRef, order.toJson());
     }
 
     // ---------- MESSAGES ----------
