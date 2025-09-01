@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luma_2/core/constants/app_icons.dart';
+import 'package:luma_2/logic/seller_stores/seller_stores_bloc.dart';
 import 'package:luma_2/presentation/screens/seller_screens/seller_homepage_screen/seller_homepage_screen_account.dart';
 import 'package:luma_2/presentation/screens/seller_screens/seller_homepage_screen/seller_homepage_screen_analitics.dart';
 import 'package:luma_2/presentation/screens/seller_screens/seller_homepage_screen/seller_homepage_screen_content.dart';
@@ -28,30 +30,32 @@ class _SellerHomepageScreenState extends State<SellerHomepageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          // Текущая страница
-          pages[selectedIndex],
-
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: CustomNavBar(
-              icons: [
-                AppIcons.sellerHomepage,
-                AppIcons.sellerProducts,
-                AppIcons.sellerOrders,
-                AppIcons.sellerAnalitics,
-                AppIcons.sellerAccount,
-              ],
-              selectedIndex: selectedIndex,
-              onTap: (index) {
-                setState(() {
-                  selectedIndex = index;
-                });
-              },
-            ),
-          ),
-        ],
+      body: BlocBuilder<SellerStoresBloc, SellerStoresState>(
+        builder: (context, state) {
+          if (state is! SellerStoresLoaded) {
+            return const Center(child: CircularProgressIndicator());
+          }
+      
+          return Stack(
+            children: [
+              pages[selectedIndex],
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: CustomNavBar(
+                  icons: [
+                    AppIcons.sellerHomepage,
+                    AppIcons.sellerProducts,
+                    AppIcons.sellerOrders,
+                    AppIcons.sellerAnalitics,
+                    AppIcons.sellerAccount,
+                  ],
+                  selectedIndex: selectedIndex,
+                  onTap: (index) => setState(() => selectedIndex = index),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

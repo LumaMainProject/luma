@@ -19,6 +19,7 @@ import 'package:luma_2/firebase_options.dart';
 import 'package:luma_2/logic/chat/chat_bloc.dart';
 
 import 'package:luma_2/logic/products/products_cubit.dart';
+import 'package:luma_2/logic/seller_stores/seller_stores_bloc.dart';
 import 'package:luma_2/logic/stores/stores_cubit.dart';
 import 'package:luma_2/logic/user/user_bloc.dart';
 import 'package:luma_2/logic/auth/auth_cubit.dart';
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
     final storesRepository = StoresRepository();
     final userRepository = UserRepository();
     final notificationsRepository = NotificationsRepository();
-    final chatRepository = ChatRepository(); // 👈 добавили
+    final chatRepository = ChatRepository();
 
     return MultiBlocProvider(
       providers: [
@@ -59,34 +60,38 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => StoresCubit(storesRepository)),
         BlocProvider(create: (_) => UserBloc(userRepository)),
         BlocProvider(create: (_) => NotificationsBloc(notificationsRepository)),
-        BlocProvider(
-          create: (_) => ChatBloc(chatRepository),
-        ), // 👈 блок сообщений
+        BlocProvider(create: (_) => ChatBloc(chatRepository)),
+        BlocProvider(create: (_) => SellerStoresBloc(storesRepository)),
       ],
       child: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           final userBloc = context.read<UserBloc>();
           final notificationsBloc = context.read<NotificationsBloc>();
-          final chatBloc = context.read<ChatBloc>(); // 👈 блок сообщений
+          final chatBloc = context.read<ChatBloc>();
+          final userStoresBloc = context.read<SellerStoresBloc>();
 
           if (state is Authenticated) {
             final userId = state.user.uid;
             userBloc.add(LoadUser(userId));
             notificationsBloc.add(LoadNotifications(userId));
             chatBloc.add(LoadUserChats(userId)); // загружаем чаты
+            userStoresBloc.add(LoadSellerStores(userId));
           } else if (state is AuthenticatedProfile) {
             final userId = state.profile.id;
             userBloc.add(SetUserProfile(state.profile));
             notificationsBloc.add(LoadNotifications(userId));
             chatBloc.add(LoadUserChats(userId));
+            userStoresBloc.add(LoadSellerStores(userId));
           } else if (state is GuestAuthenticated) {
             userBloc.add(ClearUser());
             notificationsBloc.add(ClearNotifications());
             chatBloc.add(ClearUserChats()); // гость → чаты пустые
+            userStoresBloc.add(ClearSellerStores());
           } else if (state is Unauthenticated) {
             userBloc.add(ClearUser());
             notificationsBloc.add(ClearNotifications());
             chatBloc.add(ClearUserChats()); // тоже пусто
+            userStoresBloc.add(ClearSellerStores());
           }
         },
         child: MaterialApp.router(

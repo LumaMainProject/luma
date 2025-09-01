@@ -7,17 +7,17 @@ import 'package:luma_2/data/repositories/store_repository.dart';
 part 'stores_state.dart';
 
 class StoresCubit extends Cubit<StoresState> {
-  final StoresRepository _repository;
+  final StoresRepository repository;
   StreamSubscription<List<Store>>? _storesSub;
 
-  StoresCubit(this._repository) : super(StoresInitial()) {
+  StoresCubit(this.repository) : super(StoresInitial()) {
     _loadStores();
   }
 
   void _loadStores() {
     emit(StoresLoading());
 
-    _storesSub = _repository.listenStores().listen(
+    _storesSub = repository.listenStores().listen(
       (stores) {
         emit(StoresLoaded(stores));
       },
@@ -27,10 +27,20 @@ class StoresCubit extends Cubit<StoresState> {
     );
   }
 
+  void loadStoresForOwner(String ownerId) {
+    _storesSub?.cancel();
+    _storesSub = repository.listenStores().listen(
+      (stores) => emit(
+        StoresLoaded(stores.where((s) => s.ownerId == ownerId).toList()),
+      ),
+      onError: (error) => emit(StoresError(error.toString())),
+    );
+  }
+
   /// Добавление нового магазина
   Future<void> addStore(Store store) async {
     try {
-      await _repository.addStore(store);
+      await repository.addStore(store);
     } catch (e) {
       emit(StoresError('Ошибка добавления магазина: $e'));
     }
@@ -39,7 +49,7 @@ class StoresCubit extends Cubit<StoresState> {
   /// Обновление магазина
   Future<void> updateStore(Store store) async {
     try {
-      await _repository.updateStore(store);
+      await repository.updateStore(store);
     } catch (e) {
       emit(StoresError('Ошибка обновления магазина: $e'));
     }
@@ -48,7 +58,7 @@ class StoresCubit extends Cubit<StoresState> {
   /// Удаление магазина
   Future<void> deleteStore(String id) async {
     try {
-      await _repository.deleteStore(id);
+      await repository.deleteStore(id);
     } catch (e) {
       emit(StoresError('Ошибка удаления магазина: $e'));
     }
