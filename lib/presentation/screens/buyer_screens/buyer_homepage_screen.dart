@@ -3,7 +3,7 @@ import 'package:luma_2/presentation/screens/buyer_screens/buyer_homepage_screen/
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_homepage_screen/buyer_homepage_screen_content.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_homepage_screen/buyer_homepage_screen_player.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_homepage_screen/buyer_homepage_screen_shop.dart';
-import 'package:luma_2/presentation/widgets/custom_nav_bar.dart';
+import 'package:luma_2/presentation/widgets/buyer/custom_nav_bar.dart';
 
 class BuyerHomepageScreen extends StatefulWidget {
   const BuyerHomepageScreen({super.key});

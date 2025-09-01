@@ -5,9 +5,9 @@ import 'package:luma_2/core/theme/app_text_styles.dart';
 import 'package:luma_2/data/models/store.dart';
 import 'package:luma_2/logic/products/products_cubit.dart';
 import 'package:luma_2/logic/stores/stores_cubit.dart';
-import 'package:luma_2/presentation/widgets/item_widget.dart';
-import 'package:luma_2/presentation/widgets/photo_search_overlay.dart';
-import 'package:luma_2/presentation/widgets/shop_button_widget.dart';
+import 'package:luma_2/presentation/widgets/buyer/item_widget.dart';
+import 'package:luma_2/presentation/widgets/buyer/photo_search_overlay.dart';
+import 'package:luma_2/presentation/widgets/buyer/shop_button_widget.dart';
 
 class BuyerSearchScreen extends StatefulWidget {
   const BuyerSearchScreen({super.key});

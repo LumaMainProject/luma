@@ -9,7 +9,7 @@ import 'package:luma_2/data/models/order_status.dart';
 import 'package:luma_2/data/models/user_profile.dart';
 import 'package:luma_2/data/models/product.dart';
 import 'package:luma_2/logic/products/products_cubit.dart';
-import 'package:luma_2/presentation/widgets/item_widget.dart';
+import 'package:luma_2/presentation/widgets/buyer/item_widget.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
 import 'package:luma_2/core/theme/app_text_styles.dart';
-import 'package:luma_2/presentation/widgets/notification_widget.dart';
+import 'package:luma_2/presentation/widgets/buyer/notification_widget.dart';
 import 'package:luma_2/logic/notifications/notifications_bloc.dart';
 import 'package:luma_2/data/models/app_notifications.dart';
 

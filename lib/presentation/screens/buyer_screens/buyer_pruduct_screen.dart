@@ -6,15 +6,15 @@ import 'package:luma_2/core/theme/app_text_styles.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/data/models/product.dart';
 import 'package:luma_2/data/models/store.dart';
-import 'package:luma_2/presentation/widgets/buyer_product_widgets/bottom_buy_bar.dart';
-import 'package:luma_2/presentation/widgets/buyer_product_widgets/product_description.dart';
-import 'package:luma_2/presentation/widgets/buyer_product_widgets/product_image.dart';
-import 'package:luma_2/presentation/widgets/buyer_product_widgets/product_price_block.dart';
-import 'package:luma_2/presentation/widgets/buyer_product_widgets/product_reviews.dart';
-import 'package:luma_2/presentation/widgets/buyer_product_widgets/product_specs.dart';
-import 'package:luma_2/presentation/widgets/buyer_product_widgets/product_store_info.dart';
-import 'package:luma_2/presentation/widgets/buyer_product_widgets/product_title.dart';
-import 'package:luma_2/presentation/widgets/item_widget.dart';
+import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/bottom_buy_bar.dart';
+import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/product_description.dart';
+import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/product_image.dart';
+import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/product_price_block.dart';
+import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/product_reviews.dart';
+import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/product_specs.dart';
+import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/product_store_info.dart';
+import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/product_title.dart';
+import 'package:luma_2/presentation/widgets/buyer/item_widget.dart';
 
 class BuyerProductScreen extends StatelessWidget {
   final Product product;

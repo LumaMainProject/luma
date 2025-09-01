@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
 import 'package:luma_2/logic/chat/chat_bloc.dart';
 import 'package:luma_2/logic/user/user_bloc.dart';
-import 'package:luma_2/presentation/widgets/messenger_widget.dart';
+import 'package:luma_2/presentation/widgets/buyer/messenger_widget.dart';
 
 class BuyerAccountMessenger extends StatelessWidget {
   const BuyerAccountMessenger({super.key});

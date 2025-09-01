@@ -5,7 +5,7 @@ import 'package:luma_2/core/theme/app_sizes.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
 import 'package:luma_2/core/theme/app_text_styles.dart';
 import 'package:luma_2/data/models/app_notifications.dart';
-import 'package:luma_2/presentation/widgets/item_widget.dart';
+import 'package:luma_2/presentation/widgets/buyer/item_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
 class NotificationWidget extends StatelessWidget {

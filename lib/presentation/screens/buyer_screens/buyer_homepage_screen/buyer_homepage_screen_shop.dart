@@ -7,7 +7,7 @@ import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/core/theme/app_sizes.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
 import 'package:luma_2/core/theme/app_text_styles.dart';
-import 'package:luma_2/presentation/widgets/shop_widget.dart';
+import 'package:luma_2/presentation/widgets/buyer/shop_widget.dart';
 import 'package:luma_2/logic/user/user_bloc.dart';
 import 'package:luma_2/logic/products/products_cubit.dart';
 import 'package:luma_2/logic/stores/stores_cubit.dart';
