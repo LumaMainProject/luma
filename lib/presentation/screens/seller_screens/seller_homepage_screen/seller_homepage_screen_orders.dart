@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luma_2/data/models/store.dart';
 import 'package:luma_2/logic/multi_store_orders/multi_store_orders_bloc.dart';
+import 'package:luma_2/presentation/widgets/seller/seller_order_widget.dart';
 
 class SellerHomepageScreenOrders extends StatefulWidget {
   final Store store;
@@ -18,9 +19,7 @@ class _SellerHomepageScreenOrdersState
   void initState() {
     super.initState();
     // Загружаем заказы для этого магазина
-    context
-        .read<MultiStoreOrdersBloc>()
-        .add(LoadStoreOrders(widget.store.id));
+    context.read<MultiStoreOrdersBloc>().add(LoadStoreOrders(widget.store.id));
   }
 
   @override
@@ -41,13 +40,8 @@ class _SellerHomepageScreenOrdersState
               padding: const EdgeInsets.all(16),
               itemCount: orders.length,
               separatorBuilder: (_, __) => const SizedBox(height: 12),
-              itemBuilder: (context, index) {
-                final order = orders[index];
-                return Text(
-                  "Заказ: ${order.productId} | Кол-во: ${order.quantity} | Статус: ${order.status}",
-                  style: const TextStyle(fontSize: 16),
-                );
-              },
+              itemBuilder: (context, index) =>
+                  SellerOrderWidget(order: orders[index]),
             );
           } else if (state is MultiStoreOrdersError) {
             return Center(child: Text("Ошибка: ${state.message}"));
