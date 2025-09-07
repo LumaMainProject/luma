@@ -166,7 +166,7 @@ class ShopWidget extends StatelessWidget {
                   children: [
                     Text(
                       "${productsTotal.toStringAsFixed(0)} ${AppStrings.currency}",
-                      style: AppTextStyles.cardMainText,
+                      style: AppTextStyles.buttonDeactive,
                     ),
                     Text(
                       deliveryCost == 0
