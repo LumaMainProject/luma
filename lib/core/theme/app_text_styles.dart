@@ -50,7 +50,7 @@ abstract class AppTextStyles {
   );
 
   static const cardPrice = TextStyle(
-    fontSize: 12.3,
+    fontSize: 14,
     fontWeight: FontWeight.bold,
     color: AppColors.primary,
   );

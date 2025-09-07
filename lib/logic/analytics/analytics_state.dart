@@ -27,6 +27,8 @@ class StoreAnalyticsLoaded extends AnalyticsState {
   final List<RevenuePoint> ordersPoints30Days;
   final List<RevenuePoint> ordersPoints90Days;
 
+  final List<CurrentOrder> todayOrdersList;
+
   const StoreAnalyticsLoaded({
     required this.totalOrders,
     required this.todayOrders,
@@ -41,6 +43,7 @@ class StoreAnalyticsLoaded extends AnalyticsState {
     required this.ordersPoints7Days,
     required this.ordersPoints30Days,
     required this.ordersPoints90Days,
+    required this.todayOrdersList,
   });
 
   @override
@@ -58,5 +61,6 @@ class StoreAnalyticsLoaded extends AnalyticsState {
     ordersPoints7Days,
     ordersPoints30Days,
     ordersPoints90Days,
+    todayOrdersList,
   ];
 }

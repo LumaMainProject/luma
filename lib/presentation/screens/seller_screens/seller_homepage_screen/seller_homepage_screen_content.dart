@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:luma_2/core/constants/app_icons.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
 import 'package:luma_2/core/theme/app_text_styles.dart';
@@ -8,8 +9,8 @@ import 'package:luma_2/logic/analytics/analytics_bloc.dart';
 import 'package:luma_2/logic/stores/stores_cubit.dart';
 import 'package:luma_2/presentation/widgets/seller/analytics_card.dart';
 import 'package:luma_2/presentation/widgets/seller/seller_card_stats.dart';
+import 'package:luma_2/presentation/widgets/seller/seller_order_widget.dart';
 import 'package:luma_2/presentation/widgets/seller/seller_quick_actions.dart';
-import 'package:intl/intl.dart';
 
 class SellerHomepageScreenContent extends StatefulWidget {
   final Store store;
@@ -53,6 +54,7 @@ class _SellerHomepageScreenContentState
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // ====== Статистика ======
                     SizedBox(
                       height: 90 + 16 * 2,
                       child: ListView(
@@ -65,18 +67,14 @@ class _SellerHomepageScreenContentState
                             subText: analyticsState.todayOrders.toString(),
                             text: "Заказы сегодня",
                           ),
-
                           AppSpacing.horizontalSm,
-
                           SellerCardStats(
                             icon: AppIcons.trendingUp,
                             persent: analyticsState.revenueGrowth,
                             subText: formatRevenue(analyticsState.totalRevenue),
                             text: "Выручка",
                           ),
-
                           AppSpacing.horizontalSm,
-
                           SellerCardStats(
                             icon: AppIcons.favorite,
                             persent: 0,
@@ -87,6 +85,7 @@ class _SellerHomepageScreenContentState
                       ),
                     ),
 
+                    // ====== Быстрые действия ======
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: AppSpacing.paddingMd,
@@ -106,6 +105,7 @@ class _SellerHomepageScreenContentState
 
                     AppSpacing.verticalMd,
 
+                    // ====== Аналитика ======
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: AppSpacing.paddingMd,
@@ -117,6 +117,35 @@ class _SellerHomepageScreenContentState
                         ordersPoints7Days: analyticsState.ordersPoints7Days,
                         ordersPoints30Days: analyticsState.ordersPoints30Days,
                         ordersPoints90Days: analyticsState.ordersPoints90Days,
+                      ),
+                    ),
+
+                    AppSpacing.verticalMd,
+
+                    // ====== Заказы за сегодня ======
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.paddingMd,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Заказы за сегодня",
+                            style: AppTextStyles.headline,
+                          ),
+                          AppSpacing.verticalMd,
+                          ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: analyticsState.todayOrdersList.length,
+                            separatorBuilder: (_, __) =>
+                                const SizedBox(height: 8),
+                            itemBuilder: (context, index) {
+                              return SellerOrderWidget(order: analyticsState.todayOrdersList[index],);
+                            },
+                          ),
+                        ],
                       ),
                     ),
 

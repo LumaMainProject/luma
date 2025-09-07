@@ -137,6 +137,7 @@ class AnalyticsBloc extends Bloc<AnalyticsEvent, AnalyticsState> {
         ordersPoints7Days: getOrdersPoints(event.orders, 7),
         ordersPoints30Days: getOrdersPoints(event.orders, 30),
         ordersPoints90Days: getOrdersPoints(event.orders, 90),
+        todayOrdersList: todayOrdersList, // 👉 пробросили
       ),
     );
   }
