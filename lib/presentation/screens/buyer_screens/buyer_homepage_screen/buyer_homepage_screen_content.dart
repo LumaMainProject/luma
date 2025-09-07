@@ -9,17 +9,12 @@ import 'package:luma_2/core/theme/app_sizes.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
 import 'package:luma_2/core/theme/app_text_styles.dart';
 import 'package:luma_2/data/models/store.dart';
-import 'package:luma_2/logic/auth/auth_cubit.dart';
 import 'package:luma_2/logic/products/products_cubit.dart';
 import 'package:luma_2/logic/stores/stores_cubit.dart';
 import 'package:luma_2/presentation/widgets/buyer/item_widget.dart';
 
 class BuyerHomepageScreenContent extends StatelessWidget {
   const BuyerHomepageScreenContent({super.key});
-
-  void _navigateToLogin(BuildContext context) {
-    context.go(AppRoute.auth.path);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +33,6 @@ class BuyerHomepageScreenContent extends StatelessWidget {
           AppStrings.buyerHomepageTitle,
           style: AppTextStyles.headline.copyWith(color: AppColors.primary),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              _navigateToLogin(context);
-              context.read<AuthCubit>().signOut();
-            },
-            icon: const Icon(Icons.logout),
-          ),
-        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(58),
           child: Padding(

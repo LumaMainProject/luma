@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:luma_2/core/constants/app_icons.dart';
-import 'package:luma_2/core/router/app_routes.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
 import 'package:luma_2/core/theme/app_text_styles.dart';
 import 'package:luma_2/logic/analytics/analytics_bloc.dart';
-import 'package:luma_2/logic/auth/auth_cubit.dart';
 import 'package:luma_2/logic/seller_stores/seller_stores_bloc.dart';
 import 'package:luma_2/presentation/screens/seller_screens/seller_homepage_screen/seller_homepage_screen_account.dart';
 import 'package:luma_2/presentation/screens/seller_screens/seller_homepage_screen/seller_homepage_screen_analitics.dart';
@@ -26,10 +23,6 @@ class SellerHomepageScreen extends StatefulWidget {
 class _SellerHomepageScreenState extends State<SellerHomepageScreen> {
   int selectedIndex = 0;
   int currentStore = 0;
-
-  void _navigateToLogin(BuildContext context) {
-    context.go(AppRoute.auth.path);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,18 +47,7 @@ class _SellerHomepageScreenState extends State<SellerHomepageScreen> {
         ];
 
         return Scaffold(
-          appBar: AppBar(
-            title: Text(store.name),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  _navigateToLogin(context);
-                  context.read<AuthCubit>().signOut();
-                },
-                icon: const Icon(Icons.logout),
-              ),
-            ],
-          ),
+          appBar: AppBar(title: Text(store.name)),
           drawer: Drawer(
             child: SafeArea(
               child: Column(

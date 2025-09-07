@@ -7,6 +7,7 @@ import 'package:luma_2/core/router/app_routes.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/core/theme/app_sizes.dart';
 import 'package:luma_2/core/theme/app_text_styles.dart';
+import 'package:luma_2/logic/auth/auth_cubit.dart';
 import 'package:luma_2/logic/chat/chat_bloc.dart';
 import 'package:luma_2/logic/user/user_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -167,7 +168,16 @@ class BuyerHomepageScreenAccount extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                     ),
 
-                    const SizedBox(height: 80),
+                    const SizedBox(height: 16),
+
+                    FilledButton(
+                      onPressed: () {
+                        context.read<AuthCubit>().signOut();
+                      },
+                      child: Text("Выйти из аккаунта"),
+                    ),
+
+                    const SizedBox(height: AppSizes.navBarHeight),
                   ],
                 ),
               ),
