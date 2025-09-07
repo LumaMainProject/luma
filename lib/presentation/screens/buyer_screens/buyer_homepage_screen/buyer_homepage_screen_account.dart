@@ -177,7 +177,7 @@ class BuyerHomepageScreenAccount extends StatelessWidget {
                       child: Text("Выйти из аккаунта"),
                     ),
 
-                    const SizedBox(height: AppSizes.navBarHeight),
+                    const SizedBox(height: AppSizes.buttonBar),
                   ],
                 ),
               ),
