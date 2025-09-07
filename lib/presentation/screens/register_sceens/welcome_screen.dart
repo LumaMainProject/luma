@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:luma_2/core/constants/app_icons.dart';
+import 'package:luma_2/core/constants/app_images.dart';
 import 'package:luma_2/core/constants/app_strings.dart';
 import 'package:luma_2/core/router/app_routes.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
@@ -93,6 +94,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Image.asset(AppImages.logo, width: 120, height: 120),
                 const Text(AppStrings.appName, style: AppTextStyles.mainTitle),
                 const Text(AppStrings.welcome, style: AppTextStyles.text),
 
@@ -228,7 +230,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   onPressed: () {
                     context.pushNamed(AppRoute.registrer.name);
                   },
-                  child: Text(AppStrings.registerTitle),
+                  child: Text(
+                    AppStrings.registerTitle,
+                    style: AppTextStyles.buttonDeactive,
+                  ),
                 ),
               ],
             ),

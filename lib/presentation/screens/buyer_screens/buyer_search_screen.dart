@@ -138,7 +138,7 @@ class _BuyerSearchScreenState extends State<BuyerSearchScreen>
 
                       // Продукты
                       if (filteredProducts.isNotEmpty) ...[
-                        Text("Товары", style: AppTextStyles.headline),
+                        Text("Категории", style: AppTextStyles.headline),
                         const SizedBox(height: AppSpacing.paddingSm),
                         LayoutBuilder(
                           builder: (context, constraints) {

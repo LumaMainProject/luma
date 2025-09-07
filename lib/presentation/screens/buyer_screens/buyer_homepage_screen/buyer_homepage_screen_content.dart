@@ -12,6 +12,7 @@ import 'package:luma_2/data/models/store.dart';
 import 'package:luma_2/logic/products/products_cubit.dart';
 import 'package:luma_2/logic/stores/stores_cubit.dart';
 import 'package:luma_2/presentation/widgets/buyer/item_widget.dart';
+import 'package:luma_2/presentation/widgets/buyer/shop_button_widget.dart';
 
 class BuyerHomepageScreenContent extends StatelessWidget {
   const BuyerHomepageScreenContent({super.key});
@@ -44,7 +45,7 @@ class BuyerHomepageScreenContent extends StatelessWidget {
               readOnly: true, // ✅ чтобы клавиатура не открывалась
               onTap: () {
                 context.pushNamed(
-                  AppRoute.buyerSearchScreen.name
+                  AppRoute.buyerSearchScreen.name,
                 ); // или AppRoute.search.path
               },
               decoration: InputDecoration(
@@ -98,6 +99,30 @@ class BuyerHomepageScreenContent extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.paddingMd,
+                        ),
+                        child: Text("Магазины", style: AppTextStyles.headline),
+                      ),
+                      const SizedBox(height: AppSpacing.paddingSm),
+                      SizedBox(
+                        height: 90,
+                        child: ListView.separated(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.paddingMd,
+                          ),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: storesState.stores.length,
+                          separatorBuilder: (_, __) =>
+                              const SizedBox(width: AppSpacing.paddingSm),
+                          itemBuilder: (context, index) {
+                            final s = storesState.stores[index];
+                            return ShopButtonWidget(store: s);
+                          },
+                        ),
+                      ),
+
                       // Скидки
                       const SizedBox(height: AppSpacing.paddingMd),
                       Padding(
