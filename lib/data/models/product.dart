@@ -39,13 +39,21 @@ class Product extends Equatable {
   final String? warranty;
   final bool isDeleted;
   final String? updatedBy;
-  final Timestamp createdAt;
-  final Timestamp updatedAt;
+  final Timestamp? createdAt;
+  final Timestamp? updatedAt;
   final Timestamp? lastReviewAt;
 
   /// --- НОВЫЕ ПОЛЯ ---
   final Map<String, String>? specs; // характеристики товара
   final List<Review>? reviews; // список отзывов
+
+  /// --- Новые поля аналитики ---
+  final double conversionRate; // пример: заказ/просмотр
+  final double averageRating; // средняя оценка
+  final int totalRevenue; // общая выручка
+  // Можно добавить ссылки на детальные данные в Firestore
+  // Детальные данные будут храниться в подколлекции analytics
+  // products/{productId}/analytics/{date}
 
   Product({
     required this.id,
@@ -89,6 +97,9 @@ class Product extends Equatable {
     this.lastReviewAt,
     this.specs,
     this.reviews,
+    this.conversionRate = 0.0,
+    this.averageRating = 0.0,
+    this.totalRevenue = 0,
   }) : createdAt = createdAt ?? Timestamp.now(),
        updatedAt = updatedAt ?? Timestamp.now();
 
@@ -137,6 +148,9 @@ class Product extends Equatable {
       createdAt: json['createdAt'] ?? Timestamp.now(),
       updatedAt: json['updatedAt'] ?? Timestamp.now(),
       lastReviewAt: json['lastReviewAt'],
+      conversionRate: (json['conversionRate'] ?? 0.0).toDouble(),
+      averageRating: (json['averageRating'] ?? 0.0).toDouble(),
+      totalRevenue: json['totalRevenue'] ?? 0,
 
       /// --- NEW ---
       specs: (json['specs'] != null)
@@ -188,6 +202,9 @@ class Product extends Equatable {
       "createdAt": createdAt,
       "updatedAt": updatedAt,
       "lastReviewAt": lastReviewAt,
+      "conversionRate": conversionRate,
+      "averageRating": averageRating,
+      "totalRevenue": totalRevenue,
 
       /// --- NEW ---
       "specs": specs,
@@ -221,6 +238,9 @@ class Product extends Equatable {
     int? ordersCount,
     int? favoritesCount,
     int? viewsCount,
+    double? conversionRate,
+    double? averageRating,
+    int? totalRevenue,
     double? rating,
     int? ratingCount,
     int? reviewsCount,
@@ -264,6 +284,9 @@ class Product extends Equatable {
       ordersCount: ordersCount ?? this.ordersCount,
       favoritesCount: favoritesCount ?? this.favoritesCount,
       viewsCount: viewsCount ?? this.viewsCount,
+      conversionRate: conversionRate ?? this.conversionRate,
+      averageRating: averageRating ?? this.averageRating,
+      totalRevenue: totalRevenue ?? this.totalRevenue,
       rating: rating ?? this.rating,
       ratingCount: ratingCount ?? this.ratingCount,
       reviewsCount: reviewsCount ?? this.reviewsCount,
@@ -280,6 +303,31 @@ class Product extends Equatable {
       lastReviewAt: lastReviewAt ?? this.lastReviewAt,
       specs: specs ?? this.specs,
       reviews: reviews ?? this.reviews,
+    );
+  }
+
+  factory Product.empty() {
+    return Product(
+      id: '',
+      title: '',
+      name: '',
+      description: '',
+      article: '',
+      category: '',
+      type: '',
+      brand: '',
+      countryOfOrigin: '',
+      price: 0.0,
+      imageUrl: '',
+      sellerId: '',
+      ordersCount: 0,
+      favoritesCount: 0,
+      viewsCount: 0,
+      conversionRate: 0.0,
+      averageRating: 0.0,
+      totalRevenue: 0,
+      createdAt: Timestamp.now(),
+      updatedAt: Timestamp.now(),
     );
   }
 
@@ -326,7 +374,8 @@ class Product extends Equatable {
     lastReviewAt,
     specs,
     reviews,
+    conversionRate,
+    averageRating,
+    totalRevenue,
   ];
 }
-
-

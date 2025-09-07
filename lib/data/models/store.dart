@@ -36,6 +36,12 @@ class Store extends Equatable {
   final int viewsCount;
   final int favoritesCount;
 
+  /// --- АНАЛИТИКА ---
+  final int totalOrders;
+  final int totalRevenue;
+  final double conversionRate;
+  final double averageRating;
+
   final List<String> socialLinks;
   final List<String> paymentMethods;
   final List<String> deliveryOptions;
@@ -69,6 +75,10 @@ class Store extends Equatable {
     this.reviewsCount = 0,
     this.viewsCount = 0,
     this.favoritesCount = 0,
+    this.totalOrders = 0,
+    this.totalRevenue = 0,
+    this.conversionRate = 0.0,
+    this.averageRating = 0.0,
     this.socialLinks = const [],
     this.paymentMethods = const [],
     this.deliveryOptions = const [],
@@ -100,6 +110,10 @@ class Store extends Equatable {
     reviewsCount: 0,
     viewsCount: 0,
     favoritesCount: 0,
+    totalOrders: 0,
+    totalRevenue: 0,
+    conversionRate: 0.0,
+    averageRating: 0.0,
     socialLinks: const [],
     paymentMethods: const [],
     deliveryOptions: const [],
@@ -133,6 +147,10 @@ class Store extends Equatable {
       reviewsCount: parseInt(json['reviewsCount']),
       viewsCount: parseInt(json['viewsCount']),
       favoritesCount: parseInt(json['favoritesCount']),
+      totalOrders: parseInt(json['totalOrders']),
+      totalRevenue: parseInt(json['totalRevenue']),
+      conversionRate: parseDouble(json['conversionRate']),
+      averageRating: parseDouble(json['averageRating']),
       socialLinks: List<String>.from(json['socialLinks'] ?? const []),
       paymentMethods: List<String>.from(json['paymentMethods'] ?? const []),
       deliveryOptions: List<String>.from(json['deliveryOptions'] ?? const []),
@@ -167,6 +185,10 @@ class Store extends Equatable {
     "reviewsCount": reviewsCount,
     "viewsCount": viewsCount,
     "favoritesCount": favoritesCount,
+    "totalOrders": totalOrders,
+    "totalRevenue": totalRevenue,
+    "conversionRate": conversionRate,
+    "averageRating": averageRating,
     "socialLinks": socialLinks,
     "paymentMethods": paymentMethods,
     "deliveryOptions": deliveryOptions,
@@ -180,6 +202,74 @@ class Store extends Equatable {
     "trafficSources": trafficSources,
     "conversionFunnel": conversionFunnel,
   };
+
+  Store copyWith({
+    String? id,
+    String? name,
+    String? description,
+    String? logoUrl,
+    String? bannerUrl,
+    String? ownerId,
+    List<String>? emails,
+    List<String>? phones,
+    List<StoreAddress>? addresses,
+    List<String>? productIds,
+    String? category,
+    double? rating,
+    int? reviewsCount,
+    int? viewsCount,
+    int? favoritesCount,
+    int? totalOrders,
+    int? totalRevenue,
+    double? conversionRate,
+    double? averageRating,
+    List<String>? socialLinks,
+    List<String>? paymentMethods,
+    List<String>? deliveryOptions,
+    bool? isActive,
+    Timestamp? createdAt,
+    Timestamp? updatedAt,
+    String? promoType,
+    Timestamp? promoExpiry,
+    List<String>? currentOrderIds,
+    List<String>? topProductIds,
+    Map<String, int>? trafficSources,
+    Map<String, double>? conversionFunnel,
+  }) {
+    return Store(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      logoUrl: logoUrl ?? this.logoUrl,
+      bannerUrl: bannerUrl ?? this.bannerUrl,
+      ownerId: ownerId ?? this.ownerId,
+      emails: emails ?? this.emails,
+      phones: phones ?? this.phones,
+      addresses: addresses ?? this.addresses,
+      productIds: productIds ?? this.productIds,
+      category: category ?? this.category,
+      rating: rating ?? this.rating,
+      reviewsCount: reviewsCount ?? this.reviewsCount,
+      viewsCount: viewsCount ?? this.viewsCount,
+      favoritesCount: favoritesCount ?? this.favoritesCount,
+      totalOrders: totalOrders ?? this.totalOrders,
+      totalRevenue: totalRevenue ?? this.totalRevenue,
+      conversionRate: conversionRate ?? this.conversionRate,
+      averageRating: averageRating ?? this.averageRating,
+      socialLinks: socialLinks ?? this.socialLinks,
+      paymentMethods: paymentMethods ?? this.paymentMethods,
+      deliveryOptions: deliveryOptions ?? this.deliveryOptions,
+      isActive: isActive ?? this.isActive,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      promoType: promoType ?? this.promoType,
+      promoExpiry: promoExpiry ?? this.promoExpiry,
+      currentOrderIds: currentOrderIds ?? this.currentOrderIds,
+      topProductIds: topProductIds ?? this.topProductIds,
+      trafficSources: trafficSources ?? this.trafficSources,
+      conversionFunnel: conversionFunnel ?? this.conversionFunnel,
+    );
+  }
 
   @override
   List<Object?> get props => [
@@ -198,6 +288,10 @@ class Store extends Equatable {
     reviewsCount,
     viewsCount,
     favoritesCount,
+    totalOrders,
+    totalRevenue,
+    conversionRate,
+    averageRating,
     socialLinks,
     paymentMethods,
     deliveryOptions,

@@ -33,6 +33,19 @@ class OrdersRepository {
         );
   }
 
+  // Получаем поток заказов по конкретному продукту
+  Stream<List<CurrentOrder>> getOrdersByProduct(String productId) {
+    return _firestore
+        .collection('orders')
+        .where('productId', isEqualTo: productId)
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.docs
+              .map((doc) => CurrentOrder.fromJson(doc.data()))
+              .toList(),
+        );
+  }
+
   Future<void> updateOrderStatus(String orderId, String newStatus) {
     return _firestore.collection('orders').doc(orderId).update({
       'status': newStatus,

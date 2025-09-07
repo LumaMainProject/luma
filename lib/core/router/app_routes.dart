@@ -15,6 +15,7 @@ enum AppRoute {
   sellerNoticifactions,
   sellerProductEdit,
   sellerPromo,
+  sellerAddPage,
 }
 
 extension AppRoutePath on AppRoute {
@@ -54,6 +55,8 @@ extension AppRoutePath on AppRoute {
         return '/buyer/sellerProductEdit';
       case AppRoute.sellerPromo:
         return '/buyer/sellerPromo';
+      case AppRoute.sellerAddPage:
+        return '/buyer/sellerAddPage';
     }
   }
 

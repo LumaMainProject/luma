@@ -1,17 +1,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:luma_2/core/constants/app_icons.dart';
+import 'package:luma_2/core/router/app_routes.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/core/theme/app_sizes.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
 import 'package:luma_2/core/theme/app_text_styles.dart';
 import 'package:luma_2/data/models/product.dart';
+import 'package:luma_2/data/models/store.dart';
+import 'package:luma_2/logic/seller_add_product/seller_add_product_bloc.dart';
 import 'package:luma_2/presentation/widgets/buyer/item_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SellerProductWidget extends StatelessWidget {
   final Product product;
-  const SellerProductWidget({super.key, required this.product});
+  final Store store;
+  const SellerProductWidget({
+    super.key,
+    required this.product,
+    required this.store,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +65,7 @@ class SellerProductWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          product.name,
+                          product.title,
                           style: AppTextStyles.cardMainText,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -98,9 +108,18 @@ class SellerProductWidget extends StatelessWidget {
                             icon: Icon(AppIcons.sellerProductView),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.read<SellerAddProductBloc>().add(
+                                InitProductForm(store: store, product: product),
+                              );
+                              context.pushNamed(
+                                AppRoute.sellerAddPage.name,
+                                extra: {"store": store, "product": product},
+                              );
+                            },
                             icon: Icon(AppIcons.sellerProductEdit),
                           ),
+
                           IconButton(
                             onPressed: () {},
                             icon: Icon(AppIcons.sellerProductOptions),

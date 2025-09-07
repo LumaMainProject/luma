@@ -15,6 +15,7 @@ import 'package:luma_2/presentation/screens/buyer_screens/buyer_search_screen.da
 import 'package:luma_2/presentation/screens/register_sceens/registration_screen.dart';
 import 'package:luma_2/presentation/screens/register_sceens/splash_screen.dart';
 import 'package:luma_2/presentation/screens/register_sceens/welcome_screen.dart';
+import 'package:luma_2/presentation/screens/seller_screens/seller_add_product_screen.dart';
 import 'package:luma_2/presentation/screens/seller_screens/seller_homepage_screen.dart';
 import 'package:luma_2/presentation/screens/seller_screens/seller_notifications_screen.dart';
 import 'package:luma_2/presentation/screens/seller_screens/seller_product_edit_screen.dart';
@@ -154,6 +155,24 @@ class AppRouter {
           path: AppRoute.sellerPromo.path,
           name: AppRoute.sellerPromo.name,
           builder: (context, state) => const SellerPromoScreen(),
+        ),
+        GoRoute(
+          path: AppRoute.sellerAddPage.path,
+          name: AppRoute.sellerAddPage.name,
+          builder: (context, state) {
+            final extra = state.extra as Map<String, dynamic>?;
+
+            if (extra == null || !extra.containsKey("store")) {
+              throw Exception("Store is required for SellerAddProductScreen");
+            }
+
+            final store = extra["store"] as Store;
+            final product =
+                extra["product"]
+                    as Product?;
+
+            return SellerAddProductScreen(store: store, product: product);
+          },
         ),
       ],
     );

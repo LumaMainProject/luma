@@ -40,4 +40,12 @@ abstract class AppIcons {
   static const IconData sellerProductView = Icons.remove_red_eye_outlined;
   static const IconData sellerProductEdit = Icons.edit_note_rounded;
   static const IconData sellerProductOptions = Icons.more_vert_rounded;
+
+  static const IconData trendingUp = Icons.trending_up_rounded;
+  static const IconData trendingDown = Icons.trending_down_rounded;
+
+  static const IconData sellerContentVideo = Icons.video_call_outlined;
+  static const IconData sellerContentSale = Icons.sell_outlined;
+  static const IconData sellerContentAdjust = Icons.adjust;
+  static const IconData sellerContentQR = Icons.qr_code_2_outlined;
 }

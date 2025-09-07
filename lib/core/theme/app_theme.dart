@@ -46,6 +46,23 @@ abstract class AppTheme {
       iconTheme: IconThemeData(color: AppColors.textDark),
     ),
 
+    // 🔘 FilledButton
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        backgroundColor: AppColors.primary, // основной цвет кнопки
+        foregroundColor: Colors.white, // цвет текста и иконок
+        textStyle: AppTextStyles.buttonDeactive, // твой стиль текста
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            AppSizes.buttonRadius,
+          ), // ✅ общий радиус
+        ),
+        minimumSize: const Size.fromHeight(
+          AppSizes.buttonHeight,
+        ), // высота кнопки
+      ),
+    ),
+
     // 📦 Карточки
     cardTheme: CardThemeData(
       color: AppColors.white,

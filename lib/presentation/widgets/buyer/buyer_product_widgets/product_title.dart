@@ -17,7 +17,7 @@ class ProductTitle extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start, // ✅ теперь всё влево
         children: [
           /// Название товара
-          Text(product.name, style: AppTextStyles.headline),
+          Text(product.title, style: AppTextStyles.headline),
 
           AppSpacing.verticalXs,
 

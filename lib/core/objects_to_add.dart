@@ -513,6 +513,5 @@ class TestSeeder {
     });
 
     await batch.commit();
-    print("✅ Test data uploaded successfully (with notifications)!");
   }
 }

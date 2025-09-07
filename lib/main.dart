@@ -17,11 +17,14 @@ import 'package:luma_2/data/repositories/notifications_repository.dart';
 import 'package:luma_2/data/repositories/chat_repository.dart';
 
 import 'package:luma_2/firebase_options.dart';
+import 'package:luma_2/logic/analytics/analytics_bloc.dart';
 import 'package:luma_2/logic/chat/chat_bloc.dart';
 import 'package:luma_2/logic/multi_store_orders/multi_store_orders_bloc.dart';
 import 'package:luma_2/logic/orders_bloc/orders_bloc.dart';
+import 'package:luma_2/logic/product_analytics/product_analytics_bloc.dart';
 
 import 'package:luma_2/logic/products/products_cubit.dart';
+import 'package:luma_2/logic/seller_add_product/seller_add_product_bloc.dart';
 import 'package:luma_2/logic/seller_stores/seller_stores_bloc.dart';
 import 'package:luma_2/logic/stores/stores_cubit.dart';
 import 'package:luma_2/logic/user/user_bloc.dart';
@@ -70,6 +73,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => MultiStoreOrdersBloc(repository: ordersRepository),
         ),
+        BlocProvider(create: (_) => SellerAddProductBloc(productsRepository)),
+        BlocProvider(
+          create: (_) => AnalyticsBloc(ordersRepository: ordersRepository),
+        ),
+        BlocProvider(
+          create: (_) =>
+              ProductAnalyticsBloc(ordersRepository: ordersRepository),
+        ),
       ],
       child: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
@@ -95,8 +106,8 @@ class MyApp extends StatelessWidget {
               if (storesState is SellerStoresLoaded) {
                 final storeIds = storesState.stores.map((s) => s.id).toList();
 
-                // Для каждого магазина загружаем его заказы
                 for (final storeId in storeIds) {
+                  // Подгружаем заказы для MultiStoreOrdersBloc
                   multiStoreOrdersBloc.add(LoadStoreOrders(storeId));
                 }
               }
@@ -113,6 +124,7 @@ class MyApp extends StatelessWidget {
             userStoresBloc.stream.listen((storesState) {
               if (storesState is SellerStoresLoaded) {
                 final storeIds = storesState.stores.map((s) => s.id).toList();
+
                 for (final storeId in storeIds) {
                   multiStoreOrdersBloc.add(LoadStoreOrders(storeId));
                 }
