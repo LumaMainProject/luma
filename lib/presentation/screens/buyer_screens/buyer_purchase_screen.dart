@@ -358,27 +358,79 @@ class _BuyerPurchaseScreenPaymentOptionsState
     extends State<BuyerPurchaseScreenPaymentOptions> {
   bool isCash = true;
 
+  int paymentType = 0;
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 120,
-      child: Row(
-        children: [
-          _PaymentOption(
-            title: "Наличные",
-            icon: AppIcons.buyer,
-            isActive: isCash,
-            onTap: () => setState(() => isCash = true),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 120,
+          child: Row(
+            children: [
+              _PaymentOption(
+                title: "Наличные",
+                icon: AppIcons.buyer,
+                isActive: isCash,
+                onTap: () => setState(() => isCash = true),
+              ),
+              AppSpacing.horizontalMd,
+              _PaymentOption(
+                title: "Картой",
+                icon: AppIcons.seller,
+                isActive: !isCash,
+                onTap: () => setState(() => isCash = false),
+              ),
+            ],
           ),
-          AppSpacing.horizontalMd,
-          _PaymentOption(
-            title: "Картой",
-            icon: AppIcons.seller,
-            isActive: !isCash,
-            onTap: () => setState(() => isCash = false),
+        ),
+
+        if (isCash == false) AppSpacing.verticalMd,
+
+        if (isCash == false)
+          Text("Оплатить через", style: AppTextStyles.headline),
+
+        if (isCash == false) AppSpacing.verticalMd,
+
+        if (isCash == false)
+          SizedBox(
+            height: 60,
+            child: Row(
+              children: [
+                _PaymentOption(
+                  title: "Payme",
+                  icon: AppIcons.card,
+                  isActive: paymentType == 0,
+                  onTap: () => setState(() => paymentType = 0),
+                ),
+                AppSpacing.horizontalMd,
+                _PaymentOption(
+                  title: "Click",
+                  icon: AppIcons.card,
+                  isActive: paymentType == 1,
+                  onTap: () => setState(() => paymentType = 1),
+                ),
+                AppSpacing.horizontalMd,
+                _PaymentOption(
+                  title: "Uzum",
+                  icon: AppIcons.card,
+                  isActive: paymentType == 2,
+                  onTap: () => setState(() => paymentType = 2),
+                ),
+              ],
+            ),
           ),
-        ],
-      ),
+
+        if (isCash == false) AppSpacing.verticalMd,
+
+        if (isCash == false)
+          Text(
+            "Онлайн оплата в разработке, доступна оплата наличными",
+            style: AppTextStyles.alert,
+            maxLines: 3,
+          ),
+      ],
     );
   }
 }

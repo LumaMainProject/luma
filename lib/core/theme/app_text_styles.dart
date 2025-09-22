@@ -66,4 +66,10 @@ abstract class AppTextStyles {
     fontWeight: FontWeight.bold,
     color: AppColors.white,
   );
+
+   static const alert = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    color: AppColors.error,
+  );
 }
