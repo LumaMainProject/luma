@@ -12,6 +12,7 @@ import 'package:luma_2/presentation/screens/buyer_screens/buyer_notifications.da
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_pruduct_screen.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_purchase_screen.dart';
 import 'package:luma_2/presentation/screens/buyer_screens/buyer_search_screen.dart';
+import 'package:luma_2/presentation/screens/buyer_screens/buyer_shop_screen.dart';
 import 'package:luma_2/presentation/screens/register_sceens/registration_screen.dart';
 import 'package:luma_2/presentation/screens/register_sceens/splash_screen.dart';
 import 'package:luma_2/presentation/screens/register_sceens/welcome_screen.dart';
@@ -111,6 +112,16 @@ class AppRouter {
           path: AppRoute.buyerSearchScreen.path,
           name: AppRoute.buyerSearchScreen.name,
           builder: (context, state) => const BuyerSearchScreen(),
+        ),
+        GoRoute(
+          path: AppRoute.buyerShopScreen.path,
+          name: AppRoute.buyerShopScreen.name,
+          builder: (context, state) {
+            final store = state.extra as Store?;
+            if (store == null) throw Exception('Store not passed!');
+
+            return BuyerShopScreen(store: store);
+          },
         ),
 
         // ACCOUNT

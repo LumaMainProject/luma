@@ -11,6 +11,8 @@ import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/product_
 import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/product_image.dart';
 import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/product_price_block.dart';
 import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/product_reviews.dart';
+import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/product_selector.dart';
+import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/product_size_selector.dart';
 import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/product_specs.dart';
 import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/product_store_info.dart';
 import 'package:luma_2/presentation/widgets/buyer/buyer_product_widgets/product_title.dart';
@@ -52,7 +54,11 @@ class BuyerProductScreen extends StatelessWidget {
 
               SliverToBoxAdapter(child: ProductTitle(product: product)),
 
+              SliverToBoxAdapter(child: ProductSelector()),
+
               SliverToBoxAdapter(child: ProductPriceBlock(product: product)),
+
+              SliverToBoxAdapter(child: ProductSizeSelector()),
 
               SliverToBoxAdapter(
                 child: ProductDescription(description: product.description),
@@ -134,8 +140,16 @@ class _ProductsCarousel extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(title, style: AppTextStyles.headline),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.paddingMd,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(title, style: AppTextStyles.buttonDeactive),
+                    Text("Смотреть всё >", style: AppTextStyles.cardPrice),
+                  ],
+                ),
               ),
               const SizedBox(height: 10),
               SizedBox(

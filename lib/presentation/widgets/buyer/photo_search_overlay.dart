@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/core/theme/app_spacing.dart';
 import 'package:luma_2/core/theme/app_text_styles.dart';
+import 'package:luma_2/presentation/widgets/under_construction_banner.dart';
 
 class PhotoSearchOverlay extends StatelessWidget {
   final VoidCallback onClose;
@@ -46,56 +47,74 @@ class PhotoSearchOverlay extends StatelessWidget {
                   maxLines: 5,
                 ),
                 const SizedBox(height: AppSpacing.paddingMd),
-                Row(
+                Column(
                   children: [
-                    Expanded(
+                    SizedBox(
+                      width: double.infinity,
                       child: Card(
                         child: Padding(
                           padding: const EdgeInsets.all(AppSpacing.paddingSm),
-                          child: Column(
+                          child: Stack(
+                            alignment: Alignment.center,
                             children: [
-                              Icon(
-                                Icons.upload_file,
-                                size: 40,
-                                color: AppColors.primary,
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.upload_file,
+                                    size: 40,
+                                    color: AppColors.primary,
+                                  ),
+                                  const SizedBox(height: 4),
+                                  const Text(
+                                    "Загрузить фото",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    "в разработке",
+                                    style: AppTextStyles.textButton,
+                                  ),
+                                ],
                               ),
-                              const SizedBox(height: 4),
-                              Text(
-                                "Загрузить фото",
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                "в разработке",
-                                style: AppTextStyles.textButton,
-                              ),
+                              const UnderConstructionBanner(), // баннер сверху
                             ],
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.paddingSm),
-                    Expanded(
+                    const SizedBox(height: AppSpacing.paddingSm),
+                    SizedBox(
+                      width: double.infinity,
                       child: Card(
                         child: Padding(
                           padding: const EdgeInsets.all(AppSpacing.paddingSm),
-                          child: Column(
+                          child: Stack(
+                            alignment: Alignment.center,
                             children: [
-                              Icon(
-                                Icons.photo_camera,
-                                size: 40,
-                                color: AppColors.primary,
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.photo_camera,
+                                    size: 40,
+                                    color: AppColors.primary,
+                                  ),
+                                  const SizedBox(height: 4),
+                                  const Text(
+                                    "Открыть камеру",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    "в разработке",
+                                    style: AppTextStyles.textButton,
+                                  ),
+                                ],
                               ),
-                              const SizedBox(height: 4),
-                              Text(
-                                "Открыть камеру",
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                "в разработке",
-                                style: AppTextStyles.textButton,
-                              ),
+                              const UnderConstructionBanner(), // баннер и на второй карточке
                             ],
                           ),
                         ),
@@ -103,6 +122,7 @@ class PhotoSearchOverlay extends StatelessWidget {
                     ),
                   ],
                 ),
+
                 const SizedBox(height: AppSpacing.paddingMd),
                 ElevatedButton(
                   onPressed: onClose,

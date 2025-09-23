@@ -11,6 +11,7 @@ enum AppRoute {
   buyerAccountMessenger,
   buyerAccountOrders,
   buyerSearchScreen,
+  buyerShopScreen,
   sellerHomepageScreen,
   sellerNoticifactions,
   sellerProductEdit,
@@ -37,6 +38,8 @@ extension AppRoutePath on AppRoute {
         return '/buyer/buyerNotifications';
       case AppRoute.buyerSearchScreen:
         return '/buyer/buyerSearchScreen';
+      case AppRoute.buyerShopScreen:
+        return '/buyer/buyerShopScreen';
 
       case AppRoute.buyerAccountEdit:
         return '/buyer/buyerAccountEdit';
