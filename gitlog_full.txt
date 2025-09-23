@@ -1,0 +1,503 @@
+commit d8f97c42e28102f67977f544c9b15ce27ed9cbaf
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Mon Sep 22 20:13:21 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Mon Sep 22 20:13:21 2025 +0500
+
+    Added video files
+
+commit 88f9ba374c4b8275cd701a8d9f2804bdbe102c56
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Sep 7 19:19:47 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Sep 7 19:19:47 2025 +0500
+
+    Changes in text
+
+commit 7ac2e64f09db452b45e864245086e026b0cf2a44
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Sep 7 19:10:06 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Sep 7 19:10:06 2025 +0500
+
+    Added icons and shops
+
+commit 1e9d4fc029443a337f62ae3d29e063944b9004dc
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Sep 7 18:51:33 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Sep 7 18:51:33 2025 +0500
+
+    Button fix
+
+commit 230eba28ee23f4f1a9589c5fb92173b2b22eca59
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Sep 7 18:48:13 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Sep 7 18:48:13 2025 +0500
+
+    Log out buttons implement
+
+commit b27b6ea5ea2873a1c8433bea140fa6ae3893388d
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Sep 7 18:42:27 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Sep 7 18:42:27 2025 +0500
+
+    Added analytics
+
+commit 3893956083a6889f6f9b6c6c9904132e83be3449
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Sep 7 13:48:29 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Sep 7 13:48:29 2025 +0500
+
+    Added seller pages and analytics
+
+commit 9807e645454c6f0274145d2efe882a1c8bbfaef4
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Mon Sep 1 12:26:41 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Mon Sep 1 12:26:41 2025 +0500
+
+    Added orders
+
+commit 25f0b67bad7318664f8a08a8eb867d05ac3cb1e0
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Mon Sep 1 12:02:25 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Mon Sep 1 12:02:25 2025 +0500
+
+    Separated orders from users and stores
+
+commit c5717f88c9628fddb08099b210350acac9f52256
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Mon Sep 1 09:35:32 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Mon Sep 1 09:35:32 2025 +0500
+
+    Added seller bloc integration
+
+commit 57d2fd9c4fbc8e7b1896643e1d70b9871356e072
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Mon Sep 1 07:35:26 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Mon Sep 1 07:35:26 2025 +0500
+
+    Removed dev mark
+
+commit e754b682501b42dc31c0b7e43cc13bbe8fa7dde7
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Mon Sep 1 07:33:35 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Mon Sep 1 07:33:35 2025 +0500
+
+    Added seller pages and routers to them
+
+commit 89a6ba0133dcbcc86f2ac5d7f397d196d29de235
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Mon Sep 1 06:50:59 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Mon Sep 1 06:50:59 2025 +0500
+
+    Added separation for Buyer and Seller for widgets
+
+commit 028b3f160cb555e0ee86d65e9ab55ccbf9228e4f
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Aug 31 19:19:24 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Aug 31 19:19:24 2025 +0500
+
+    Added registration
+
+commit a55ebee26293c5ed28d24103f8b456273928b651
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Aug 31 15:45:17 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Aug 31 15:45:17 2025 +0500
+
+    Added orders
+
+commit a8fdd6700e8afb887bf1e6a4f0c4c4e96d1c0eeb
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Aug 31 13:14:17 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Aug 31 13:14:17 2025 +0500
+
+    Added in Track orders
+
+commit 57d077163280ca90263be167b8b0ee7984c89b46
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Aug 31 12:49:15 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Aug 31 12:49:15 2025 +0500
+
+    Added overlay for seach
+
+commit 53ccabb8ad2f58069c90d2b18a1c91a3859066d2
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Aug 31 12:23:14 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Aug 31 12:23:14 2025 +0500
+
+    Added searcg
+
+commit 7f475b96f55cd4bdb6817c3e1da3ce5131b84df6
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Aug 31 11:36:04 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Aug 31 11:36:04 2025 +0500
+
+    Added edit account
+
+commit 21924f3e2ec23bd301893afb852c680fd36f25f5
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Aug 31 10:08:24 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Aug 31 10:08:24 2025 +0500
+
+    Added messenger
+
+commit d779fc177c691513455e9d62895d384d9d49ab02
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Aug 31 08:20:12 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Aug 31 08:20:12 2025 +0500
+
+    Added favorite
+
+commit ccaaa4479abf3b8611c70fd0ee58c05375e6dc52
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Aug 31 08:03:22 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Aug 31 08:03:22 2025 +0500
+
+    Added notifications
+
+commit 4648a71a2c26e399a51438030597dd98601f96a4
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sat Aug 30 18:33:15 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sat Aug 30 18:33:15 2025 +0500
+
+    Added notifications
+
+commit a058edf030563113d9217766796e4d1b2705ec55
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sat Aug 30 17:43:56 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sat Aug 30 17:43:56 2025 +0500
+
+    Added all user pages
+
+commit c9b36f31479500fd6737475881bdaa73f1bf34dc
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Fri Aug 29 13:15:10 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Fri Aug 29 13:15:10 2025 +0500
+
+    Changes in shop card widget, that makes buttons work
+
+commit 6ddaafb6d4f96f93093c816c6d5813bf91fae19a
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Fri Aug 29 12:49:01 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Fri Aug 29 12:49:01 2025 +0500
+
+    logic complete overhaul
+
+commit b42f4b084c7b00ef7401ee3d22d4468c43021a90
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Tue Aug 19 18:00:14 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Tue Aug 19 18:00:14 2025 +0500
+
+    Added Luma 1 file entierly
+
+commit 1719e1003400cc5c24c8b8ab8883004d373d4f70
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Aug 17 13:57:22 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Aug 17 13:57:22 2025 +0500
+
+    Start editing the app
+
+commit f6bd520899f1e19723e6ed3d650618b633bfaba7
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Fri Jul 18 13:48:12 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Fri Jul 18 13:48:12 2025 +0500
+
+    Fixes of buttons
+
+commit ac967509c4e2c38e8771418b47e991b3497659f4
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Fri Jul 18 12:35:42 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Fri Jul 18 12:35:42 2025 +0500
+
+    Edit in store
+
+commit bdfb54137bcfbfef6164b791f5b3debf7daa0b11
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Fri Jul 18 11:55:38 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Fri Jul 18 11:55:38 2025 +0500
+
+    Change in charts
+
+commit 86cc6810568cf29992b0c58248088fb41aa324b2
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Fri Jul 18 11:43:07 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Fri Jul 18 11:43:07 2025 +0500
+
+    Readme edit
+
+commit 7b280afd9a1468fbf478b40cc60d472160083d4d
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Fri Jul 18 11:08:00 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Fri Jul 18 11:08:00 2025 +0500
+
+    Seach edited
+
+commit 97cda9b80973188c77c3754b04e605b64e112525
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Fri Jul 18 10:15:47 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Fri Jul 18 10:15:47 2025 +0500
+
+    Page register edit
+
+commit a488e03dcdf549915666d5b5af86442a6b03dfea
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Fri Jul 18 10:02:15 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Fri Jul 18 10:02:15 2025 +0500
+
+    Charts added
+
+commit b2074a95a9706846361752127aabce67fc445880
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Fri Jul 18 08:37:48 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Fri Jul 18 08:37:48 2025 +0500
+
+    Added notifications
+
+commit 0f80268925d6bf8cb24b12de9bb9ac0ab9a01798
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Thu Jul 17 19:57:29 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Thu Jul 17 19:57:29 2025 +0500
+
+    Fixes in Buyer Cart pages
+
+commit f44d406e614bc27314237176df733a3a4c5398f0
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Thu Jul 17 19:30:24 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Thu Jul 17 19:30:24 2025 +0500
+
+    Added map
+
+commit 275eb3a39e34daad54a86151caaca751fb038fb0
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Thu Jul 17 19:05:12 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Thu Jul 17 19:05:12 2025 +0500
+
+    Added checkout new ui
+
+commit 51eb6188d380a32b515f4deec957861ca45e29b5
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Thu Jul 17 15:56:47 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Thu Jul 17 15:56:47 2025 +0500
+
+    Minor fixes
+
+commit 3daca7a569644c999a9bb97ab3ebaf2ff1fd52f3
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Thu Jul 17 15:31:22 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Thu Jul 17 15:31:22 2025 +0500
+
+    UI buyer homepage fixes
+
+commit c60e93647927f0350033731d3ab1bdbf4ce6ac95
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Thu Jul 17 13:29:03 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Thu Jul 17 13:29:03 2025 +0500
+
+    Homepage cart and Item card edits.
+
+commit 10624eb6715d1e323e49d1cc13b431fbae307942
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Thu Jul 17 11:37:29 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Thu Jul 17 11:37:29 2025 +0500
+
+    Backend mass fix to Stores and Items. Now items and stores work properly.
+
+commit 2c3cd474958e82c8db934a45e19fa73501b7148f
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Wed Jul 16 13:15:47 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Wed Jul 16 13:15:47 2025 +0500
+
+    added firebase
+
+commit a06230b05b71314175e579f0e4abd3531a03d5cb
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Wed Jul 16 09:35:57 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Wed Jul 16 09:35:57 2025 +0500
+
+    Dependencies fix
+
+commit 2a45fee4183f7c2c02dcc324a094188f928221ca
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Wed Jul 16 09:31:09 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Wed Jul 16 09:31:09 2025 +0500
+
+    Seller statistic implement. Added notifications, search and account
+
+commit 54bc329a718c9c7c298e60d46487de39fd33cc37
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Wed Jul 16 07:41:06 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Wed Jul 16 07:41:06 2025 +0500
+
+    New videos added
+
+commit 3fb617015a08f9324c24063cfcae9f9b90484b26
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Tue Jul 15 20:41:40 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Tue Jul 15 20:41:40 2025 +0500
+
+    App added video. Need to remade video controller. Avoid using multiple video controllers.
+
+commit 0754c53aa21b4c889dae1b01d15c89679b9a34d5
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Tue Jul 15 17:06:48 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Tue Jul 15 17:06:48 2025 +0500
+
+    App icon added
+
+commit 017509f86aa1c01897ee000395f02acba2c9d9a1
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Tue Jul 15 15:21:06 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Tue Jul 15 15:21:06 2025 +0500
+
+    Minor changes
+
+commit 668fa01a705c10b72ea67dcedb09bcecb4e9bf44
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Tue Jul 15 14:42:31 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Tue Jul 15 14:42:31 2025 +0500
+
+    Added Bloc and color changes.
+
+commit 07903675aa47e668ee0c3dc91d8e6b2357278e81
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Jul 13 19:29:42 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Jul 13 19:29:42 2025 +0500
+
+    Fixed feeder
+
+commit d40304f882477c051601df0240259bfb4fee1354
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Jul 13 18:44:26 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Jul 13 18:44:26 2025 +0500
+
+    Images fixed
+
+commit ace6def3399106c8f0ab1dd3cfea315dd9975c9a
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Jul 13 17:33:23 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Jul 13 17:33:23 2025 +0500
+
+    Implemets save files to app
+
+commit 988c642dda18271e1191c1afe727961be4ece572
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Jul 13 15:56:01 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Jul 13 15:56:01 2025 +0500
+
+    Added Saves file
+
+commit ddd17430ed09b50ddd71a9b07ec8e0a8a5a0d7ca
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Jul 13 14:45:28 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Jul 13 14:45:28 2025 +0500
+
+    Added Bloc and Equatable. Added object classes for Item, User, Shop, Notification. Change order of params.
+
+commit adae6b85ae816f5c2fea2b63ce523e6526f47df3
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Jul 13 13:26:42 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Jul 13 13:26:42 2025 +0500
+
+    Adding Images
+
+commit f51b70614612c00845c030580d53ccab2d8ff3f0
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Jul 13 11:54:02 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Jul 13 11:54:02 2025 +0500
+
+    Cleaning code
+
+commit 9b75778fb87b26118e18fea988f68e8784c2654f
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Jul 13 11:50:14 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Jul 13 11:50:14 2025 +0500
+
+    Changes in Readme
+
+commit 79d29012614bfe172fcdd65c157c744c7f7bb0ba
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Jul 13 11:48:16 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Jul 13 11:48:16 2025 +0500
+
+    Change Pubspec.yaml
+
+commit e485e0a368fbc14ec9fa4cdcb8eb38dfd9515376
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sun Jul 13 11:35:52 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sun Jul 13 11:35:52 2025 +0500
+
+    Added seller UI
+
+commit 8ef88a55e8402c21496b8c695b6d5e8587f002d4
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sat Jul 12 20:26:58 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sat Jul 12 20:26:58 2025 +0500
+
+    Add Notifications and Purchase pages
+
+commit 511bb0584ddb798f6498260e59dbe68245f08c0c
+Author:     baseklesser@gmail.com <baseklesser@gmail.com>
+AuthorDate: Sat Jul 12 19:11:18 2025 +0500
+Commit:     baseklesser@gmail.com <baseklesser@gmail.com>
+CommitDate: Sat Jul 12 19:11:18 2025 +0500
+
+    Add full project

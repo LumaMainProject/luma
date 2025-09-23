@@ -173,6 +173,7 @@ class BuyerHomepageScreenAccount extends StatelessWidget {
                     FilledButton(
                       onPressed: () {
                         context.read<AuthCubit>().signOut();
+                        context.go(AppRoute.auth.name);
                       },
                       child: Text("Выйти из аккаунта"),
                     ),
