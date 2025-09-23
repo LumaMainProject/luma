@@ -99,6 +99,7 @@ class BuyerHomepageScreenContent extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(height: 8),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: AppSpacing.paddingMd,
