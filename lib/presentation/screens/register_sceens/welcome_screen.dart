@@ -177,7 +177,66 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             hintText: AppStrings.passwordHint,
                           ),
                         ),
+
                         AppSpacing.verticalMd,
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // Кнопка Google
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: AppColors.background,
+                                    width: 2,
+                                  ), // цвет границы
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Colors.white, // фон кнопки
+                                ),
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.asset(
+                                      AppImages.google,
+                                      height: 40,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            // Кнопка Apple
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: AppColors.background,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Colors.white,
+                                ),
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.asset(
+                                      AppImages.apple,
+                                      height: 40,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        AppSpacing.verticalMd,
+
                         ElevatedButton(
                           onPressed: isEmailNotEmpty
                               ? () {
