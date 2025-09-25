@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:luma_2/core/constants/app_videos.dart';
 import 'package:luma_2/core/router/app_routes.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/data/models/product.dart';
@@ -22,20 +22,39 @@ class BuyerHomepageScreenPlayer extends StatefulWidget {
 }
 
 class _BuyerHomepageScreenPlayerState extends State<BuyerHomepageScreenPlayer> {
-  final List<String> videoAssets = [
-    AppVideos.first,
-    AppVideos.second,
-    AppVideos.third,
-    AppVideos.four,
-    AppVideos.fifth,
-  ];
+  final List<String> videoFiles = ['1.mp4', '2.mp4', '3.mp4', '4.mp4', '5.mp4'];
+
+  List<String> videoUrls = [];
 
   final List<Store> storeAssets = [];
-
   final List<Product> productsAssets = [];
 
   @override
+  void initState() {
+    super.initState();
+    _loadVideoUrls();
+  }
+
+  Future<void> _loadVideoUrls() async {
+    final urls = await Future.wait(videoFiles.map((f) => getVideoUrl(f)));
+    if (!mounted) return;
+    setState(() {
+      videoUrls = urls;
+    });
+  }
+
+  Future<String> getVideoUrl(String fileName) async {
+    final ref = FirebaseStorage.instance.ref().child('videos/$fileName');
+    return await ref.getDownloadURL();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (videoUrls.isEmpty) {
+      // Показываем индикатор загрузки, пока ссылки не получены
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
     return Scaffold(
       body: BlocBuilder<StoresCubit, StoresState>(
         builder: (context, storesState) {
@@ -52,20 +71,24 @@ class _BuyerHomepageScreenPlayerState extends State<BuyerHomepageScreenPlayer> {
                   return const Center(child: Text("Нет видео"));
                 }
 
-                for (int i = 0; i < videoAssets.length; i++) {
-                  storeAssets.add(storesState.stores[i % 2 == 0 ? 0 : 1]);
-                }
-
-                for (int i = 0; i < videoAssets.length; i++) {
-                  productsAssets.add(productsState.products[i]);
+                // Инициализация storeAssets и productsAssets
+                storeAssets.clear();
+                productsAssets.clear();
+                for (int i = 0; i < videoUrls.length; i++) {
+                  storeAssets.add(
+                    storesState.stores[i % storesState.stores.length],
+                  );
+                  productsAssets.add(
+                    productsState.products[i % productsState.products.length],
+                  );
                 }
 
                 return PageView.builder(
                   scrollDirection: Axis.vertical,
-                  itemCount: videoAssets.length,
+                  itemCount: videoUrls.length,
                   itemBuilder: (context, index) {
                     return VideoPlayerItem(
-                      assetPath: videoAssets[index],
+                      videoUrl: videoUrls[index],
                       overlayUI: _buildOverlayUI(index),
                     );
                   },
@@ -286,7 +309,8 @@ class _BuyerHomepageScreenPlayerState extends State<BuyerHomepageScreenPlayer> {
                                             GoRouter.of(context).push(
                                               AppRoute.buyerProduct.path,
                                               extra: {
-                                                'product': productsAssets[index],
+                                                'product':
+                                                    productsAssets[index],
                                                 'store': storeAssets[index],
                                               },
                                             );
@@ -385,10 +409,10 @@ class _BuyerHomepageScreenPlayerState extends State<BuyerHomepageScreenPlayer> {
 }
 
 class VideoPlayerItem extends StatefulWidget {
-  final String assetPath;
-  final Widget? overlayUI; // сюда можно добавлять кастомный UI
+  final String videoUrl; // теперь это URL с сервера
+  final Widget? overlayUI;
 
-  const VideoPlayerItem({super.key, required this.assetPath, this.overlayUI});
+  const VideoPlayerItem({super.key, required this.videoUrl, this.overlayUI});
 
   @override
   State<VideoPlayerItem> createState() => _VideoPlayerItemState();
@@ -400,7 +424,9 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset(widget.assetPath)
+
+    // Всегда используем network для видео с сервера
+    _controller = VideoPlayerController.network(widget.videoUrl)
       ..initialize().then((_) {
         if (!mounted) return;
         setState(() {});
@@ -426,7 +452,7 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
-      key: Key(widget.assetPath),
+      key: Key(widget.videoUrl),
       onVisibilityChanged: (info) {
         if (!_controller.value.isInitialized || !mounted) return;
         if (info.visibleFraction == 0) {
@@ -438,7 +464,6 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Видео
           if (_controller.value.isInitialized)
             SizedBox.expand(
               child: FittedBox(
@@ -452,8 +477,6 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
             )
           else
             const Center(child: CircularProgressIndicator()),
-
-          // Полноэкранный GestureDetector поверх видео для Play/Pause
           Positioned.fill(
             child: GestureDetector(
               behavior: HitTestBehavior.translucent,
@@ -461,12 +484,8 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
               child: const SizedBox.shrink(),
             ),
           ),
-
-          // Play/Pause иконка по центру
           if (!_controller.value.isPlaying)
             const Icon(Icons.play_arrow, size: 80, color: Colors.white70),
-
-          // Кастомный UI поверх видео
           if (widget.overlayUI != null) widget.overlayUI!,
         ],
       ),
