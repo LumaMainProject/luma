@@ -263,7 +263,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         //   child: Text(AppStrings.continueAsGuest),
                         // ),
 
-                        // AppSpacing.verticalMd,
+                        AppSpacing.verticalMd,
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

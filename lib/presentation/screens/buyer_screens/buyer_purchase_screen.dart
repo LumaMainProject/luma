@@ -78,6 +78,10 @@ class _BuyerPurchaseScreenState extends State<BuyerPurchaseScreen> {
                         Text("Способ оплаты", style: AppTextStyles.headline),
                         const SizedBox(height: AppSpacing.paddingMd),
                         const BuyerPurchaseScreenPaymentOptions(),
+                        const SizedBox(height: AppSpacing.paddingMd),
+                        const PaymentProcessors(),
+                        const SizedBox(height: AppSpacing.paddingMd),
+                        const PaymentCommentary(),
                         const SizedBox(height: AppSpacing.bottomButtonBar),
                       ],
                     ),
@@ -472,12 +476,115 @@ class _PaymentOption extends StatelessWidget {
   }
 }
 
-class _PaymentProcessots extends StatelessWidget {
-  const _PaymentProcessots();
+class PaymentProcessors extends StatelessWidget {
+  const PaymentProcessors({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox();
+    final processors = ["Payme", "Click", "Uzum"];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text("Оплатить через:", style: AppTextStyles.headline),
+        const SizedBox(height: 12),
+        Row(
+          children: List.generate(processors.length * 2 - 1, (index) {
+            if (index.isOdd) return const SizedBox(width: 10); // зазор
+            final processor = processors[index ~/ 2];
+            return Expanded(
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  // Повернутый фон кнопки
+                  Transform.rotate(
+                    angle: 12 * 3.1415927 / 180,
+                    child: Container(
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFDC700),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                  // Текст кнопки
+                  Text(
+                    processor,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  // Overlay "В разработке" по ширине кнопки
+                  Positioned(
+                    top: 18,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 24,
+                      decoration: BoxDecoration(
+                        color: Colors.black.withAlpha(150),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        "В разработке",
+                        style: TextStyle(
+                          color: Color(0xFFFFDF20),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+        ),
+        const SizedBox(height: 16),
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.red.withAlpha(25),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Text(
+            "Онлайн-оплата в разработке. Доступна оплата наличными.",
+            style: TextStyle(fontSize: 14, color: AppColors.graphDown),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class PaymentCommentary extends StatelessWidget {
+  const PaymentCommentary({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Комментарий к курьеру",
+          style: AppTextStyles.headline,
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          maxLines: 2, // две строки
+          decoration: InputDecoration(
+            hintText: "Напишите комментарий...",
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 12,
+              horizontal: 12,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 
