@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:luma_2/core/constants/app_videos.dart';
 import 'package:luma_2/core/router/app_routes.dart';
 import 'package:luma_2/core/theme/app_colors.dart';
 import 'package:luma_2/data/models/product.dart';
@@ -22,39 +23,20 @@ class BuyerHomepageScreenPlayer extends StatefulWidget {
 }
 
 class _BuyerHomepageScreenPlayerState extends State<BuyerHomepageScreenPlayer> {
-  final List<String> videoFiles = ['1.mp4', '2.mp4', '3.mp4', '4.mp4', '5.mp4'];
-
-  List<String> videoUrls = [];
+  final List<String> videoAssets = [
+    AppVideos.first,
+    AppVideos.second,
+    AppVideos.third,
+    AppVideos.four,
+    AppVideos.fifth,
+  ];
 
   final List<Store> storeAssets = [];
+
   final List<Product> productsAssets = [];
 
   @override
-  void initState() {
-    super.initState();
-    _loadVideoUrls();
-  }
-
-  Future<void> _loadVideoUrls() async {
-    final urls = await Future.wait(videoFiles.map((f) => getVideoUrl(f)));
-    if (!mounted) return;
-    setState(() {
-      videoUrls = urls;
-    });
-  }
-
-  Future<String> getVideoUrl(String fileName) async {
-    final ref = FirebaseStorage.instance.ref().child('videos/$fileName');
-    return await ref.getDownloadURL();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    if (videoUrls.isEmpty) {
-      // Показываем индикатор загрузки, пока ссылки не получены
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
-    }
-
     return Scaffold(
       body: BlocBuilder<StoresCubit, StoresState>(
         builder: (context, storesState) {
@@ -71,24 +53,20 @@ class _BuyerHomepageScreenPlayerState extends State<BuyerHomepageScreenPlayer> {
                   return const Center(child: Text("Нет видео"));
                 }
 
-                // Инициализация storeAssets и productsAssets
-                storeAssets.clear();
-                productsAssets.clear();
-                for (int i = 0; i < videoUrls.length; i++) {
-                  storeAssets.add(
-                    storesState.stores[i % storesState.stores.length],
-                  );
-                  productsAssets.add(
-                    productsState.products[i % productsState.products.length],
-                  );
+                for (int i = 0; i < videoAssets.length; i++) {
+                  storeAssets.add(storesState.stores[i % 2 == 0 ? 0 : 1]);
+                }
+
+                for (int i = 0; i < videoAssets.length; i++) {
+                  productsAssets.add(productsState.products[i]);
                 }
 
                 return PageView.builder(
                   scrollDirection: Axis.vertical,
-                  itemCount: videoUrls.length,
+                  itemCount: videoAssets.length,
                   itemBuilder: (context, index) {
                     return VideoPlayerItem(
-                      videoUrl: videoUrls[index],
+                      assetPath: videoAssets[index],
                       overlayUI: _buildOverlayUI(index),
                     );
                   },
@@ -408,11 +386,13 @@ class _BuyerHomepageScreenPlayerState extends State<BuyerHomepageScreenPlayer> {
   }
 }
 
+
+
 class VideoPlayerItem extends StatefulWidget {
-  final String videoUrl; // теперь это URL с сервера
+  final String assetPath;
   final Widget? overlayUI;
 
-  const VideoPlayerItem({super.key, required this.videoUrl, this.overlayUI});
+  const VideoPlayerItem({super.key, required this.assetPath, this.overlayUI});
 
   @override
   State<VideoPlayerItem> createState() => _VideoPlayerItemState();
@@ -420,63 +400,188 @@ class VideoPlayerItem extends StatefulWidget {
 
 class _VideoPlayerItemState extends State<VideoPlayerItem> {
   late VideoPlayerController _controller;
+  bool _isLoading = true;
+  bool _hasError = false;
+  bool _userUnmuted = false;
+
+  // buffering state
+  double _bufferedFraction = 0.0; // 0.0 .. 1.0
+  bool _isBuffering = false;
 
   @override
   void initState() {
     super.initState();
+    _initializeVideo();
+  }
 
-    // Всегда используем network для видео с сервера
-    _controller = VideoPlayerController.network(widget.videoUrl)
-      ..initialize().then((_) {
-        if (!mounted) return;
-        setState(() {});
-        _controller.play();
-        _controller.setLooping(true);
+  void _attachListener() {
+    _controller.removeListener(_onControllerUpdate);
+    _controller.addListener(_onControllerUpdate);
+  }
+
+  void _onControllerUpdate() {
+    if (!mounted) return;
+    final value = _controller.value;
+    if (!value.isInitialized) return;
+
+    double buffered = 0.0;
+    try {
+      if (value.buffered.isNotEmpty && value.duration.inMilliseconds > 0) {
+        final end = value.buffered.last.end.inMilliseconds;
+        buffered = end / value.duration.inMilliseconds;
+        if (buffered > 1.0) buffered = 1.0;
+      }
+    } catch (_) {
+      buffered = 0.0;
+    }
+
+    // try to read isBuffering; fallback to heuristic if needed
+    bool isBuffering = false;
+    try {
+      isBuffering = value.isBuffering;
+    } catch (_) {
+      // fallback: consider buffering if bufferedFraction very small while not ended
+      isBuffering = (!value.isPlaying && buffered < 0.02) || (buffered < 0.02 && value.position.inMilliseconds < 1000);
+    }
+
+    // Update state only if changed enough to avoid UI thrash
+    if (( (_bufferedFraction - buffered ).abs() > 0.005) || (_isBuffering != isBuffering)) {
+      setState(() {
+        _bufferedFraction = buffered;
+        _isBuffering = isBuffering;
       });
+    }
+  }
+
+  Future<void> _initializeVideo() async {
+    setState(() {
+      _isLoading = true;
+      _hasError = false;
+      _bufferedFraction = 0.0;
+      _isBuffering = true;
+    });
+
+    final String rawPath = widget.assetPath;
+    String videoUrl = rawPath;
+
+    try {
+      if (kIsWeb) {
+        // make absolute path for web-hosting
+        if (videoUrl.startsWith('assets/')) {
+          if (!videoUrl.startsWith('/')) videoUrl = '/$videoUrl';
+        }
+        _controller = VideoPlayerController.networkUrl(Uri.parse(videoUrl));
+      } else {
+        _controller = VideoPlayerController.asset(videoUrl);
+      }
+
+      _attachListener();
+
+      // mute for autoplay on web
+      if (kIsWeb) {
+        await _controller.setVolume(1.0);
+      } else {
+        await _controller.setVolume(1.0);
+      }
+
+      await _controller.initialize();
+      if (!mounted) return;
+
+      _controller.setLooping(true);
+      await _controller.play();
+
+      // after play attempt, update buffering state once
+      _onControllerUpdate();
+
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (e, st) {
+      debugPrint("Ошибка загрузки видео (${widget.assetPath}): $e\n$st");
+      setState(() {
+        _hasError = true;
+        _isLoading = false;
+        _isBuffering = false;
+      });
+    }
   }
 
   @override
   void dispose() {
-    _controller.pause();
-    _controller.dispose();
+    try {
+      _controller.removeListener(_onControllerUpdate);
+      _controller.pause();
+      _controller.dispose();
+    } catch (_) {}
     super.dispose();
   }
 
-  void _togglePlayPause() {
+  Future<void> _togglePlayPause() async {
     if (!_controller.value.isInitialized) return;
-    setState(() {
-      _controller.value.isPlaying ? _controller.pause() : _controller.play();
-    });
+
+    if (_controller.value.isPlaying) {
+      setState(() => _controller.pause());
+      return;
+    }
+
+    // если на web и ещё не делали unmute — включаем звук при первом play
+    if (kIsWeb && !_userUnmuted) {
+      await _controller.setVolume(1.0);
+      _userUnmuted = true;
+    }
+
+    await _controller.play();
+  }
+
+  Future<void> _forceReload() async {
+    try {
+      await _controller.pause();
+    } catch (_) {}
+    try {
+      _controller.removeListener(_onControllerUpdate);
+      await _controller.dispose();
+    } catch (_) {}
+    await _initializeVideo();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Loading initial initialize
+    if (_isLoading) {
+      return _buildLoadingView();
+    }
+
+    if (_hasError) {
+      return _buildErrorView();
+    }
+
+    // Normal video display with buffering UI
     return VisibilityDetector(
-      key: Key(widget.videoUrl),
+      key: Key(widget.assetPath),
       onVisibilityChanged: (info) {
         if (!_controller.value.isInitialized || !mounted) return;
         if (info.visibleFraction == 0) {
           _controller.pause();
         } else {
+          // if buffered enough, play; otherwise try play (browser will handle buffering)
           _controller.play();
         }
       },
       child: Stack(
         alignment: Alignment.center,
         children: [
-          if (_controller.value.isInitialized)
-            SizedBox.expand(
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: SizedBox(
-                  width: _controller.value.size.width,
-                  height: _controller.value.size.height,
-                  child: VideoPlayer(_controller),
-                ),
+          SizedBox.expand(
+            child: FittedBox(
+              fit: BoxFit.cover,
+              child: SizedBox(
+                width: _controller.value.size.width,
+                height: _controller.value.size.height,
+                child: VideoPlayer(_controller),
               ),
-            )
-          else
-            const Center(child: CircularProgressIndicator()),
+            ),
+          ),
+
+          // tap area
           Positioned.fill(
             child: GestureDetector(
               behavior: HitTestBehavior.translucent,
@@ -484,14 +589,94 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
               child: const SizedBox.shrink(),
             ),
           ),
+
+          // big play icon when paused
           if (!_controller.value.isPlaying)
             const Icon(Icons.play_arrow, size: 80, color: Colors.white70),
+
+          // buffering overlay
+          if (_isBuffering) _buildBufferingOverlay(),
+
+          // bottom buffered progress indicator
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: SafeArea(
+              top: false,
+              bottom: true,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  LinearProgressIndicator(
+                    value: _bufferedFraction.clamp(0.0, 1.0),
+                    minHeight: 3,
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // custom overlay UI from caller (title, buttons etc.)
           if (widget.overlayUI != null) widget.overlayUI!,
         ],
       ),
     );
   }
+
+  Widget _buildLoadingView() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          CircularProgressIndicator(),
+          SizedBox(height: 8),
+          Text('Загрузка видео...'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildErrorView() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.error_outline, size: 56, color: Colors.red),
+          const SizedBox(height: 8),
+          const Text('Ошибка загрузки видео'),
+          const SizedBox(height: 8),
+          ElevatedButton(
+            onPressed: _forceReload,
+            child: const Text('Повторить'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBufferingOverlay() {
+    final percent = (_bufferedFraction * 100).clamp(0.0, 100.0);
+    return Container(
+      color: Colors.black45,
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const CircularProgressIndicator(),
+          const SizedBox(height: 12),
+          Text('Буферизация... ${percent.toStringAsFixed(0)}%'),
+          const SizedBox(height: 8),
+          ElevatedButton(
+            onPressed: _forceReload,
+            child: const Text('Перезапустить'),
+          ),
+        ],
+      ),
+    );
+  }
 }
+
 
 class VideoLocalLogo extends StatelessWidget {
   final Store store;

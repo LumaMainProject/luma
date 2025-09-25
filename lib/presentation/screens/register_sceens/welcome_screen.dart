@@ -252,18 +252,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           child: Text(AppStrings.loginTitle),
                         ),
 
-                        AppSpacing.verticalMd,
+                        // AppSpacing.verticalMd,
 
-                        ElevatedButton(
-                          onPressed: () {
-                            _handleAction(
-                              () => context.read<AuthCubit>().signInAsGuest(),
-                            );
-                          },
-                          child: Text(AppStrings.continueAsGuest),
-                        ),
+                        // ElevatedButton(
+                        //   onPressed: () {
+                        //     _handleAction(
+                        //       () => context.read<AuthCubit>().signInAsGuest(),
+                        //     );
+                        //   },
+                        //   child: Text(AppStrings.continueAsGuest),
+                        // ),
 
-                        AppSpacing.verticalMd,
+                        // AppSpacing.verticalMd,
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
