@@ -126,7 +126,6 @@ class ItemWidget extends StatelessWidget {
                       ],
                     ),
 
-                    // Заполнитель, чтобы цены были внизу
                     const Spacer(),
 
                     // Цены
@@ -165,9 +164,44 @@ class ItemWidget extends StatelessWidget {
             padding: const EdgeInsets.all(AppSpacing.paddingSm),
             child: ItemWidgetTag(text: tagText),
           ),
+
+        // Кнопки справа сверху
+        Positioned(
+          top: AppSpacing.paddingSm,
+          right: AppSpacing.paddingSm,
+          child: Column(
+            children: [
+              // Сердечко
+              _buildCircleButton(icon: Icons.favorite_border, onTap: () {}),
+              const SizedBox(height: 8),
+              // Корзина
+              _buildCircleButton(
+                icon: Icons.shopping_cart_outlined,
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
+}
+
+Widget _buildCircleButton({
+  required IconData icon,
+  required VoidCallback onTap,
+}) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      padding: const EdgeInsets.all(8),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+      ),
+      child: Icon(icon, size: 20, color: Colors.black),
+    ),
+  );
 }
 
 class ItemWidgetTag extends StatelessWidget {
