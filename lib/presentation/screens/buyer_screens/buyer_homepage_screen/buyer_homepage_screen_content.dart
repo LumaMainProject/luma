@@ -12,6 +12,7 @@ import 'package:luma_2/data/models/store.dart';
 import 'package:luma_2/logic/products/products_cubit.dart';
 import 'package:luma_2/logic/stores/stores_cubit.dart';
 import 'package:luma_2/presentation/widgets/buyer/item_widget.dart';
+import 'package:luma_2/presentation/widgets/buyer/photo_search_overlay.dart';
 import 'package:luma_2/presentation/widgets/buyer/shop_button_widget.dart';
 
 class BuyerHomepageScreenContent extends StatelessWidget {
@@ -19,6 +20,14 @@ class BuyerHomepageScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void showCameraDialog() {
+    showDialog(
+      context: context,
+      barrierColor: Colors
+          .transparent, // чтобы фон был полупрозрачным через BackdropFilter
+      builder: (_) => PhotoSearchOverlay(onClose: () => Navigator.pop(context)),
+    );
+  }
     return Scaffold(
       appBar: AppBar(
         foregroundColor: AppColors.primary,
@@ -51,6 +60,10 @@ class BuyerHomepageScreenContent extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: AppStrings.buyerHomepageSearch,
                 prefixIcon: const Icon(Icons.search),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.camera_alt),
+                  onPressed: showCameraDialog,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
                   borderSide: BorderSide(color: AppColors.borderColor),

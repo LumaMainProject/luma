@@ -472,6 +472,15 @@ class _PaymentOption extends StatelessWidget {
   }
 }
 
+class _PaymentProcessots extends StatelessWidget {
+  const _PaymentProcessots();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox();
+  }
+}
+
 // -------------------- BOTTOM BAR --------------------
 
 class _BottomSummaryBar extends StatelessWidget {
