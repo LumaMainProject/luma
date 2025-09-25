@@ -112,13 +112,6 @@ class BuyerHomepageScreenContent extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 8),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.paddingMd,
-                        ),
-                        child: Text("Магазины", style: AppTextStyles.headline),
-                      ),
                       const SizedBox(height: AppSpacing.paddingSm),
                       SizedBox(
                         height: 90,

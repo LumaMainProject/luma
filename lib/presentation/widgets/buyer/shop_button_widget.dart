@@ -23,7 +23,7 @@ class ShopButtonWidget extends StatelessWidget {
           AppSpacing.verticalSm,
 
           ClipRRect(
-            borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
+            borderRadius: BorderRadius.circular(AppSizes.buttonHeight),
             child: CachedNetworkImage(
               imageUrl: store.logoUrl!,
               width: AppSizes.avatarMd,
