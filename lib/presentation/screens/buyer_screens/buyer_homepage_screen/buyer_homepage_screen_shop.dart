@@ -64,7 +64,7 @@ class BuyerHomepageScreenShop extends StatelessWidget {
                                 AppSpacing.paddingMd,
                                 AppSpacing.paddingMd,
                                 AppSpacing.paddingMd,
-                                80, // 👈 отступ снизу под итог
+                                200, // 👈 отступ снизу под итог
                               ),
                               itemBuilder: (context, index) {
                                 final storeId = uniqueStoreIds[index];

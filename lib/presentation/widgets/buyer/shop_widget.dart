@@ -123,7 +123,9 @@ class ShopWidget extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (context, index) =>
                 ShopWidgetItem(item: productOrders[index]),
-            separatorBuilder: (context, index) => AppSpacing.verticalSm,
+            separatorBuilder: (context, index) {
+              return AppSpacing.verticalSm;
+            },
             itemCount: productOrders.length,
           ),
 
@@ -194,8 +196,14 @@ class ShopWidgetItem extends StatelessWidget {
     final product = item.key;
     final order = item.value;
 
+    List tags = ["M", "Черный"];
+
+    // for (var tag in item.key.specs?.values.toList() ?? []) {
+    //   tags.add(tag);
+    // }
+
     return SizedBox(
-      height: AppSizes.avatarLg,
+      height: 84,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -221,7 +229,7 @@ class ShopWidgetItem extends StatelessWidget {
           // Название и цены
           Expanded(
             child: SizedBox(
-              height: AppSizes.avatarLg,
+              height: 84,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -232,6 +240,20 @@ class ShopWidgetItem extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
+
+                  item.key.sellerId == "store_2"? Row(
+                    children: [
+                      ...tags.map(
+                        (tag) => Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: ShopTag(
+                            text: tag.toString(),
+                          ), // на всякий случай toString()
+                        ),
+                      ),
+                    ],
+                  ) : const SizedBox(),
+
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -282,6 +304,23 @@ class ShopWidgetItem extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ShopTag extends StatelessWidget {
+  final String text;
+  const ShopTag({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      decoration: BoxDecoration(
+        color: Color(0xffF3F4F6),
+        borderRadius: BorderRadius.all(Radius.circular(4)),
+      ),
+      child: Text(text, style: TextStyle(fontSize: 10, color: AppColors.text)),
     );
   }
 }
