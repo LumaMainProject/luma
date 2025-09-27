@@ -15,6 +15,13 @@ abstract class AppTextStyles {
     overflow: TextOverflow.ellipsis,
   );
 
+  static const headline2 = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primary,
+    overflow: TextOverflow.ellipsis,
+  );
+
   static const buttonDeactive = TextStyle(
     fontSize: 14,
     color: AppColors.textDark,
