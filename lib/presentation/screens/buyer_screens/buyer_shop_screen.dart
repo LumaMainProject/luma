@@ -242,6 +242,13 @@ class _BuyerShopScreenState extends State<BuyerShopScreen> {
     List products,
     Map<String, Store> storesMap,
   ) {
+    // 🔹 фильтруем только товары текущего магазина
+    final filteredProducts = products
+        .where((p) => p.sellerId == widget.store.id)
+        .toList();
+
+    if (filteredProducts.isEmpty) return const SizedBox.shrink();
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: Column(
@@ -260,11 +267,11 @@ class _BuyerShopScreenState extends State<BuyerShopScreen> {
             ),
             child: LayoutBuilder(
               builder: (context, constraints) {
-                int crossAxisCount = 2; // по умолчанию телефон
+                int crossAxisCount = 2;
                 if (constraints.maxWidth >= 900) {
-                  crossAxisCount = 5; // ПК
+                  crossAxisCount = 5;
                 } else if (constraints.maxWidth >= 600) {
-                  crossAxisCount = 3; // планшет
+                  crossAxisCount = 3;
                 }
 
                 return GridView.builder(
@@ -276,9 +283,9 @@ class _BuyerShopScreenState extends State<BuyerShopScreen> {
                     mainAxisSpacing: AppSpacing.paddingMd,
                     childAspectRatio: 0.65,
                   ),
-                  itemCount: products.length,
+                  itemCount: filteredProducts.length,
                   itemBuilder: (context, i) {
-                    final product = products[i];
+                    final product = filteredProducts[i];
                     final store = storesMap[product.sellerId] ?? Store.empty();
                     return ItemWidget(product: product, store: store);
                   },
