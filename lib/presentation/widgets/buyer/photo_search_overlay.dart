@@ -15,10 +15,18 @@ class PhotoSearchOverlay extends StatelessWidget {
     return Stack(
       children: [
         // Полупрозрачный размытый фон
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-          child: Container(color: Colors.black.withAlpha(120)),
+        GestureDetector(
+          onTap: onClose, // закрываем диалог при тапе
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+            child: Container(
+              color: Colors.black.withAlpha(120),
+              width: double.infinity,
+              height: double.infinity,
+            ),
+          ),
         ),
+
         // Центрированный контейнер
         Center(
           child: Container(

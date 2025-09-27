@@ -21,13 +21,15 @@ class BuyerHomepageScreenContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void showCameraDialog() {
-    showDialog(
-      context: context,
-      barrierColor: Colors
-          .transparent, // чтобы фон был полупрозрачным через BackdropFilter
-      builder: (_) => PhotoSearchOverlay(onClose: () => Navigator.pop(context)),
-    );
-  }
+      showDialog(
+        context: context,
+        barrierColor: Colors
+            .transparent, // чтобы фон был полупрозрачным через BackdropFilter
+        builder: (_) =>
+            PhotoSearchOverlay(onClose: () => Navigator.pop(context)),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         foregroundColor: AppColors.primary,
