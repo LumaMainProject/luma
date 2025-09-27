@@ -19,6 +19,17 @@ class BuyerHomepageScreenAccount extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(
       builder: (context, state) {
+        if (state is UserInitial) {
+          Center(
+            child: FilledButton(
+              onPressed: () {
+                context.read<AuthCubit>().signOut();
+                context.pushReplacement(AppRoute.auth.path);
+              },
+              child: Text("Выйти из аккаунта"),
+            ),
+          );
+        }
         if (state is! UserLoaded) {
           return const Center(child: CircularProgressIndicator());
         }

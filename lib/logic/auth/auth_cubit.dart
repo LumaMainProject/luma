@@ -49,6 +49,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> signInAsGuest() async {
     await authRepository.signInAsGuest();
+    emit(Unauthenticated());
   }
 
   Future<void> signOut() async {
