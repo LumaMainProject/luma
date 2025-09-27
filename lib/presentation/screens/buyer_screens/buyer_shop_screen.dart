@@ -22,7 +22,7 @@ class _BuyerShopScreenState extends State<BuyerShopScreen> {
 
   Widget _buildFilterDropdown(String label) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: AppColors.secondary,
@@ -71,113 +71,28 @@ class _BuyerShopScreenState extends State<BuyerShopScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// Изображение магазина — от края до края
+                      /// Изображение магазина
                       ShopImage(store: widget.store),
 
                       /// Контент с отступами
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Column(
-                              children: [
-                                _buildTags(),
-                                const SizedBox(height: 12),
-                                _buildDescription(),
-                                const SizedBox(height: 12),
-                                _buildInfoButtons(),
-                                const SizedBox(height: 12),
-                                _buildTabSelector(),
-                                const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildTags(),
+                            const SizedBox(height: 12),
+                            _buildDescription(),
+                            const SizedBox(height: 12),
+                            _buildInfoButtons(),
+                            const SizedBox(height: 12),
+                            _buildTabSelector(),
+                            const SizedBox(height: 20),
 
-                                /// Поиск и сортировка
-                                Row(
-                                  children: [
-                                    // Поле поиска
-                                    Expanded(
-                                      child: TextField(
-                                        decoration: InputDecoration(
-                                          hintText: "Поиск...",
-                                          prefixIcon: const Icon(Icons.search),
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              12,
-                                            ),
-                                            borderSide: BorderSide.none,
-                                          ),
-                                          filled: true,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 12),
-
-                                    // Dropdown сортировки
-                                    DropdownButton<String>(
-                                      value: "По популярности",
-                                      items: const [
-                                        DropdownMenuItem(
-                                          value: "По популярности",
-                                          child: Text("По популярности"),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: "По цене",
-                                          child: Text("По цене"),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: "По рейтингу",
-                                          child: Text("По рейтингу"),
-                                        ),
-                                      ],
-                                      onChanged: (_) {},
-                                      underline: const SizedBox(),
-                                    ),
-                                  ],
-                                ),
-
-                                const SizedBox(height: 12),
-
-                                /// Горизонтальные фильтры
-                                SizedBox(
-                                  height: 40,
-                                  child: ListView(
-                                    scrollDirection: Axis.horizontal,
-                                    children: [
-                                      _buildFilterDropdown("Категории"),
-                                      const SizedBox(width: 8),
-                                      _buildFilterDropdown("Цены"),
-                                      const SizedBox(width: 8),
-                                      _buildFilterDropdown("Цвета"),
-                                      const SizedBox(width: 8),
-                                      _buildFilterDropdown("Размеры"),
-                                      const SizedBox(width: 8),
-                                      _buildFilterDropdown("Время доставки"),
-                                    ],
-                                  ),
-                                ),
-
-                                const SizedBox(height: 20),
-                              ],
-                            ),
-                          ),
-
-                          /// Блоки с товарами
-                          _buildProductsSection(
-                            "Популярные товары",
-                            productsState.products,
-                            storesMap,
-                          ),
-                          _buildProductsSection(
-                            "Больше всего продано",
-                            productsState.products,
-                            storesMap,
-                          ),
-                          _buildProductsSection(
-                            "Все товары магазина",
-                            productsState.products,
-                            storesMap,
-                          ),
-                        ],
+                            /// 🔹 Контент в зависимости от выбранной вкладки
+                            _buildTabContent(productsState, storesMap),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -237,12 +152,116 @@ class _BuyerShopScreenState extends State<BuyerShopScreen> {
     );
   }
 
+  Widget _buildTabContent(
+    ProductsLoaded productsState,
+    Map<String, Store> storesMap,
+  ) {
+    switch (selectedTab) {
+      case 0: // Товары
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            /// Поиск и сортировка
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "Поиск...",
+                      prefixIcon: const Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                DropdownButton<String>(
+                  value: "По популярности",
+                  items: const [
+                    DropdownMenuItem(
+                      value: "По популярности",
+                      child: Text("По популярности"),
+                    ),
+                    DropdownMenuItem(value: "По цене", child: Text("По цене")),
+                    DropdownMenuItem(
+                      value: "По рейтингу",
+                      child: Text("По рейтингу"),
+                    ),
+                  ],
+                  onChanged: (_) {},
+                  underline: const SizedBox(),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 12),
+            SizedBox(
+              height: 40,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  _buildFilterDropdown("Категории"),
+                  const SizedBox(width: 8),
+                  _buildFilterDropdown("Цены"),
+                  const SizedBox(width: 8),
+                  _buildFilterDropdown("Цвета"),
+                  const SizedBox(width: 8),
+                  _buildFilterDropdown("Размеры"),
+                  const SizedBox(width: 8),
+                  _buildFilterDropdown("Время доставки"),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            /// Секции с товарами
+            _buildProductsSection(
+              "Популярные товары",
+              productsState.products,
+              storesMap,
+            ),
+            _buildProductsSection(
+              "Больше всего продано",
+              productsState.products,
+              storesMap,
+            ),
+            _buildProductsSection(
+              "Все товары магазина",
+              productsState.products,
+              storesMap,
+            ),
+          ],
+        );
+      case 1: // Отзывы
+        return const Padding(
+          padding: EdgeInsets.all(16),
+          child: Text(
+            "Отзывы пока отсутствуют",
+            style: TextStyle(fontSize: 16),
+          ),
+        );
+      case 2: // О магазине
+        return Padding(
+          padding: const EdgeInsets.all(16),
+          child: Text(
+            widget.store.description,
+            style: const TextStyle(fontSize: 16),
+          ),
+        );
+      default:
+        return const SizedBox();
+    }
+  }
+
   Widget _buildProductsSection(
     String title,
     List products,
     Map<String, Store> storesMap,
   ) {
-    // 🔹 фильтруем только товары текущего магазина
     final filteredProducts = products
         .where((p) => p.sellerId == widget.store.id)
         .toList();
@@ -254,44 +273,34 @@ class _BuyerShopScreenState extends State<BuyerShopScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.paddingMd,
-            ),
-            child: Text(title, style: AppTextStyles.headline),
-          ),
+          Text(title, style: AppTextStyles.headline),
           const SizedBox(height: AppSpacing.paddingMd),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.paddingMd,
-            ),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                int crossAxisCount = 2;
-                if (constraints.maxWidth >= 900) {
-                  crossAxisCount = 5;
-                } else if (constraints.maxWidth >= 600) {
-                  crossAxisCount = 3;
-                }
+          LayoutBuilder(
+            builder: (context, constraints) {
+              int crossAxisCount = 2;
+              if (constraints.maxWidth >= 900) {
+                crossAxisCount = 5;
+              } else if (constraints.maxWidth >= 600) {
+                crossAxisCount = 3;
+              }
 
-                return GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: crossAxisCount,
-                    crossAxisSpacing: AppSpacing.paddingMd,
-                    mainAxisSpacing: AppSpacing.paddingMd,
-                    childAspectRatio: 0.65,
-                  ),
-                  itemCount: filteredProducts.length,
-                  itemBuilder: (context, i) {
-                    final product = filteredProducts[i];
-                    final store = storesMap[product.sellerId] ?? Store.empty();
-                    return ItemWidget(product: product, store: store);
-                  },
-                );
-              },
-            ),
+              return GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: crossAxisCount,
+                  crossAxisSpacing: AppSpacing.paddingMd,
+                  mainAxisSpacing: AppSpacing.paddingMd,
+                  childAspectRatio: 0.65,
+                ),
+                itemCount: filteredProducts.length,
+                itemBuilder: (context, i) {
+                  final product = filteredProducts[i];
+                  final store = storesMap[product.sellerId] ?? Store.empty();
+                  return ItemWidget(product: product, store: store);
+                },
+              );
+            },
           ),
         ],
       ),
