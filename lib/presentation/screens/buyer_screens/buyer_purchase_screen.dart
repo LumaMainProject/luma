@@ -79,8 +79,6 @@ class _BuyerPurchaseScreenState extends State<BuyerPurchaseScreen> {
                         const SizedBox(height: AppSpacing.paddingMd),
                         const BuyerPurchaseScreenPaymentOptions(),
                         const SizedBox(height: AppSpacing.paddingMd),
-                        const PaymentProcessors(),
-                        const SizedBox(height: AppSpacing.paddingMd),
                         const PaymentCommentary(),
                         const SizedBox(height: AppSpacing.bottomButtonBar),
                       ],
@@ -397,43 +395,9 @@ class _BuyerPurchaseScreenPaymentOptionsState
 
         if (isCash == false) AppSpacing.verticalMd,
 
-        if (isCash == false)
-          SizedBox(
-            height: 60,
-            child: Row(
-              children: [
-                _PaymentOption(
-                  title: "Payme",
-                  icon: AppIcons.card,
-                  isActive: paymentType == 0,
-                  onTap: () => setState(() => paymentType = 0),
-                ),
-                AppSpacing.horizontalMd,
-                _PaymentOption(
-                  title: "Click",
-                  icon: AppIcons.card,
-                  isActive: paymentType == 1,
-                  onTap: () => setState(() => paymentType = 1),
-                ),
-                AppSpacing.horizontalMd,
-                _PaymentOption(
-                  title: "Uzum",
-                  icon: AppIcons.card,
-                  isActive: paymentType == 2,
-                  onTap: () => setState(() => paymentType = 2),
-                ),
-              ],
-            ),
-          ),
+        if (isCash == false) PaymentProcessors(),
 
         if (isCash == false) AppSpacing.verticalMd,
-
-        if (isCash == false)
-          Text(
-            "Онлайн оплата в разработке, доступна оплата наличными",
-            style: AppTextStyles.alert,
-            maxLines: 3,
-          ),
       ],
     );
   }
@@ -486,8 +450,6 @@ class PaymentProcessors extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Оплатить через:", style: AppTextStyles.headline),
-        const SizedBox(height: 12),
         Row(
           children: List.generate(processors.length * 2 - 1, (index) {
             if (index.isOdd) return const SizedBox(width: 10); // зазор
@@ -567,10 +529,7 @@ class PaymentCommentary extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Комментарий к курьеру",
-          style: AppTextStyles.headline,
-        ),
+        const Text("Комментарий к курьеру", style: AppTextStyles.headline),
         const SizedBox(height: 8),
         TextField(
           maxLines: 2, // две строки
